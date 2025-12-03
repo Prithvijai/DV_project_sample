@@ -1,0 +1,377 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #2d3748;
+    background: linear-gradient(135deg, #1e4d2b 0%, #2d5a3d 50%, #3d6f4d 100%);
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f2920 0%, #1e4d2b 50%, #2d5a3d 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z" fill="rgba(45,90,61,0.3)"/></svg>') no-repeat bottom;
+    background-size: cover;
+    opacity: 0.5;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 50px;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.scroll-indicator {
+    margin-top: 60px;
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.scroll-indicator span {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.arrow-down {
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Story Sections */
+.story-section {
+    min-height: 80vh;
+    padding: 80px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-section {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.transition-section {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.conclusion-section {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    color: white;
+}
+
+.viz-section {
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    padding: 100px 20px;
+}
+
+.story-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #1e4d2b;
+    text-align: center;
+}
+
+.conclusion-section .section-title {
+    color: #fff;
+}
+
+.story-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #374151;
+}
+
+.story-text strong {
+    color: #1e4d2b;
+    font-weight: 700;
+}
+
+.story-text.insight {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 20px 30px;
+    border-radius: 12px;
+    border-left: 5px solid #f59e0b;
+    margin-top: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Visualization Cards */
+.viz-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 40px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.viz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* SVG Styling */
+svg {
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    display: block;
+}
+
+#viz1_svg {
+    height: 500px;
+}
+
+#viz2_svg {
+    height: 500px;
+}
+
+/* Food Selector */
+.food-selector-label {
+    font-size: 1.1rem;
+    color: #1e4d2b;
+    margin-right: 15px;
+}
+
+.food-selector-dropdown {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid #2d5a3d;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: #1e4d2b;
+    transition: all 0.3s ease;
+    min-width: 250px;
+}
+
+.food-selector-dropdown:hover {
+    border-color: #1e4d2b;
+    box-shadow: 0 2px 8px rgba(30, 77, 43, 0.2);
+}
+
+.food-selector-dropdown:focus {
+    outline: none;
+    border-color: #1e4d2b;
+    box-shadow: 0 0 0 3px rgba(30, 77, 43, 0.1);
+}
+
+/* Takeaway Cards */
+.takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.takeaway-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.takeaway-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.takeaway-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.takeaway-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.takeaway-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.final-message {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.credits {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    opacity: 0.8;
+}
+
+/* Tooltip Styling */
+#tooltip {
+    position: absolute;
+    background-color: white;
+    border: 2px solid #1e4d2b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    z-index: 1000;
+    max-width: 250px;
+}
+
+/* D3 Elements - Common Styles */
+.axis text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #374151;
+    shape-rendering: crispEdges;
+}
+
+/* Interactive Elements */
+.hoverable:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/* Sankey specific styles */
+.links path {
+    transition: opacity 0.3s;
+}
+
+.nodes rect {
+    transition: opacity 0.3s;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .story-text {
+        font-size: 1rem;
+    }
+    
+    svg {
+        height: 300px;
+    }
+    
+    #viz1_svg, #viz2_svg {
+        height: 350px;
+    }
+    
+    .takeaway-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .viz-card {
+        padding: 20px;
+    }
+    
+    .food-selector-dropdown {
+        min-width: 200px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .story-section {
+        padding: 60px 15px;
+    }
+}
