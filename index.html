@@ -6,7 +6,7 @@
         <title>Project: D3 Custom Visualization Design - CSE 578 - Fall 2025</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
         <script src="https://d3js.org/d3.v7.min.js"></script>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
         <link rel="stylesheet"  href="pjramesh.css">
         <!-- <script src="pjramesh.js"></script> -->
     </head>
@@ -56,8 +56,10 @@
             <!-- Visualization 5 -->
             <div class="row justify-content-center mb-4">
                 <div class="col-12">
-                    <h4 class="text-center">Visualization 5</h4>
-                    <div id="viz5" class="viz-container"></div>
+                    <h4 class="text-center">Visualization 5 - Greenhouse Gas Emissions by Food Type</h4>
+                    <div id="viz5_div" class="viz-container text-center">
+                        <svg id="viz5_svg" width="900" height="500" style="display: inline-block;"></svg>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -65,8 +67,16 @@
             <!-- Visualization 6 -->
             <div class="row justify-content-center mb-4">
                 <div class="col-12">
-                    <h4 class="text-center">Visualization 6</h4>
-                    <div id="viz6" class="viz-container"></div>
+                    <h4 class="text-center">Visualization 6 - Food Emissions Supply Chain</h4>
+                    <div id="viz6_div" class="viz-container text-center">
+                        <div class="text-center mb-3">
+                            <label for="food-selector" style="font-weight: bold; margin-right: 10px;">Select Food Item:</label>
+                            <select id="food-selector" style="padding: 5px 10px; font-size: 14px;">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <svg id="viz6_svg" width="900" height="500" style="display: inline-block;"></svg>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -129,6 +139,9 @@
             Main feature my vis include:
 
         </div>
+        
+        <!-- Tooltip for visualizations -->
+        <div id="tooltip" style="position: absolute; display: none; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; pointer-events: none; font-size: 12px; z-index: 1000;"></div>
         <script src="viz1.js"></script>
         <script src="viz2.js"></script>
         <script src="viz3.js"></script>
