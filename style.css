@@ -1086,5 +1086,409 @@ option {
 /* FIGURE CONTAINER CENTER FIX */
 
 
+/* ========================================
+   VIZ 3: LIFESPAN CHART STYLES
+   ======================================== */
 
+/* Header Row - Title left, Selector right */
+.lifespan-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto 0.5rem auto;
+    padding: 0.5rem 1rem;
+}
+
+.lifespan-main-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+/* Selector Wrapper */
+.lifespan-selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+}
+
+.lifespan-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #aaffc7;
+}
+
+.lifespan-dropdown {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border: 2px solid rgba(0, 255, 120, 0.3);
+    border-radius: 8px;
+    background: rgba(25, 25, 25, 0.9);
+    color: #fff;
+    cursor: pointer;
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.lifespan-dropdown:hover {
+    border-color: #00ff99;
+    box-shadow: 0 0 15px rgba(0, 255, 120, 0.2);
+}
+
+.lifespan-dropdown:focus {
+    outline: none;
+    border-color: #00ff99;
+    box-shadow: 0 0 20px rgba(0, 255, 120, 0.3);
+}
+
+/* Split Viz Container */
+#split-viz-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 880px;
+    background: transparent;
+}
+
+/* Viz 3 Container Override */
+#viz3.viz-container {
+    background: #000 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1rem 2rem !important;
+}
+
+/* Viz 3 SVG overrides */
+#viz3 svg {
+    background: transparent !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+/* Viz 3 Tooltip Override */
+#viz3 + #tooltip,
+#tooltip {
+    background: rgba(20, 20, 20, 0.98) !important;
+    border: 1px solid rgba(239, 83, 80, 0.4) !important;
+    color: #fff !important;
+}
+
+/* Viz Panels */
+.viz-panel {
+    flex: 1;
+    min-width: 600px;
+    max-width: 680px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+.panel-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Stats Box */
+.stats-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    background: rgba(183, 28, 28, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(183, 28, 28, 0.3);
+}
+
+.stat-large {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #90A4AE;
+    margin-top: 0.25rem;
+}
+
+/* ========================================
+   VIZ 4: SUBSTITUTION FLOW STYLES
+   ======================================== */
+
+/* Filter Bar */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: #aaffc7;
+    font-weight: 500;
+}
+
+.filter-chip {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid rgba(0, 255, 120, 0.3);
+    border-radius: 20px;
+    background: transparent;
+    color: #9AD1B3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-chip:hover {
+    border-color: #00ff99;
+    background: rgba(0, 255, 120, 0.1);
+}
+
+.filter-chip.active {
+    background: linear-gradient(135deg, #00ff99 0%, #00cc77 100%);
+    color: #000;
+    border-color: #00ff99;
+}
+
+/* Flow Chart Container */
+#substitution-chart {
+    flex-shrink: 0;
+    width: 970px;
+    min-height: 640px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 0.5rem;
+    position: relative;
+    overflow: visible;
+}
+
+#substitution-chart svg {
+    width: 100%;
+    height: auto;
+    background: transparent;
+}
+
+/* Node Styles */
+.dish-node rect,
+.substitute-node rect {
+    fill: rgba(30, 40, 35, 0.95);
+    stroke: rgba(154, 209, 179, 0.5);
+    stroke-width: 2px;
+    rx: 14px;
+    transition: all 0.3s ease;
+}
+
+.dish-node:hover rect,
+.substitute-node:hover rect {
+    fill: rgba(40, 55, 45, 0.95);
+    stroke: #9AD1B3;
+    stroke-width: 3px;
+}
+
+.dish-node.highlighted rect,
+.substitute-node.highlighted rect {
+    stroke: #66BB6A;
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 8px rgba(102, 187, 106, 0.4));
+}
+
+.dish-node.dimmed rect,
+.substitute-node.dimmed rect {
+    opacity: 0.3;
+}
+
+.node-title {
+    fill: #E0E0E0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Flow Link Styles */
+.flow-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.flow-link.highlighted {
+    stroke-opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(154, 209, 179, 0.5));
+}
+
+.flow-link.dimmed {
+    stroke-opacity: 0.15;
+}
+
+.flow-link-halo.dimmed {
+    opacity: 0.2;
+}
+
+/* Flow Tooltip */
+#flow-tooltip,
+.flow-tooltip {
+    position: fixed;
+    background: rgba(20, 30, 25, 0.98);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border: 1px solid rgba(154, 209, 179, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    max-width: 300px;
+}
+
+#flow-tooltip.visible,
+.flow-tooltip.visible {
+    opacity: 1;
+}
+
+.tooltip-species {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #9AD1B3;
+}
+
+/* Nutrition Badges */
+.nutrition-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.cal-badge {
+    background: rgba(239, 83, 80, 0.2);
+    color: #EF5350;
+    border: 1px solid rgba(239, 83, 80, 0.4);
+}
+
+.fiber-badge {
+    background: rgba(102, 187, 106, 0.2);
+    color: #66BB6A;
+    border: 1px solid rgba(102, 187, 106, 0.4);
+}
+
+/* Recipe Card */
+.recipe-card {
+    width: 280px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 1rem;
+    background: rgba(20, 30, 25, 0.98);
+    border: 1px solid rgba(154, 209, 179, 0.4);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.recipe-card.hidden {
+    display: none;
+}
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(154, 209, 179, 0.2);
+}
+
+.recipe-header h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #9AD1B3;
+    margin: 0;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #78909C;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #EF5350;
+}
+
+#recipe-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#recipe-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #E0E0E0;
+    font-size: 0.9rem;
+}
+
+#recipe-list li:last-child {
+    border-bottom: none;
+}
+
+#recipe-list li strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .viz-panel {
+        min-width: 100%;
+    }
+    
+    #split-viz-container {
+        flex-direction: column;
+    }
+    
+    .recipe-card {
+        max-width: 100%;
+        padding: 1rem;
+    }
+}
 

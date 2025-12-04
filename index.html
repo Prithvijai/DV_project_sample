@@ -132,19 +132,48 @@
                 </div>
                 <hr>
 
-    <!-- Viz 3 -->
+    <!-- Viz 3: Lifespan Chart -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
-            <h4 class="text-center">Visualization 3</h4>
-            <div id="viz3" class="viz-container"></div>
+            <div id="viz3" class="viz-container" style="flex-direction: column; min-height: 950px;">
+                <!-- Header Row: Title on left, Selector on right -->
+                <div class="lifespan-header-row">
+                    <h4 class="lifespan-main-title">Animal Lifespan Reality</h4>
+                    <div class="lifespan-selector-wrapper">
+                        <label for="animal-selector" class="lifespan-label">Select an animal:</label>
+                        <select id="animal-selector" class="lifespan-dropdown"></select>
+                    </div>
+                </div>
+                <!-- Main Visualization Container -->
+                <div id="split-viz-container"></div>
+            </div>
         </div>
     </div><hr>
 
-    <!-- Viz 4 -->
+    <!-- Viz 4: Substitution Flow -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
-            <h4 class="text-center">Visualization 4</h4>
-            <div id="viz4" class="viz-container"></div>
+            <div id="viz4" class="viz-container" style="flex-direction: column; min-height: 700px;">
+                <!-- Header Row: Title on left -->
+                <div class="lifespan-header-row">
+                    <h4 class="lifespan-main-title">Plant-Based Substitutions</h4>
+                </div>
+                <!-- Chart and Recipe Card Row -->
+                <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 1rem; justify-content: center; width: 100%;">
+                    <!-- Flow Chart Container -->
+                    <div id="substitution-chart"></div>
+                    <!-- Flow Tooltip -->
+                    <div id="flow-tooltip" class="flow-tooltip"></div>
+                    <!-- Recipe Card -->
+                    <div id="recipe-card" class="recipe-card hidden">
+                        <div class="recipe-header">
+                            <h4 id="recipe-title"></h4>
+                            <button id="close-recipe" class="close-btn">&times;</button>
+                        </div>
+                        <ul id="recipe-list"></ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div><hr>
 
