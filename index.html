@@ -7,7 +7,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+        <script src="https://unpkg.com/topojson@3"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet"  href="project.css">
         <!-- Mapbox GL JS -->
         <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
@@ -29,7 +31,39 @@
             <div class="row justify-content-center mb-4">
                 <div class="col-12">
                     <h4 class="text-center">Visualization 1</h4>
-                    <div id="viz1" class="viz-container"></div>
+                    <div id="viz1" class="viz-container">
+                        <div class="D347" style="width: 100%; max-width: 1200px;">
+                            <div class="hdr3">
+                                <div class="TB34">
+                                    <h1>The Rise of Veganism</h1>
+                                    <p>Exploring the evolution of global search interest (2004–2024), from a niche dietary restriction to a mainstream lifestyle movement.</p>
+                                </div>
+                                <div class="ct34">
+                                    <button class="btn btsnd88" onclick="window.viz1ResetZoom()">
+                                        Reset View
+                                    </button>
+                                    <button class="btn btpmy22" id="playBtn" onclick="window.viz1TogglePlay()">
+                                        ▶ Play Story
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="viz1-chart-wrapper"></div>
+                            <div class="e7ct">
+                                <div class="e7cd" onclick="window.viz1ZoomToEra(0)" style="--color: #74b9ff">
+                                    <div class="e7tt">2004 — 2013</div>
+                                    <div class="e7dc">The Niche Era</div>
+                                </div>
+                                <div class="e7cd" onclick="window.viz1ZoomToEra(1)" style="--color: #ffeaa7">
+                                    <div class="e7tt">2014 — 2019</div>
+                                    <div class="e7dc">The Boom</div>
+                                </div>
+                                <div class="e7cd" onclick="window.viz1ZoomToEra(2)" style="--color: #00b894">
+                                    <div class="e7tt">2020 — 2024</div>
+                                    <div class="e7dc">Peak & Stabilization</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -38,6 +72,9 @@
             <div class="row justify-content-center mb-4">
                 <div class="col-12">
                     <h4 class="text-center">Visualization 2</h4>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h1 style="color: #ffffff; margin-bottom: 10px;">Veganism All Around the World</h1>
+                    </div>
                     <div id="viz2" class="viz-container"></div>
                 </div>
             </div>
