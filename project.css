@@ -15,6 +15,12 @@
     position: relative;
 }
 
+/* Viz7 needs block layout for scrollytelling sections */
+#viz7.viz-container {
+    display: block;
+    padding: 0;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -2000,7 +2006,7 @@ footer {
     
         }
 
-
+/* 
 /* ============================== */
 /* Visualization 2: Global Veganism Map Styles */
 /* ============================== */
@@ -2167,4 +2173,4 @@ footer {
         
         .lg22-labels {        display: flex;                     justify-content:         space-between; color:       #8b949e; }
 
-
+ 
