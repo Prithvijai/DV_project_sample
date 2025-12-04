@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang='en'>
 
+<head>
+    <title>Project: D3 Custom Visualization Design - CSE 578 - Fall 2025</title>
 
     <head>
         <title>Project: D3 Custom Visualization Design - CSE 578 - Fall 2025</title>
@@ -21,76 +23,116 @@
     <body>
         <div class="myContainer">
 
-            <h1 class="text-center">Data Visualization Project - CSE 578 - Fall 2025</h1>
-            <h3 class="text-center">Prithvi Jai Ramesh - pjramesh@asu.edu</h3>
-            <hr>
+    <!-- Group CSS -->
+    <link rel="stylesheet" href="pjramesh.css">
 
-            <!-- Visualization 1 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 1</h4>
-                    <div id="viz1" class="viz-container"></div>
-                </div>
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ALIGNMENT FIX ONLY -->
+    <style>
+        /* Centers the two human figures */
+        .figure-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Keeps figure width consistent */
+        .figure {
+            width: 420px;
+            text-align: center;
+        }
+
+        /* Center the results table */
+        #comparisonResults {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        #comparisonResults table {
+            margin: 0 auto;
+        }
+
+        /* Ensures input box aligns with the viz */
+        .input-container {
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+
+</head> 
+
+<body>
+
+<div class="myContainer">
+
+    <h1 class="text-center">Data Visualization Project - CSE 578 - Fall 2025</h1>
+    <h3 class="text-center">Prithvi Jai Ramesh - pjramesh@asu.edu</h3>
+    <hr>
+
+    <!-- Viz 1 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 1</h4>
+            <div id="viz1" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+    <!-- Viz 2 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 2</h4>
+            <div id="viz2" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+    <!-- Viz 3 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 3</h4>
+            <div id="viz3" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+    <!-- Viz 4 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 4</h4>
+            <div id="viz4" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+    <!-- Viz 5 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 5</h4>
+            <div id="viz5_div" class="viz-container text-center">
+                <svg id="viz5_svg" width="900" height="500"></svg>
             </div>
-            <hr>
+        </div>
+    </div><hr>
 
-            <!-- Visualization 2 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 2</h4>
-                    <div id="viz2" class="viz-container"></div>
-                </div>
+    <!-- Viz 6 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 6</h4>
+            <div id="viz6_div" class="viz-container text-center">
+                <label>Select Food Item:</label>
+                <select id="food-selector"><option>Loading...</option></select>
+                <svg id="viz6_svg" width="900" height="500"></svg>
             </div>
-            <hr>
+        </div>
+    </div><hr>
 
-            <!-- Visualization 3 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 3</h4>
-                    <div id="viz3" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 4 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 4</h4>
-                    <div id="viz4" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 5 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 5 - Greenhouse Gas Emissions by Food Type</h4>
-                    <div id="viz5_div" class="viz-container text-center">
-                        <svg id="viz5_svg" width="900" height="500" style="display: inline-block;"></svg>
-                    </div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 6 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 6 - Food Emissions Supply Chain</h4>
-                    <div id="viz6_div" class="viz-container text-center">
-                        <div class="text-center mb-3">
-                            <label for="food-selector" style="font-weight: bold; margin-right: 10px;">Select Food Item:</label>
-                            <select id="food-selector" style="padding: 5px 10px; font-size: 14px;">
-                                <option value="">Loading...</option>
-                            </select>
-                        </div>
-                        <svg id="viz6_svg" width="900" height="500" style="display: inline-block;"></svg>
-                    </div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 7 -->
-            <div class="row justify-content-center mb-4">
+    <!-- Viz 7 -->
+                <div class="row justify-content-center mb-4">
                 <div class="col-12">
                     <h4 class="text-center">Visualization 7</h4>
                     <div id="viz7" class="viz-container">
@@ -264,69 +306,241 @@
             </div>
             <hr>
 
-            <!-- Visualization 8 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 8</h4>
-                    <div id="viz8" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 9 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 9</h4>
-                    <div id="viz9" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 10 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 10</h4>
-                    <div id="viz10" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 11 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 11</h4>
-                    <div id="viz11" class="viz-container"></div>
-                </div>
-            </div>
-            <hr>
-
-            <!-- Visualization 12 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 12</h4>
-                    <div id="viz12" class="viz-container"></div>
-                </div>
-            </div>
-
-            <p class="text-center" style="margin-top: 20px;">
-
-            Main feature my vis include:
-
+    <!-- Viz 8 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 8</h4>
+            <div id="viz8" class="viz-container"></div>
         </div>
-        
-        <!-- Tooltip for visualizations -->
-        <div id="tooltip" style="position: absolute; display: none; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; pointer-events: none; font-size: 12px; z-index: 1000;"></div>
-        <script src="viz1.js"></script>
-        <script src="viz2.js"></script>
-        <script src="viz3.js"></script>
-        <script src="viz4.js"></script>
-        <script src="viz5.js"></script>
-        <script src="viz6.js"></script>
-        <script src="viz7.js"></script>
-        <script src="viz8.js"></script>
-        <script src="viz9.js"></script>
-        <script src="viz10.js"></script>
-        <script src="viz11.js"></script>
-        <script src="viz12.js"></script>
-    </body>
-</html> 
+    </div><hr>
+
+    <!-- ===================================== -->
+    <!--             VIZ 9 (PAGE 1)            -->
+    <!-- ===================================== -->
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 9 – Nutrition Intake Liquid Figures</h4>
+
+            <div id="viz9" class="viz-container">
+
+                <!-- ⭐ INPUT BOX INSIDE VIZ 9 ⭐ -->
+                <div class="input-container">
+                    <label for="meatInput" style="font-weight: 600;">Meat Consumed per day:</label>
+                    <input type="number" id="meatInput" placeholder="ENTER IN (g)" />
+                    <button id="submitMeat">Calculate</button>
+                </div>
+
+    
+
+                <!-- ⭐ ORIGINAL PAGE 1 CODE (UNCHANGED) ⭐ -->
+                <section id="introPage">
+                    <div class="figure-container">
+
+                        <!-- LEFT FIGURE -->
+                        <div class="figure vegan-figure adjust-aura">
+                            <p class="label">Vegan Meat</p>
+                            <svg viewBox="0 0 550 950">
+                                <defs>
+                                    <pattern id="wavePatternGreen" x="0" y="0" width="300" height="15" patternUnits="userSpaceOnUse"></pattern>
+                                    <clipPath id="clipLeft">
+                                        <path d="M20 350 A25 25 0 0 1 45 325 L330 325 A25 25 0 0 1 350 350 L350 525 A10 10 0 0 1 340 535 L290 535 L290 750 A25 25 0 0 1 265 775 L235 775 A25 25 0 0 1 210 750 L210 550 L155 550 L155 750 A25 25 0 0 1 130 775 L100 775 A25 25 0 0 1 75 750 L75 535 L30 535 A10 10 0 0 1 20 525 Z"/>
+                                        <circle cx="185" cy="215" r="65" />
+                                    </clipPath>
+                                </defs>
+
+                                <g id="liquidLayer">
+                                    <path id="waveLeft" clip-path="url(#clipLeft)" fill="#00ff99" opacity="0.8"
+                                        d="M0,775 Q150,770 300,775 T550,775 L550,950 L0,950 Z" />
+                                </g>
+
+                                <g id="bubblesLeft" clip-path="url(#clipLeft)"></g>
+
+                                <!-- outline -->
+                                <circle cx="185" cy="215" r="65" />
+                                <line x1="75" y1="350" x2="75" y2="750" />
+                                <path d="M75 750 A25 25 0 0 0 100 775" />
+                                <line x1="100" y1="775" x2="130" y2="775" />
+                                <path d="M130 775 A25 25 0 0 0 155 750" />
+                                <line x1="155" y1="750" x2="155" y2="550" />
+                                <line x1="155" y1="550" x2="210" y2="550" />
+                                <line x1="210" y1="550" x2="210" y2="750" />
+                                <path d="M210 750 A25 25 0 0 0 235 775" />
+                                <line x1="235" y1="775" x2="265" y2="775" />
+                                <path d="M265 775 A25 25 0 0 0 290 750" />
+                                <line x1="290" y1="750" x2="290" y2="350" />
+                                <line x1="42.5" y1="325" x2="330" y2="325" />
+                                <line x1="20" y1="350" x2="20" y2="525" />
+                                <line x1="350" y1="350" x2="350" y2="525" />
+                                <path d="M20 350 A25 25 0 0 1 45 325" />
+                                <path d="M350 350 A25 25 0 0 0 325 325" />
+                                <line x1="27.5" y1="535" x2="75" y2="535" />
+                                <line x1="290" y1="535" x2="340" y2="535" />
+                                <path d="M20 525 A10 10 0 0 0 30 535" />
+                                <path d="M350 525 A10 10 0 0 1 340 535" />
+                            </svg>
+                            <p class="life-expectancy" id="lifeVegan">Life Expectancy: -- years</p>
+                        </div>
+
+                       <!-- ⭐ RESULTS TABLE ⭐ -->
+                        <div id="comparisonResults">
+                            <table><tbody id="resultsTable"></tbody></table>
+                        </div>
+
+                        <!-- RIGHT FIGURE -->
+                        <div class="figure meat-figure">
+                            <p class="label">Meat Meat</p>
+                            <svg viewBox="0 0 550 950">
+                                <defs>
+                                    <clipPath id="clipRight">
+                                        <path d="M20 350 A25 25 0 0 1 45 325 L330 325 A25 25 0 0 1 350 350 L350 525 A10 10 0 0 1 340 535 L290 535 L290 750 A25 25 0 0 1 265 775 L235 775 A25 25 0 0 1 210 750 L210 550 L155 550 L155 750 A25 25 0 0 1 130 775 L100 775 A25 25 0 0 1 75 750 L75 535 L30 535 A10 10 0 0 1 20 525 Z"/>
+                                        <circle cx="185" cy="215" r="65" />
+                                    </clipPath>
+                                </defs>
+
+                                <path id="waveRight" clip-path="url(#clipRight)" fill="#ff4444" opacity="0.85"
+                                    d="M0,775 Q150,770 300,775 T550,775 L550,950 L0,950 Z" />
+                                <g id="bubblesRight" clip-path="url(#clipRight)"></g>
+
+                                <!-- outline -->
+                                <circle cx="185" cy="215" r="65" />
+                                <line x1="75" y1="350" x2="75" y2="750" />
+                                <path d="M75 750 A25 25 0 0 0 100 775" />
+                                <line x1="100" y1="775" x2="130" y2="775" />
+                                <path d="M130 775 A25 25 0 0 0 155 750" />
+                                <line x1="155" y1="750" x2="155" y2="550" />
+                                <line x1="155" y1="550" x2="210" y2="550" />
+                                <line x1="210" y1="550" x2="210" y2="750" />
+                                <path d="M210 750 A25 25 0 0 0 235 775" />
+                                <line x1="235" y1="775" x2="265" y2="775" />
+                                <path d="M265 775 A25 25 0 0 0 290 750" />
+                                <line x1="290" y1="750" x2="290" y2="350" />
+                                <line x1="42.5" y1="325" x2="330" y2="325" />
+                                <line x1="20" y1="350" x2="20" y2="525" />
+                                <line x1="350" y1="350" x2="350" y2="525" />
+                                <path d="M20 350 A25 25 0 0 1 45 325" />
+                                <path d="M350 350 A25 25 0 0 0 325 325" />
+                                <line x1="27.5" y1="535" x2="75" y2="535" />
+                                <line x1="290" y1="535" x2="340" y2="535" />
+                                <path d="M20 525 A10 10 0 0 0 30 535" />
+                                <path d="M350 525 A10 10 0 0 1 340 535" />
+                            </svg>
+
+                            <p class="life-expectancy" id="lifeMeat">Life Expectancy: -- years</p>
+                        </div>
+
+                    </div>
+
+                    <button id="exploreBtn">Explore Detailed Comparison ↓</button>
+
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- ===================================== -->
+    <!--             VIZ 10 (PAGE 2)           -->
+    <!-- ===================================== -->
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 10 – Nutrition Radar</h4>
+
+            <div id="viz10" class="viz-container">
+
+<section id="comparison">
+  <section id="compare">
+    <div class="header">
+      <h1>Nutrition Radar: Vegan vs Carnivore</h1>
+      <p>Compare any two foods interactively across six nutritional dimensions.</p>
+    </div>
+
+    <div class="selectors">
+
+      <div class="control" id="leftControl">
+        <label for="styleLeft">Select Food Style (Left)</label>
+        <select id="styleLeft" class="style-dropdown">
+          <option value="">--- Choose Style ---</option>
+          <option value="carnivore">Carnivore 🥩</option>
+          <option value="vegan">Vegan 🌿</option>
+        </select>
+        <div id="foodLeftContainer" class="dropdown-container"></div>
+      </div>
+
+      <div class="control" id="rightControl">
+        <label for="styleRight">Select Food Style (Right)</label>
+        <select id="styleRight" class="style-dropdown">
+          <option value="">--- Choose Style ---</option>
+          <option value="carnivore">Carnivore 🥩</option>
+          <option value="vegan">Vegan 🌿</option>
+        </select>
+        <div id="foodRightContainer" class="dropdown-container"></div>
+      </div>
+
+    </div>
+
+    <div id="viz-layout">
+      <div id="leftinfo" class="info-panel"></div>
+      <div id="chart-container">
+        <svg id="chart"></svg>
+      </div>
+      <div id="rightinfo" class="info-panel"></div>
+    </div>
+
+    <div class="calorie-cards">
+      <div id="leftCalories" class="card red"></div>
+      <div id="rightCalories" class="card green"></div>
+    </div>
+
+    <div id="legend">
+      <span class="legend red">◼ Left Food</span>
+      <span class="legend green">◼ Right Food</span>
+    </div>
+
+  </section>
+</section>
+
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- Viz 11 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 11</h4>
+            <div id="viz11" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+    <!-- Viz 12 -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 12</h4>
+            <div id="viz12" class="viz-container"></div>
+        </div>
+    </div><hr>
+
+</div>
+
+<!-- Shared Tooltip -->
+<div id="tooltip" style="opacity:0; position:absolute;"></div>
+
+<!-- Group Scripts -->
+<script src="viz1.js"></script>
+<script src="viz2.js"></script>
+<script src="viz3.js"></script>
+<script src="viz4.js"></script>
+<script src="viz5.js"></script>
+<script src="viz6.js"></script>
+<script src="viz7.js"></script>
+<script src="viz8.js"></script>
+<script src="viz9.js"></script>
+<script src="viz10.js"></script>
+<script src="viz11.js"></script>
+<script src="viz12.js"></script>
+
+</body>
+</html>
