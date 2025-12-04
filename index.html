@@ -3,27 +3,20 @@
 
 <head>
     <title>Project: D3 Custom Visualization Design - CSE 578 - Fall 2025</title>
-
-    <head>
-        <title>Project: D3 Custom Visualization Design - CSE 578 - Fall 2025</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
-        <script src="https://d3js.org/d3.v7.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
-        <script src="https://unpkg.com/topojson@3"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" />
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-        <link rel="stylesheet"  href="project.css">
-        <!-- Mapbox GL JS -->
-        <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
-        <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
-        
-        <!-- Scrollama -->
-        <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
-        <script src="https://unpkg.com/scrollama"></script>
-        <!-- <script src="pjramesh.js"></script> -->
-    </head>
-    <body>
-        <div class="myContainer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="project.css">
+    <!-- Mapbox GL JS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    
+    <!-- Scrollama -->
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
 
     <!-- Group CSS -->
     <link rel="stylesheet" href="pjramesh.css">
@@ -68,8 +61,7 @@
             gap: 10px;
         }
     </style>
-
-</head> 
+</head>
 
 <body>
 
@@ -79,8 +71,7 @@
     <h3 class="text-center">Prithvi Jai Ramesh - pjramesh@asu.edu</h3>
     <hr>
 
-    <!-- Viz 1 -->
-     <!-- Visualization 1 -->
+    <!-- Visualization 1 -->
             <div class="row justify-content-center mb-4">
                 <div class="col-12">
                     <h4 class="text-center">Visualization 1</h4>
@@ -118,37 +109,40 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+            </div>
+            <hr>
 
-    <!-- Viz 2 -->
     <!-- Visualization 2 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 2</h4>
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <h1 style="color: #ffffff; margin-bottom: 10px;">Veganism All Around the World</h1>
-                    </div>
-                    <div id="viz2" class="viz-container"></div>
-                </div>
-                <hr>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 2</h4>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="color: #ffffff; margin-bottom: 10px;">Veganism All Around the World</h1>
+            </div>
+            <div id="viz2" class="viz-container"></div>
+        </div>
+    </div>
+    <hr>
 
-    <!-- Viz 3 -->
+    <!-- Visualization 3 -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
             <h4 class="text-center">Visualization 3</h4>
             <div id="viz3" class="viz-container"></div>
         </div>
-    </div><hr>
+    </div>
+    <hr>
 
-    <!-- Viz 4 -->
+    <!-- Visualization 4 -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
             <h4 class="text-center">Visualization 4</h4>
             <div id="viz4" class="viz-container"></div>
         </div>
-    </div><hr>
+    </div>
+    <hr>
 
-    <!-- Viz 5 -->
+    <!-- Visualization 5 -->
     <section class="prithvi-story-section prithvi-viz-section">
         <div class="prithvi-story-container">
             <h2 class="prithvi-section-title">The Meat Industry's Impact</h2>
@@ -214,187 +208,186 @@
         <div class="col-12">
             <h4 class="text-center">Visualization 7</h4>
             <div id="viz7" class="viz-container">
-                        <!-- INTRO SECTION -->
-                        <section id="intro">
-                            <div class="intro-content">
-                                <p class="kicker">DATA INVESTIGATION</p>
-                                <h1>The Hidden Cost of Vegan Protein</h1>
-                                <p class="lede">
-                                    As plant-based diets surge globally, Brazil's Amazon bears an invisible burden. 
-                                    Soy monocultures stretch across millions of hectare, feeding the world's vegans 
-                                    while draining rainforest soils and displacing ecosystems.
-                                </p>
-                                <p class="scroll-cue">↓ Scroll to explore</p>
-                            </div>
-                        </section>
-
-                        <!-- SCROLLY SECTION (Mapbox GL JS with Pitch/Bearing) -->
-                        <section id="scrolly">
-                            <!-- Map FIRST (background layer) -->
-                            <figure>
-                                <div id="map-container"></div>
-                                <div class="map-legend" id="map-legend"></div>
-                            </figure>
-
-                            <!-- Text SECOND (overlay on top) -->
-                            <article id="narrative">
-                                <div class="step" data-step="world-view">
-                                    <div class="step-inner">
-                                        <h2>A Tale of Two Forests</h2>
-                                        <p>Brazil, a country of continental proportions, holds two of the world's most vital ecosystems: the vast Amazon rainforest and the sprawling Cerrado savanna. This is a story of how one golden grain is reshaping them both.</p>
-                                        <p class="map-cue">Map cue: The emerald outline traces the Legal Amazon, framing the biomes at stake.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="amazon-basin">
-                                    <div class="step-inner">
-                                        <h3>The Amazon's Embrace</h3>
-                                        <p>The Legal Amazon, a huge administrative area, covers nearly 60% of Brazil. For decades, its primary story was one of cattle ranching and logging pushing into the jungle. But a new force was gathering on its southern border: soy cultivation, which exploded particularly after 2000.</p>
-                                        <p class="map-cue">Map cue: The same outline thickens along the basin's southern rim to spotlight the Legal Amazon perimeter.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="rondonia-fishbone">
-                                    <div class="step-inner">
-                                        <h3>The Fishbone Scars</h3>
-                                        <p>In states like Rondônia, early deforestation for settlement and ranching created a distinctive "fishbone" pattern. Roads cut deep into the forest, with smaller clearings branching off. This infrastructure laid the groundwork for larger agricultural operations to follow.</p>
-                                        <p class="map-cue">Map cue: The outline fades so Rondônia, Acre, and Amazonas can glow, tracing how the fishbone roads bit into the frontier.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="mato-grosso-boom">
-                                    <div class="step-inner">
-                                        <h3>Mato Grosso: The Soy Empire</h3>
-                                        <p>This is Mato Grosso, the epicenter of Brazil's soy revolution. Once covered by Cerrado and transitional forests, it has been transformed into a sea of agriculture. The state alone produces over 30% of the nation's soy.</p>
-                                        <p>This boom was fueled by technological advances, government incentives, and an insatiable global demand for animal feed.</p>
-                                        <p class="map-cue">Map cue: The Legal Amazon outline stays on while a red gradient shows soy growth and sprout icons mark the empire's powerhouse towns.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="arc-of-fire">
-                                    <div class="step-inner">
-                                        <h3>The Arc of Fire</h3>
-                                        <p>The agricultural frontier presses northward, creating the "arc of deforestation" along the southern and eastern edges of the Amazon. Here, the clash between forest and farm is most intense, with states showing explosive growth in soy production since 2000.</p>
-                                        <p class="map-cue">Map cue: Outline plus gradient sweep eastward to show Arc of Fire states multiplying their soy footprint, with hotspots flagged by sprout icons.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="br163-artery">
-                                    <div class="step-inner">
-                                        <h3>BR-163: Paving the Way</h3>
-                                        <p>Highways like the BR-163 are the arteries of this expansion. Paving this road connected the soy fields of Mato Grosso to river ports in Pará, drastically cutting transport costs and accelerating land clearing along its entire length.</p>
-                                        <p class="map-cue">Map cue: Corridor shading hugs BR-163 while sprout icons hop toward river ports, tracing the export artery inside the Legal Amazon outline.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="fertilizer-yield">
-                                    <div class="step-inner">
-                                        <h3>The Chemical Boost</h3>
-                                        <p>This agricultural miracle has a hidden cost. Brazilian soils, particularly in the Cerrado, are naturally poor. Soy cultivation requires massive inputs of fertilizers and agrochemicals to achieve high yields, putting immense pressure on water systems and soil health.</p>
-                                        <p class="map-cue">Map cue: An amber wash fills the Legal Amazon to show where fertilizer intensity is spiking.</p>
-                                    </div>
-                                </div>
-                                <div class="step" data-step="final-cost">
-                                    <div class="step-inner">
-                                        <h3>The Final Cost</h3>
-                                        <p>The expansion of soy has brought wealth, but at a great environmental cost. The pressure on the Amazon continues, the Cerrado is critically endangered, and the future of these vital ecosystems hangs in the balance. The golden grain leaves a long, dark shadow.</p>
-                                        <p class="map-cue">Map cue: The red growth gradient and amber soil toll overlap inside the outline to show who shoulders the long-term cost.</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        <!-- DATA BRIDGE SECTION -->
-                        <section id="outro">
-                            <div class="outro-intro">
-                                <p class="eyebrow">Ground Truths</p>
-                                <h2>Where the fly-over meets the farm gate</h2>
-                                <p>The aerial journey lands on two pulse checks: how much of Brazil's soy area now sits inside the Legal Amazon, and how heavily growers lean on fertilizers to keep yields from collapsing.</p>
-                            </div>
-
-                            <div class="outro-grid story-one-grid">
-                                <article class="chart-card" id="area-card">
-                                    <h2>Amazon vs. Rest of Brazil</h2>
-                                    <svg id="area-chart"></svg>
-                                    <p class="chart-note">
-                                        Harvested soy area inside the Legal Amazon quintupled between 2000 and 2024 even as the rest of Brazil plateaued. Source: IBGE SIDRA table 1612.
-                                    </p>
-                                </article>
-                                
-                                <article class="chart-card" id="fertilizer-card">
-                                    <h2>Brazil's Fertilizer Intensity</h2>
-                                    <svg id="fertilizer-chart"></svg>
-                                    <p class="chart-note">
-                                        Cerrado soils need constant chemical inputs. Fertilizer use per hectare jumped 45% after 2010, signaling mounting soil fatigue (FAO/OWID).
-                                    </p>
-                                </article>
-                            </div>
-
-                            <div class="story-bridge">
-                                <h3>From inputs to influence</h3>
-                                <p>The acreage surge isn't spread evenly. A handful of corridor states convert fertilizer, finance, and highways into leverage over Brazil's export machine.</p>
-                                <p>Keep scrolling and scrub through the treemap to see how those blocs wax and wane year by year.</p>
-                            </div>
-                        </section>
-
-                        <!-- FRONTIER STATE NARRATIVE -->
-                        <section id="treemap-story">
-                            <div class="treemap-intro">
-                                <p class="eyebrow">Frontier Keepers</p>
-                                <h2>Who holds the soy throttle?</h2>
-                                <p>As soy pushes north, nine Amazon states trade places at the top of the acreage league table. The treemap below lets you slide through time or spotlight logistics corridors to watch the balance of power shift.</p>
-                            </div>
-
-                            <div class="treemap-controls">
-                                <div class="control-group year-control">
-                                    <label for="treemap-year-slider">Year <span id="treemap-year-label">2024</span></label>
-                                    <input type="range" id="treemap-year-slider" min="2000" max="2024" value="2024" step="1" />
-                                </div>
-                                <div class="control-group focus-control">
-                                    <span>Focus corridor</span>
-                                    <div class="button-group" id="treemap-focus">
-                                        <button type="button" data-group="all" class="active">All Amazon</button>
-                                        <button type="button" data-group="arc">Arc of Fire</button>
-                                        <button type="button" data-group="shield">Forest Shield</button>
-                                        <button type="button" data-group="rivers">River Ports</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="treemap-layout">
-                                <div id="treemap-story-vis" class="treemap-canvas"></div>
-                                <aside class="treemap-sidebar">
-                                    <div class="sidebar-card" id="treemap-state-spotlight">
-                                        <h3>State spotlight</h3>
-                                        <p class="spotlight-copy">Click a cell to pin a state and trace the harvested area trend inside the Legal Amazon.</p>
-                                        <div class="spotlight-metric">
-                                            <span class="state-name">—</span>
-                                            <span class="state-value">Select a state</span>
-                                        </div>
-                                        <svg id="treemap-sparkline"></svg>
-                                        <p class="sparkline-note">Line shows harvested soy area from 2000 onward.</p>
-                                    </div>
-                                    <div class="sidebar-card key-findings">
-                                        <h3>Reading the treemap</h3>
-                                        <ul>
-                                            <li><strong>Arc of Fire</strong>: Mato Grosso, Pará and their neighbors account for over half the Amazon soy footprint.</li>
-                                            <li><strong>Forest Shield</strong>: Acre, Amapá, Amazonas and Roraima still have small shares but fastest relative growth.</li>
-                                            <li><strong>River Ports</strong>: Pará, Maranhão and Amazonas command export corridors tied to BR-163 and Madeira River barges.</li>
-                                        </ul>
-                                    </div>
-                                </aside>
-                            </div>
-                        </section>
+                <!-- INTRO SECTION -->
+                <section id="intro">
+                    <div class="intro-content">
+                        <p class="kicker">DATA INVESTIGATION</p>
+                        <h1>The Hidden Cost of Vegan Protein</h1>
+                        <p class="lede">
+                            As plant-based diets surge globally, Brazil's Amazon bears an invisible burden. 
+                            Soy monocultures stretch across millions of hectare, feeding the world's vegans 
+                            while draining rainforest soils and displacing ecosystems.
+                        </p>
+                        <p class="scroll-cue">↓ Scroll to explore</p>
                     </div>
-                </div>
-            </div>
-            <hr>
+                </section>
 
-    <!-- Viz 8 -->
+                <!-- SCROLLY SECTION (Mapbox GL JS with Pitch/Bearing) -->
+                <section id="scrolly">
+                    <!-- Map FIRST (background layer) -->
+                    <figure>
+                        <div id="map-container"></div>
+                        <div class="map-legend" id="map-legend"></div>
+                    </figure>
+
+                    <!-- Text SECOND (overlay on top) -->
+                    <article id="narrative">
+                        <div class="step" data-step="world-view">
+                            <div class="step-inner">
+                                <h2>A Tale of Two Forests</h2>
+                                <p>Brazil, a country of continental proportions, holds two of the world's most vital ecosystems: the vast Amazon rainforest and the sprawling Cerrado savanna. This is a story of how one golden grain is reshaping them both.</p>
+                                <p class="map-cue">Map cue: The emerald outline traces the Legal Amazon, framing the biomes at stake.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="amazon-basin">
+                            <div class="step-inner">
+                                <h3>The Amazon's Embrace</h3>
+                                <p>The Legal Amazon, a huge administrative area, covers nearly 60% of Brazil. For decades, its primary story was one of cattle ranching and logging pushing into the jungle. But a new force was gathering on its southern border: soy cultivation, which exploded particularly after 2000.</p>
+                                <p class="map-cue">Map cue: The same outline thickens along the basin's southern rim to spotlight the Legal Amazon perimeter.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="rondonia-fishbone">
+                            <div class="step-inner">
+                                <h3>The Fishbone Scars</h3>
+                                <p>In states like Rondônia, early deforestation for settlement and ranching created a distinctive "fishbone" pattern. Roads cut deep into the forest, with smaller clearings branching off. This infrastructure laid the groundwork for larger agricultural operations to follow.</p>
+                                <p class="map-cue">Map cue: The outline fades so Rondônia, Acre, and Amazonas can glow, tracing how the fishbone roads bit into the frontier.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="mato-grosso-boom">
+                            <div class="step-inner">
+                                <h3>Mato Grosso: The Soy Empire</h3>
+                                <p>This is Mato Grosso, the epicenter of Brazil's soy revolution. Once covered by Cerrado and transitional forests, it has been transformed into a sea of agriculture. The state alone produces over 30% of the nation's soy.</p>
+                                <p>This boom was fueled by technological advances, government incentives, and an insatiable global demand for animal feed.</p>
+                                <p class="map-cue">Map cue: The Legal Amazon outline stays on while a red gradient shows soy growth and sprout icons mark the empire's powerhouse towns.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="arc-of-fire">
+                            <div class="step-inner">
+                                <h3>The Arc of Fire</h3>
+                                <p>The agricultural frontier presses northward, creating the "arc of deforestation" along the southern and eastern edges of the Amazon. Here, the clash between forest and farm is most intense, with states showing explosive growth in soy production since 2000.</p>
+                                <p class="map-cue">Map cue: Outline plus gradient sweep eastward to show Arc of Fire states multiplying their soy footprint, with hotspots flagged by sprout icons.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="br163-artery">
+                            <div class="step-inner">
+                                <h3>BR-163: Paving the Way</h3>
+                                <p>Highways like the BR-163 are the arteries of this expansion. Paving this road connected the soy fields of Mato Grosso to river ports in Pará, drastically cutting transport costs and accelerating land clearing along its entire length.</p>
+                                <p class="map-cue">Map cue: Corridor shading hugs BR-163 while sprout icons hop toward river ports, tracing the export artery inside the Legal Amazon outline.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="fertilizer-yield">
+                            <div class="step-inner">
+                                <h3>The Chemical Boost</h3>
+                                <p>This agricultural miracle has a hidden cost. Brazilian soils, particularly in the Cerrado, are naturally poor. Soy cultivation requires massive inputs of fertilizers and agrochemicals to achieve high yields, putting immense pressure on water systems and soil health.</p>
+                                <p class="map-cue">Map cue: An amber wash fills the Legal Amazon to show where fertilizer intensity is spiking.</p>
+                            </div>
+                        </div>
+                        <div class="step" data-step="final-cost">
+                            <div class="step-inner">
+                                <h3>The Final Cost</h3>
+                                <p>The expansion of soy has brought wealth, but at a great environmental cost. The pressure on the Amazon continues, the Cerrado is critically endangered, and the future of these vital ecosystems hangs in the balance. The golden grain leaves a long, dark shadow.</p>
+                                <p class="map-cue">Map cue: The red growth gradient and amber soil toll overlap inside the outline to show who shoulders the long-term cost.</p>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- DATA BRIDGE SECTION -->
+                <section id="outro">
+                    <div class="outro-intro">
+                        <p class="eyebrow">Ground Truths</p>
+                        <h2>Where the fly-over meets the farm gate</h2>
+                        <p>The aerial journey lands on two pulse checks: how much of Brazil's soy area now sits inside the Legal Amazon, and how heavily growers lean on fertilizers to keep yields from collapsing.</p>
+                    </div>
+
+                    <div class="outro-grid story-one-grid">
+                        <article class="chart-card" id="area-card">
+                            <h2>Amazon vs. Rest of Brazil</h2>
+                            <svg id="area-chart"></svg>
+                            <p class="chart-note">
+                                Harvested soy area inside the Legal Amazon quintupled between 2000 and 2024 even as the rest of Brazil plateaued. Source: IBGE SIDRA table 1612.
+                            </p>
+                        </article>
+                        
+                        <article class="chart-card" id="fertilizer-card">
+                            <h2>Brazil's Fertilizer Intensity</h2>
+                            <svg id="fertilizer-chart"></svg>
+                            <p class="chart-note">
+                                Cerrado soils need constant chemical inputs. Fertilizer use per hectare jumped 45% after 2010, signaling mounting soil fatigue (FAO/OWID).
+                            </p>
+                        </article>
+                    </div>
+
+                    <div class="story-bridge">
+                        <h3>From inputs to influence</h3>
+                        <p>The acreage surge isn't spread evenly. A handful of corridor states convert fertilizer, finance, and highways into leverage over Brazil's export machine.</p>
+                        <p>Keep scrolling and scrub through the treemap to see how those blocs wax and wane year by year.</p>
+                    </div>
+                </section>
+
+                <!-- FRONTIER STATE NARRATIVE -->
+                <section id="treemap-story">
+                    <div class="treemap-intro">
+                        <p class="eyebrow">Frontier Keepers</p>
+                        <h2>Who holds the soy throttle?</h2>
+                        <p>As soy pushes north, nine Amazon states trade places at the top of the acreage league table. The treemap below lets you slide through time or spotlight logistics corridors to watch the balance of power shift.</p>
+                    </div>
+
+                    <div class="treemap-controls">
+                        <div class="control-group year-control">
+                            <label for="treemap-year-slider">Year <span id="treemap-year-label">2024</span></label>
+                            <input type="range" id="treemap-year-slider" min="2000" max="2024" value="2024" step="1" />
+                        </div>
+                        <div class="control-group focus-control">
+                            <span>Focus corridor</span>
+                            <div class="button-group" id="treemap-focus">
+                                <button type="button" data-group="all" class="active">All Amazon</button>
+                                <button type="button" data-group="arc">Arc of Fire</button>
+                                <button type="button" data-group="shield">Forest Shield</button>
+                                <button type="button" data-group="rivers">River Ports</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="treemap-layout">
+                        <div id="treemap-story-vis" class="treemap-canvas"></div>
+                        <aside class="treemap-sidebar">
+                            <div class="sidebar-card" id="treemap-state-spotlight">
+                                <h3>State spotlight</h3>
+                                <p class="spotlight-copy">Click a cell to pin a state and trace the harvested area trend inside the Legal Amazon.</p>
+                                <div class="spotlight-metric">
+                                    <span class="state-name">—</span>
+                                    <span class="state-value">Select a state</span>
+                                </div>
+                                <svg id="treemap-sparkline"></svg>
+                                <p class="sparkline-note">Line shows harvested soy area from 2000 onward.</p>
+                            </div>
+                            <div class="sidebar-card key-findings">
+                                <h3>Reading the treemap</h3>
+                                <ul>
+                                    <li><strong>Arc of Fire</strong>: Mato Grosso, Pará and their neighbors account for over half the Amazon soy footprint.</li>
+                                    <li><strong>Forest Shield</strong>: Acre, Amapá, Amazonas and Roraima still have small shares but fastest relative growth.</li>
+                                    <li><strong>River Ports</strong>: Pará, Maranhão and Amazonas command export corridors tied to BR-163 and Madeira River barges.</li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- Visualization 8 -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
             <h4 class="text-center">Visualization 8</h4>
             <div id="viz8" class="viz-container"></div>
         </div>
-    </div><hr>
+    </div>
+    <hr>
 
-    <!-- ===================================== -->
-    <!--             VIZ 9 (PAGE 1)            -->
-    <!-- ===================================== -->
+    <!-- Visualization 9 -->
 
     <div class="row justify-content-center mb-4">
         <div class="col-12">
@@ -585,33 +578,35 @@
     </div>
     <hr>
 
-    <!-- Viz 11 -->
+    <!-- Visualization 11 -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
             <h4 class="text-center">Visualization 11</h4>
             <div id="viz11" class="viz-container"></div>
         </div>
-    </div><hr>
+    </div>
+    <hr>
 
-    <!-- Viz 12 -->
+    <!-- Visualization 12 -->
     <div class="row justify-content-center mb-4">
         <div class="col-12">
             <h4 class="text-center">Visualization 12</h4>
             <div id="viz12" class="viz-container"></div>
         </div>
-    </div><hr>
+    </div>
+    <hr>
 
-    <!-- Viz 13 -->
-     <section id="thankyouPage">
-      <div class="thankyou-wrapper">
-        <h1 id="thankyouText" class="thankyou-text">THANK YOU</h1>  
-        <p class="thankyou-sub">Your contribution helps improve the nutrition study</p>
-    
-        <div class="qr-container">
-          <img id="qrCode" src="" alt="QR Code to Google Form">
-          <p class="qr-label">Scan to submit your diet choice</p>
+    <!-- Visualization 13 -->
+    <section id="thankyouPage">
+        <div class="thankyou-wrapper">
+            <h1 id="thankyouText" class="thankyou-text">THANK YOU</h1>  
+            <p class="thankyou-sub">Your contribution helps improve the nutrition study</p>
+        
+            <div class="qr-container">
+                <img id="qrCode" src="" alt="QR Code to Google Form">
+                <p class="qr-label">Scan to submit your diet choice</p>
+            </div>
         </div>
-      </div>
     </section>
 
 </div>
