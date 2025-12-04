@@ -52,12 +52,13 @@ h1 {
     height: 100vh;
     color: #fff;
     font-family: 'Inter', sans-serif;
-    overflow: hidden;
+    overflow: visible !important;
+
 }
 
 /* Base SVG and Liquid Styles (Using #introPage selector) */
 #introPage svg {
-    width: 550px;
+    width: 500px;
     height: 950px;
     background: none;
 }
@@ -1083,7 +1084,63 @@ option {
   height: 230px;
   margin-top: 25px;
 }
-/* FIGURE CONTAINER CENTER FIX */
+/* ============================================================
+   FIX 1: CENTER BOTH HUMAN FIGURES PERFECTLY
+   ============================================================ */
+/* ==========================================
+   FINAL FIX — REMOVE ALL CONFLICTS CLEANLY
+   ========================================== */
+
+/* 1. Reset the stupid margin that pushed input down */
+.input-container {
+    margin: 0 !important;
+    margin-top: -40px !important;   /* Move box UP */
+    position: relative !important;
+    z-index: 200 !important;
+}
+
+/* 2. ResultsBox absolute positioning shouldn't push things */
+#resultsBox {
+    position: relative !important;
+    top: 20px !important;
+}
+
+/* 3. Remove huge top margin on figures */
+#intro .comparison-scene {
+    margin-top: 10px !important;
+}
+
+/* 4. Hard center the figures */
+#intro .comparison-scene {
+    justify-content: center !important;
+    gap: 180px !important;
+}
+
+/* 5. Remove leftover transforms */
+.meat-figure,
+.vegan-figure {
+    left: 0 !important;
+    transform: none !important;
+    margin: 0 !important;
+}
+
+/* 6. Align everything to the center cleanly */
+#intro {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+/* Align Calculate button perfectly with input */
+.input-container button {
+    height: 45px !important;      /* match input height */
+    display: flex !important;
+    margin-top: 1px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
 
 
 /* ========================================
