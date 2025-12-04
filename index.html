@@ -149,33 +149,71 @@
     </div><hr>
 
     <!-- Viz 5 -->
-    <div class="row justify-content-center mb-4">
-        <div class="col-12">
-            <h4 class="text-center">Visualization 5</h4>
-            <div id="viz5_div" class="viz-container text-center">
+    <section class="prithvi-story-section prithvi-viz-section">
+        <div class="prithvi-story-container">
+            <h2 class="prithvi-section-title">The Meat Industry's Impact</h2>
+            <p class="prithvi-story-text">
+                When we compare greenhouse gas emissions across different food types, a striking pattern emerges. 
+                Beef production stands out dramatically—producing up to <strong>150 times more carbon emissions</strong> 
+                than growing potatoes. This visualization shows emissions measured three different ways: per kilogram, 
+                per 1000 calories, and per 100 grams of protein.
+            </p>
+            
+            <div id="viz5_div" class="prithvi-viz-card text-center">
                 <svg id="viz5_svg" width="900" height="500"></svg>
             </div>
-        </div>
-    </div><hr>
 
-            
+            <p class="prithvi-story-text prithvi-insight">
+                💡 <strong>Key Insight:</strong> Even when accounting for nutritional content, animal-based foods—especially 
+                beef and lamb—require significantly more resources and produce far more emissions than plant-based alternatives 
+                like tofu and potatoes.
+            </p>
+        </div>
+    </section>
+    <hr>
+
     <!-- Viz 6 -->
-    <div class="row justify-content-center mb-4">
-        <div class="col-12">
-            <h4 class="text-center">Visualization 6</h4>
-            <div id="viz6_div" class="viz-container text-center">
-                <label>Select Food Item:</label>
-                <select id="food-selector"><option>Loading...</option></select>
+    <section class="prithvi-story-section prithvi-viz-section">
+        <div class="prithvi-story-container">
+            <h2 class="prithvi-section-title">Breaking Down the Supply Chain</h2>
+            <p class="prithvi-story-text">
+                But where do these emissions actually come from? It's not just about the farm. The journey from 
+                field to fork involves land use, farming practices, animal feed, processing, transportation, 
+                packaging, retail, and food waste. Each stage contributes differently depending on the food type.
+            </p>
+            <p class="prithvi-story-text">
+                This interactive diagram shows how emissions are distributed across different stages of food 
+                production. Select any food item from the dropdown to see its unique emissions profile. Notice 
+                how animal products have significant emissions from farming and feed, while plant-based foods 
+                often see more proportional impact from processing and transport.
+            </p>
+            
+            <div id="viz6_div" class="prithvi-viz-card text-center">
+                <div class="mb-3">
+                    <label for="food-selector" class="food-selector-label">
+                        <strong>🔍 Explore Food Item:</strong>
+                    </label>
+                    <select id="food-selector" class="food-selector-dropdown">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
                 <svg id="viz6_svg" width="900" height="500"></svg>
             </div>
+
+            <p class="prithvi-story-text prithvi-insight">
+                💡 <strong>Key Insight:</strong> For beef, over 80% of emissions come from the farm and feed stages. 
+                In contrast, plant-based foods have more distributed emissions across transportation, packaging, and 
+                processing—stages where improvements in infrastructure and technology can make significant impacts.
+            </p>
         </div>
-    </div><hr>
+    </section>
+    <hr>
 
     <!-- Visualization 7 -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <h4 class="text-center">Visualization 7</h4>
-                    <div id="viz7" class="viz-container">
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <h4 class="text-center">Visualization 7</h4>
+            <div id="viz7" class="viz-container">
                         <!-- INTRO SECTION -->
                         <section id="intro">
                             <div class="intro-content">
@@ -579,7 +617,7 @@
 </div>
 
 <!-- Shared Tooltip -->
-<div id="tooltip" style="opacity:0; position:absolute;"></div>
+<div id="tooltip"></div>
 
 <!-- Group Scripts -->
 <script src="viz1.js"></script>
