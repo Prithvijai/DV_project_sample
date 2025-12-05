@@ -5,12 +5,13 @@
     let xScale,         yScale,     xAxis,   lineGene7tor,         areaGene7tor;
     
     
-    let svg, contentGroup   ,        linePath, areaPath, mrk22Group;
+    let svg, contentGroup   ,        linePath, areaPath, mrk22Group, focusGroup;
 
     let  data; 
 
     
     let     czt244 =        d3.zoomIdentity;
+    let activeStoryPoint = null;
 
     let         zoom;
 
@@ -236,7 +237,7 @@
 
 
         
-        svg.append("rect")
+        const hoverRect = svg.append("rect")
 
             .attr("class", "zmlyr")
 
@@ -245,8 +246,13 @@
             .style("fill", "none")
 
                   .style("pointer-events", "all") 
+            .style("cursor", "default")
 
             .call(zoom);
+        
+        hoverRect
+            .on("mousemove.hover", handleHover)
+            .on("mouseleave.hover", handleHoverEnd);
 
 
         const yAxis = d3.axisLeft(yScale).tickSize(-width).tickFormat("").ticks(5);
@@ -302,6 +308,22 @@
 
 
         mrk22Group = contentGroup.append("g").attr("class", "mrk22-group");
+        focusGroup = contentGroup.append("g")
+            .attr("class", "focus-marker")
+            .style("pointer-events", "none")
+            .style("opacity", 0);
+
+        focusGroup.append("circle")
+            .attr("r", 12)
+            .attr("fill", "rgba(255,255,255,0.1)")
+            .attr("stroke", "rgba(0,184,148,0.4)")
+            .attr("stroke-width", 2);
+
+        focusGroup.append("circle")
+            .attr("r", 5)
+            .attr("fill", "#00b894")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5);
 
         drawmrk22(xScale);
 
@@ -400,40 +422,69 @@
 
         const mrk22Enter = mrk22.enter()
             .append("g")
-            .attr("class", "stmkr");
-
-        mrk22Enter.append("circle")
-            .attr("r", 20)
-            .attr("fill", "transparent");
-
-        mrk22Enter.append("circle")
-            .attr("r", 12)
-            .attr("fill", "#fff")
-            .attr("opacity", 0.5)
+            .attr("class", "stmkr")
             .style("pointer-events", "none");
 
         mrk22Enter.append("circle")
+            .attr("class", "stmkr-ring")
+            .attr("r", 12)
+            .attr("fill", "#fff")
+            .attr("opacity", 0.45);
+
+        mrk22Enter.append("circle")
+            .attr("class", "stmkr-core")
             .attr("r", 6)
             .attr("fill", "#fff")
             .attr("stroke", "#00b894")
-            .attr("stroke-width", 2)
-            .style("pointer-events", "none");
+            .attr("stroke-width", 2);
 
-        const mrk22All = mrk22Enter.merge(mrk22);
-
-        mrk22All
-            .attr("transform", d => `translate(${currentXScale(d.dateObj)}, ${yScale(d.value)})`)
-            .on("mouseover", function(event, d) {
-                d3.select(this).select("circle:nth-child(3)").attr("fill", "#00b894").attr("r", 8);
-                showtp6(event, d);
-            })
-            .on("mouseout", function() {
-                d3.select(this).select("circle:nth-child(3)").attr("fill", "#fff").attr("r", 6);
-                hidetp6();
-            });
+        mrk22Enter.merge(mrk22)
+            .attr("transform", d => `translate(${currentXScale(d.dateObj)}, ${yScale(d.value)})`);
 
         mrk22.exit().remove();
 
+    }
+
+    function getCurrentXScale() {
+        return czt244 ? czt244.rescaleX(xScale) : xScale;
+    }
+
+    function handleHover(event) {
+        if (!focusGroup || event.buttons > 0) return;
+        const currentScale = getCurrentXScale();
+        const [mx] = d3.pointer(event);
+
+        let closest = null;
+        let minDist = Infinity;
+        stpt42.forEach(pt => {
+            const px = currentScale(pt.dateObj);
+            const dist = Math.abs(px - mx);
+            if (dist < minDist) {
+                minDist = dist;
+                closest = pt;
+            }
+        });
+
+        const threshold = 18;
+        if (!closest || minDist > threshold) {
+            handleHoverEnd();
+            return;
+        }
+
+        const px = currentScale(closest.dateObj);
+        const py = yScale(closest.value);
+        focusGroup
+            .style("opacity", 1)
+            .attr("transform", `translate(${px}, ${py})`);
+
+        activeStoryPoint = closest;
+        showtp6(event, closest);
+    }
+
+    function handleHoverEnd() {
+        if (focusGroup) focusGroup.style("opacity", 0);
+        activeStoryPoint = null;
+        hidetp6();
     }
 
 
@@ -468,38 +519,27 @@
                 tp6.style("opacity", 1);
 
 
-                const chartRect = document.querySelector('#viz1-chart-wrapper svg').getBoundingClientRect();
+        if (event) {
+            let left = event.pageX + 18;
+            let top = event.pageY - 18;
+            const tooltipWidth = 320;
+            const tooltipHeight = 200;
+            if (left + tooltipWidth > window.scrollX + window.innerWidth) {
+                left = event.pageX - tooltipWidth - 18;
+            }
+            if (top < window.scrollY + 20) {
+                top = event.pageY + 24;
+            }
+            tp6.style("left", `${left}px`).style("top", `${top}px`);
+            return;
+        }
+
+        const chartRect = document.querySelector('#viz1-chart-wrapper svg').getBoundingClientRect();
         const plotX = czt244.applyX(xScale(d.dateObj));
         const plotY = yScale(d.value);
-        const anchorX = (chartRect.left + window.scrollX) + margin.left + plotX;
-        const anchorY = (chartRect.top + window.scrollY) + margin.top + plotY;
-        const tooltipWidth = 320;
-        const tooltipHeight = 200;
-
-        let left = anchorX - tooltipWidth / 2;
-        let top = anchorY - tooltipHeight - 20;
-
-        if (event) {
-            const halfway = window.scrollX + window.innerWidth / 2;
-            if (event.pageX > halfway) {
-                left = anchorX - tooltipWidth - 30;
-            } else {
-                left = anchorX + 30;
-            }
-        }
-
-        const minLeft = window.scrollX + 20;
-        const maxLeft = window.scrollX + window.innerWidth - tooltipWidth - 20;
-        left = Math.max(minLeft, Math.min(left, maxLeft));
-
-        const minTop = window.scrollY + 20;
-        const maxTop = window.scrollY + window.innerHeight - tooltipHeight - 20;
-        if (top < minTop) {
-            top = anchorY + 30;
-        }
-        top = Math.max(minTop, Math.min(top, maxTop));
-
-        tp6.style("left", `${left}px`).style("top", `${top}px`);
+        const anchorX = (chartRect.left + window.scrollX) + margin.left + plotX - 140;
+        const anchorY = (chartRect.top + window.scrollY) + margin.top + plotY - 170;
+        tp6.style("left", `${anchorX}px`).style("top", `${anchorY}px`);
  
     }
 
