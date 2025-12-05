@@ -7,13 +7,7 @@
     const svgHeight = 950;
 
     // Keep humans side-by-side
-    const container = document.querySelector(".figure-container");
-    if (container) {
-      container.style.display = "flex";
-      container.style.justifyContent = "center";
-      container.style.alignItems = "flex-start";
-      container.style.gap = "150px";
-    }
+    const figureContainer = document.querySelector("#introPage .figure-container");
 
 function animateFill(wave, lifePercent, duration = 1500, color = "#00ff99") {
   if (!wave) return;
@@ -247,6 +241,9 @@ function animateLifeText(element, finalValue, duration = 1500) {
 
       // Animate appearance (fade + slide)
       comparisonResults.classList.remove("visible");
+      if (figureContainer) {
+        figureContainer.classList.add("results-visible");
+      }
       setTimeout(() => comparisonResults.classList.add("visible"), 100);
           });
 

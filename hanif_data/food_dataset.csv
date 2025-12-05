@@ -1,0 +1,9 @@
+name,type,basePrice,healthROI,envROI,color,emoji,mass
+Beef,animal,15,-45,-60,#e74c3c,🥩,3
+Chicken,animal,8,-15,-25,#e67e22,🍗,2
+Cheese,animal,10,-20,-40,#f39c12,🧀,2.5
+Milk,animal,6,-10,-20,#f1c40f,🥛,1.5
+Processed,animal,12,-50,-15,#95a5a6,🍕,2.8
+Vegetables,plant,8,60,80,#27ae60,🥗,1
+Grains,plant,5,40,65,#16a085,🌾,0.8
+Plant Protein,plant,7,75,90,#2ecc71,🫘,0.9
