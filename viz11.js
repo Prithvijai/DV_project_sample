@@ -114,7 +114,7 @@ const tutorialScenarios = [
         message: "🌍 Welcome to Your Food Impact Journey! Let's explore how different diets affect your health and our planet.",
         title: "Introduction"
     },
-    
+
     // THE STANDARD AMERICAN DIET
     {
         section: 1,
@@ -130,7 +130,7 @@ const tutorialScenarios = [
         message: "📊 Impact Check: This diet shows negative environmental ROI. The planets cluster toward the center, indicating lower combined benefits.",
         title: "Traditional Diet Impact"
     },
-    
+
     // FLEXITARIAN APPROACH
     {
         section: 1,
@@ -146,7 +146,7 @@ const tutorialScenarios = [
         message: "📈 Getting Better: Notice how the planets spread outward? That's improved health and environmental scores combining!",
         title: "Flexitarian Results"
     },
-    
+
     // MEDITERRANEAN DIET
     {
         section: 1,
@@ -162,7 +162,7 @@ const tutorialScenarios = [
         message: "✨ Strong Performance: Planets move further out, showing positive ROI. Health and environment both benefit!",
         title: "Mediterranean Impact"
     },
-    
+
     // PESCATARIAN
     {
         section: 1,
@@ -178,7 +178,7 @@ const tutorialScenarios = [
         message: "🌟 Excellent Progress: The cosmic view shows planets pushing into the outer orbits. Strong combined benefits!",
         title: "Pescatarian Benefits"
     },
-    
+
     // VEGETARIAN
     {
         section: 1,
@@ -194,7 +194,7 @@ const tutorialScenarios = [
         message: "🚀 Outstanding Impact: Most planets reach the outer orbits. High positive ROI for both health and environment!",
         title: "Vegetarian Results"
     },
-    
+
     // FULL PLANT-BASED
     {
         section: 1,
@@ -210,7 +210,7 @@ const tutorialScenarios = [
         message: "🌈 Peak Performance: The planets reach their maximum distance from center. Optimal ROI across both dimensions!",
         title: "Plant-Based Impact"
     },
-    
+
     // PROTEIN-FOCUSED CARNIVORE (For Comparison)
     {
         section: 1,
@@ -226,7 +226,7 @@ const tutorialScenarios = [
         message: "⚠️ Reality Check: Planets cluster near center with lower scores. This shows the trade-offs of protein-heavy animal diets.",
         title: "Carnivore Trade-offs"
     },
-    
+
     // OPTIMAL BALANCED
     {
         section: 1,
@@ -242,7 +242,7 @@ const tutorialScenarios = [
         message: "💚 Finding Balance: Strong planetary distribution showing excellent overall performance. A realistic, sustainable approach!",
         title: "Balanced Results"
     },
-    
+
     // FINAL SUMMARY
     {
         section: 0,
@@ -276,24 +276,24 @@ function runTutorialStep() {
     }
 
     const scenario = tutorialScenarios[tutorialStep];
-    
+
     // Show message with title
     showTutorialMessage(scenario.message, scenario.title);
-    
+
     // Update progress indicator
     updateTutorialProgress();
-    
+
     // Scroll to section
     const sections = document.querySelectorAll('.section');
     if (sections[scenario.section]) {
         sections[scenario.section].scrollIntoView({ behavior: 'smooth' });
     }
-    
+
     // Apply spending changes gradually
     setTimeout(() => {
         applySpendingChanges(scenario.changes);
     }, 1000);
-    
+
     // Move to next step
     tutorialStep++;
     setTimeout(() => {
@@ -304,7 +304,7 @@ function runTutorialStep() {
 function updateTutorialProgress() {
     const progressBar = document.getElementById('tutorial-progress-fill');
     const progressText = document.getElementById('tutorial-progress-text');
-    
+
     const progress = ((tutorialStep + 1) / tutorialScenarios.length) * 100;
     progressBar.style.width = progress + '%';
     progressText.textContent = `Chapter ${tutorialStep + 1} of ${tutorialScenarios.length}`;
@@ -312,7 +312,7 @@ function updateTutorialProgress() {
 
 function applySpendingChanges(changes) {
     const hasCustomScenario = Object.keys(changes).length > 0;
-    
+
     foodData.forEach(food => {
         const targetValue = hasCustomScenario
             ? (Object.prototype.hasOwnProperty.call(changes, food.name) ? changes[food.name] : 0)
@@ -331,16 +331,16 @@ function animateSliderChange(foodName, targetValue) {
     const interval = setInterval(() => {
         step++;
         spending[foodName] = currentValue + (increment * step);
-        
+
         // Update slider
         const slider = d3.select(`#slider-${foodName}`).node();
         if (slider) {
             slider.value = spending[foodName];
             d3.select(`#val-${foodName}`).text('$' + spending[foodName].toFixed(1));
         }
-        
+
         updateAllVisualizations();
-        
+
         if (step >= steps) {
             clearInterval(interval);
             spending[foodName] = targetValue;
@@ -352,10 +352,10 @@ function showTutorialMessage(message, title) {
     const msgBox = document.getElementById('tutorial-message');
     const titleBox = document.getElementById('tutorial-title');
     const container = document.getElementById('tutorial-message-container');
-    
+
     titleBox.textContent = title || '';
     msgBox.textContent = message;
-    
+
     container.style.opacity = '1';
     msgBox.style.opacity = '1';
     msgBox.style.transform = 'translateY(0)';
@@ -365,7 +365,7 @@ function hideTutorialMessage() {
     const msgBox = document.getElementById('tutorial-message');
     const container = document.getElementById('tutorial-message-container');
     const progressContainer = document.getElementById('tutorial-progress');
-    
+
     container.style.opacity = '0';
     msgBox.style.opacity = '0';
     msgBox.style.transform = 'translateY(-20px)';
@@ -464,10 +464,10 @@ function showTooltip(event, food) {
         <div style="margin-bottom: 4px;">Health ROI: <span style="color: ${food.healthROI > 0 ? '#10b981' : '#ef4444'}">${food.healthROI > 0 ? '+' : ''}${food.healthROI}</span></div>
         <div>Environment ROI: <span style="color: ${food.envROI > 0 ? '#10b981' : '#ef4444'}">${food.envROI > 0 ? '+' : ''}${food.envROI}</span></div>
     `)
-    .style('left', (event.clientX + 15) + 'px')
-    .style('top', (event.clientY - 15) + 'px')
-    .style('display', 'block')
-    .style('opacity', 1);
+        .style('left', (event.clientX + 15) + 'px')
+        .style('top', (event.clientY - 15) + 'px')
+        .style('display', 'block')
+        .style('opacity', 1);
 }
 
 function hideTooltip() {
@@ -678,12 +678,12 @@ function updateSeeSaw() {
             const g = group.append('g')
                 .attr('class', 'food-item')
                 .style('cursor', 'pointer')
-                .on('mouseover', function(event) {
+                .on('mouseover', function (event) {
                     showTooltip(event, food);
                 })
-                .on('mousemove', function(event) {
+                .on('mousemove', function (event) {
                     viz11Tooltip.style('left', (event.clientX + 15) + 'px')
-                           .style('top', (event.clientY - 15) + 'px');
+                        .style('top', (event.clientY - 15) + 'px');
                 })
                 .on('mouseout', hideTooltip);
 
@@ -748,12 +748,12 @@ function updateRadial() {
         const planet = foodPlanets.append('g')
             .attr('transform', `translate(${radialCenterX},${radialCenterY})`)
             .style('cursor', 'pointer')
-            .on('mouseover', function(event) {
+            .on('mouseover', function (event) {
                 showTooltip(event, food);
             })
-            .on('mousemove', function(event) {
+            .on('mousemove', function (event) {
                 viz11Tooltip.style('left', (event.clientX + 15) + 'px')
-                       .style('top', (event.clientY - 15) + 'px');
+                    .style('top', (event.clientY - 15) + 'px');
             })
             .on('mouseout', hideTooltip);
 
@@ -838,40 +838,43 @@ document.querySelectorAll('.section').forEach(section => observer.observe(sectio
  * INITIALIZE TUTORIAL BUTTONS & UI
  ***************************************/
 window.addEventListener('DOMContentLoaded', () => {
-    // Create tutorial control buttons and enhanced message display
-    const tutorialControls = document.createElement('div');
-    tutorialControls.innerHTML = `
-        <!-- Tutorial Buttons -->
-        <div style="position: fixed; bottom: 30px; right: 30px; z-index: 10000; display: flex; gap: 10px;">
-            <button id="tutorial-btn" style="
-                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 50px;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-                transition: all 0.3s;
-            ">▶ Start Story Mode</button>
-            <button id="stop-tutorial-btn" style="
-                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 50px;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-                transition: all 0.3s;
-                display: none;
-            ">⬛ Stop Story</button>
-        </div>
-        
-        <!-- Enhanced Tutorial Message Box -->
-        <div style="
+    // STATIC BUTTON INJECTION
+    const container = document.getElementById('story-mode-container');
+
+    if (container) {
+        container.innerHTML = `
+            <div id="tutorial-controls-container" style="display: flex; gap: 10px; pointer-events: auto;">
+                <button id="tutorial-btn" style="
+                    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+                    transition: all 0.3s;
+                ">▶ Start Story Mode</button>
+                <button id="stop-tutorial-btn" style="
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+                    transition: all 0.3s;
+                    display: none;
+                ">⬛ Stop Story</button>
+            </div>
+        `;
+
+        // Enhanced Tutorial Message Box (Keep Fixed)
+        const msgContainer = document.createElement('div');
+        msgContainer.style.cssText = `
             position: fixed;
             top: 100px;
             left: 50%;
@@ -879,7 +882,10 @@ window.addEventListener('DOMContentLoaded', () => {
             z-index: 10000;
             opacity: 0;
             transition: all 0.3s;
-        " id="tutorial-message-container">
+            pointer-events: none;
+        `;
+        msgContainer.setAttribute('id', 'tutorial-message-container');
+        msgContainer.innerHTML = `
             <div style="
                 background: linear-gradient(135deg, rgba(15, 20, 25, 0.98) 0%, rgba(20, 25, 35, 0.98) 100%);
                 padding: 25px 40px;
@@ -888,6 +894,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4), 0 0 100px rgba(59, 130, 246, 0.2);
                 max-width: 700px;
                 backdrop-filter: blur(10px);
+                pointer-events: auto;
             ">
                 <div id="tutorial-title" style="
                     color: #3b82f6;
@@ -939,34 +946,36 @@ window.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-        </div>
-    `;
-    document.body.appendChild(tutorialControls);
+        `;
+        document.body.appendChild(msgContainer);
 
-    // Add hover effects
-    const tutorialBtn = document.getElementById('tutorial-btn');
-    const stopBtn = document.getElementById('stop-tutorial-btn');
-    
-    tutorialBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.05)';
-        this.style.boxShadow = '0 6px 20px rgba(59, 130, 246, 0.6)';
-    });
-    tutorialBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.4)';
-    });
-    
-    stopBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.05)';
-        this.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.6)';
-    });
-    stopBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.4)';
-    });
+        // Add hover effects and listeners
+        const tutorialBtn = document.getElementById('tutorial-btn');
+        const stopBtn = document.getElementById('stop-tutorial-btn');
 
-    // Attach click handlers
-    tutorialBtn.addEventListener('click', startTutorial);
-    stopBtn.addEventListener('click', stopTutorial);
+        if (tutorialBtn && stopBtn) {
+            tutorialBtn.addEventListener('mouseenter', function () {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 6px 20px rgba(59, 130, 246, 0.6)';
+            });
+            tutorialBtn.addEventListener('mouseleave', function () {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.4)';
+            });
+
+            stopBtn.addEventListener('mouseenter', function () {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.6)';
+            });
+            stopBtn.addEventListener('mouseleave', function () {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.4)';
+            });
+
+            // Attach click handlers
+            tutorialBtn.addEventListener('click', startTutorial);
+            stopBtn.addEventListener('click', stopTutorial);
+        }
+    }
 });
-                
+

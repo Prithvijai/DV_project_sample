@@ -258,7 +258,7 @@ function initialize([amazonBoundary, soyAmazonVsNon, soyMunicipal, fertilizerSer
     treemapYears = metricsData.years;
     treemapCurrentYear = treemapYears[treemapYears.length - 1];
     initializeMap(amazonBoundary);
-    
+
     // Use enhanced interactive chart functions
     drawAreaChartEnhanced(soyAmazonVsNon);
     drawFertilizerChartEnhanced(fertilizerSeries);
@@ -269,7 +269,7 @@ function initialize([amazonBoundary, soyAmazonVsNon, soyMunicipal, fertilizerSer
 function initializeMap(boundaryGeo) {
     map = new mapboxgl.Map({
         container: 'map-container',
-        style: 'mapbox://styles/mapbox/outdoors-v12', // Muted, vintage style like Kontinentalist
+        style: 'mapbox://styles/mapbox/navigation-night-v1', // Dark theme with colorful/neon accents
         center: chapters['world-view'].center,
         zoom: chapters['world-view'].zoom,
         pitch: chapters['world-view'].pitch,
@@ -279,8 +279,13 @@ function initializeMap(boundaryGeo) {
     });
 
     map.on('load', () => {
+        // Override water color to dark blue
+        if (map.getLayer('water')) {
+            map.setPaintProperty('water', 'fill-color', '#001f3f'); // Deep dark blue
+        }
+
         map.addSource('amazon-boundary', { type: 'geojson', data: boundaryGeo });
-        
+
         map.addLayer({
             'id': 'amazon-boundary-fill',
             'type': 'fill',
@@ -306,7 +311,7 @@ function initializeMap(boundaryGeo) {
         setLayerPaint('amazon-boundary-fill', 'fill-color-transition', { duration: 400, delay: 0 });
         setLayerPaint('amazon-boundary-line', 'line-opacity-transition', { duration: 400, delay: 0 });
         setLayerPaint('amazon-boundary-line', 'line-color-transition', { duration: 400, delay: 0 });
-        
+
         addStateChoropleth().then(() => {
             addStateExtrusion(); // Add the 3D layer
             addSoyHotspotMarkers();
@@ -407,7 +412,7 @@ async function addStateChoropleth() {
 
     map.on('mousemove', 'states-growth', handleMapHover);
     map.on('mouseleave', 'states-growth', () => tooltip.classed("show", false));
-    
+
     return Promise.resolve();
 }
 
@@ -424,23 +429,31 @@ function addStateExtrusion() {
                 50, '#fc8d59',
                 500, '#990000'
             ],
-            'fill-extrusion-height': [
-                'case',
-                ['boolean', ['feature-state', 'extrude'], false],
-                ['interpolate', ['linear'], ['get', 'growth_ratio'],
-                    1, 40000,
-                    10, 90000,
-                    50, 150000,
-                    200, 220000
-                ],
-                0
-            ],
+            'fill-extrusion-height': 0, // Start at 0 for animation
             'fill-extrusion-base': 0,
             'fill-extrusion-opacity': 0.65
         }
     });
+
+    // Set transition parameters
     setLayerPaint('states-extrusion', 'fill-extrusion-opacity-transition', { duration: 450, delay: 0 });
-    setLayerPaint('states-extrusion', 'fill-extrusion-height-transition', { duration: 450, delay: 0 });
+    setLayerPaint('states-extrusion', 'fill-extrusion-height-transition', { duration: 2000, delay: 500 }); // Slower growth
+
+    // Trigger animation to full height after mount
+    setTimeout(() => {
+        if (!map || !map.getLayer('states-extrusion')) return;
+        map.setPaintProperty('states-extrusion', 'fill-extrusion-height', [
+            'case',
+            ['boolean', ['feature-state', 'extrude'], false],
+            ['interpolate', ['linear'], ['get', 'growth_ratio'],
+                1, 40000,
+                10, 90000,
+                50, 150000,
+                200, 220000
+            ],
+            0
+        ]);
+    }, 100);
 }
 
 function addSoyHotspotMarkers() {
@@ -558,7 +571,7 @@ function setupScrollama() {
         .onStepEnter(response => {
             const chapterID = response.element.getAttribute('data-step');
             const chapter = chapters[chapterID];
-            
+
             document.querySelectorAll('.step').forEach(s => s.classList.remove('is-active'));
             response.element.classList.add('is-active');
             highlightStoryCharts(chapterID);

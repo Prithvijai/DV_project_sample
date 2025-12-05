@@ -61,7 +61,7 @@ function applyDynamicGradient(vegan, meat) {
   const score = vegan / total;          // 0 = all Meat, 1 = all Vegan
   const splitPoint = 10 + score * 80;   // 10% → 90%
 
-  const meatColor  = "#ee0202ff";
+  const meatColor = "#ee0202ff";
   const veganColor = "#00ff99";
 
   const gradient = `linear-gradient(45deg,

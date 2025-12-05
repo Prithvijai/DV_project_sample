@@ -1,0 +1,37 @@
+/* FORCE TRANSPARENT BACKGROUNDS - STRICT OVERRIDE */
+/* Exception: World Map (Viz 2) keeps its background */
+
+html {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+body,
+html,
+.myContainer,
+#introPage,
+#intro,
+.viz-container,
+.viz-section,
+.prithvi-viz-section,
+.intro-section,
+.transition-section,
+.conclusion-section,
+.story-panel,
+.prithvi-story-container,
+.prithvi-viz-card,
+.viz-card,
+.chart-card,
+section,
+div:not(#viz2):not(#viz2 *) {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Ensure World Map (Viz 2) keeps its background */
+#viz2,
+#viz2 * {
+    background: initial;
+    background-color: initial;
+}

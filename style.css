@@ -9,16 +9,19 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top, #0a0a0a 0%, #000 85%);
+    background: #000000;
+    /* Pure black */
     color: #fff;
     overflow-x: hidden;
 }
 
 h1 {
     text-align: center;
-    margin-top: 30px; /* From Global H1 */
-    color: #00ff99; /* From Global H1 */
-    font-family: 'Outfit', sans-serif;
+    margin-top: 30px;
+    /* From Global H1 */
+    color: #00ff99;
+    /* From Global H1 */
+    font-family: 'Playfair Display', serif;
     font-weight: 600;
     letter-spacing: 1px;
     text-shadow: 0 0 15px rgba(0, 255, 153, 0.45);
@@ -44,7 +47,7 @@ h1 {
 
 /* Base #introPage Styles (Only used in the first block) */
 #introPage {
-    background: radial-gradient(circle at top, #0a0a0a 0%, #000 90%);
+    background: #000000;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -66,7 +69,7 @@ h1 {
 #introPage line,
 #introPage path,
 #introPage circle {
-    stroke: rgba(255,255,255,0.85);
+    stroke: rgba(255, 255, 255, 0.85);
     stroke-width: 2.5;
     fill: none;
 }
@@ -79,7 +82,7 @@ h1 {
 #introPage .liquid {
     fill: #00ff99;
     opacity: 0.7;
-    filter: drop-shadow(0 0 15px rgba(0,255,120,0.4));
+    filter: drop-shadow(0 0 15px rgba(0, 255, 120, 0.4));
 }
 
 /* Figure Container (Using #introPage selector) */
@@ -89,7 +92,8 @@ h1 {
     justify-content: center;
     align-items: flex-start;
     gap: clamp(50px, 7vw, 120px);
-    margin: clamp(40px, 6vw, 100px) auto 30px;
+    margin: 10px auto 30px !important;
+    /* Pull figures closer to input box */
     padding: 0 clamp(30px, 4vw, 80px);
     max-width: 1200px;
     width: 100%;
@@ -116,67 +120,79 @@ h1 {
 
 /* Labels and Inputs (Using #introPage selector) */
 .figure {
-  position: relative; /* make the figure the positioning anchor */
+    position: relative;
+    /* make the figure the positioning anchor */
 }
 
 .figure .label {
-  position: absolute;
-  top: -10px;      /* vertical position above the SVG */
-  left: 100%;       /* center horizontally */
-  transform: translateX(-50%);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  pointer-events: none; /* ensure it doesn't block clicks */
+    position: absolute;
+    top: -10px;
+    /* vertical position above the SVG */
+    left: 100%;
+    /* center horizontally */
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    /* ensure it doesn't block clicks */
 }
+
 .vegan-figure .label {
-  color: #00ff99;
-  text-shadow: 0 0 15px rgba(0,255,150,0.6);
-  top: -70px;  /* move Meat title up/down */
-  left: 40px;  /* fine-tune horizontal offset */
+    color: #00ff99;
+    text-shadow: 0 0 15px rgba(0, 255, 150, 0.6);
+    top: -70px;
+    /* move Meat title up/down */
+    left: 40px;
+    /* fine-tune horizontal offset */
 }
 
 .meat-figure .label {
-  color: #ff4b4b;
-  top: -70px;  /* move Vegan title up/down */
-  left: -20px; /* fine-tune horizontal offset */
-  text-shadow: 0 0 15px rgba(255,75,75,0.6);
+    color: #ff4b4b;
+    top: -70px;
+    /* move Vegan title up/down */
+    left: -20px;
+    /* fine-tune horizontal offset */
+    text-shadow: 0 0 15px rgba(255, 75, 75, 0.6);
 }
 
 
 .figure {
-  position: relative; /* anchor for absolute children */
+    position: relative;
+    /* anchor for absolute children */
 }
 
 .figure .label {
-  position: absolute;
-  top: 40px; /* move above the figure */
-  left: 35%;
-  transform: translateX(-50%);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.4rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  text-align: center;
-  color: #fff;
-  pointer-events: none;
-  z-index: 10;
-  transition: all 0.3s ease;
+    position: absolute;
+    top: 40px;
+    /* move above the figure */
+    left: 35%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    pointer-events: none;
+    z-index: 10;
+    transition: all 0.3s ease;
 }
+
 .vegan-figure .label {
-  color: #00ff99;
-  text-shadow: 0 0 20px rgba(0,255,150,0.7);
+    color: #00ff99;
+    text-shadow: 0 0 20px rgba(0, 255, 150, 0.7);
 }
 
 .meat-figure .label {
-  color: #ff4b4b;
-  text-shadow: 0 0 20px rgba(255,75,75,0.7);
+    color: #ff4b4b;
+    text-shadow: 0 0 20px rgba(255, 75, 75, 0.7);
 }
 
 
@@ -185,11 +201,11 @@ h1 {
     margin-top: 20px;
     accent-color: #00ff99;
     cursor: pointer;
-    filter: drop-shadow(0 0 10px rgba(0,255,120,0.25));
+    filter: drop-shadow(0 0 10px rgba(0, 255, 120, 0.25));
 }
 
 #introPage input[type="range"]:hover {
-    filter: drop-shadow(0 0 20px rgba(0,255,120,0.5));
+    filter: drop-shadow(0 0 20px rgba(0, 255, 120, 0.5));
     transform: scale(1.02);
 }
 
@@ -204,13 +220,14 @@ h1 {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0,255,120,0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 120, 0.4);
     transition: 0.3s ease;
 }
+
 #introPage button:hover {
     background: #00cc77;
     transform: translateY(-3px);
-    box-shadow: 0 0 25px rgba(0,255,120,0.6);
+    box-shadow: 0 0 25px rgba(0, 255, 120, 0.6);
 }
 
 /* Life expectancy styling */
@@ -220,17 +237,18 @@ h1 {
     font-weight: 700;
     color: #00ff99;
     bottom: 100px;
-    left: 30%; 
+    left: 30%;
     text-shadow: 0 0 12px rgba(0, 255, 153, 0.4);
     opacity: 0.9;
-    transform:  translateX(-50%);
+    transform: translateX(-50%);
     transition: all 0.6s ease;
     display: block;
     text-align: center;
     margin: 0;
-    margin-top: 0px; /* increase spacing from viz */
+    margin-top: 0px;
+    /* increase spacing from viz */
     position: relative;
-    top: calc(100% - 1000px); 
+    top: calc(100% - 1000px);
 }
 
 .figure:nth-child(2) .life-expectancy {
@@ -239,27 +257,45 @@ h1 {
     left: 200px;
     text-shadow: 0 0 12px rgba(255, 75, 75, 0.4);
 }
+
 @keyframes textFlicker {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.3; }
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.3;
+    }
 }
 
 .life-expectancy.animate {
-  animation: textFlicker 1s linear infinite;
+    animation: textFlicker 1s linear infinite;
 }
+
 .life-expectancy.animate {
     opacity: 1;
     text-shadow: 0 0 20px currentColor;
 }
+
 .life-expectancy {
-  visibility: hidden;   /* hidden until first calculate */
-  opacity: 0;
-  transition: opacity 0.5s ease;
+    visibility: hidden;
+    /* hidden until first calculate */
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 .life-expectancy.visible {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 /* -----------------------------------
@@ -268,32 +304,44 @@ h1 {
 
 /* The last declared background and layout properties for #intro are used */
 #intro {
-    background: #000000; /* From last #intro */
+    background: transparent !important;
+    /* From last #intro */
     color: #fff;
     min-height: 100vh;
     display: flex;
-    justify-content: flex-start; /* From last #intro */
+    justify-content: flex-start;
+    /* From last #intro */
     align-items: center;
     text-align: center;
-    padding: 60px 8% 40px; /* From last #intro */
+    padding: 60px 8% 40px;
+    /* From last #intro */
     flex-direction: column;
 }
 
 #intro h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: 2rem; /* From last #intro h1 */
+    font-size: 2rem;
+    /* From last #intro h1 */
     font-weight: 600;
-    color: #f5e9c8; /* From last #intro h1 */
-    margin-bottom: 15px; /* From last #intro h1 */
-    text-shadow: none; /* Removed redundant text-shadow from earlier H1 */
+    color: #f5e9c8;
+    /* From last #intro h1 */
+    margin-bottom: 15px;
+    /* From last #intro h1 */
+    text-shadow: none;
+    /* Removed redundant text-shadow from earlier H1 */
 }
 
 #intro p {
-    max-width: 900px; /* From last #intro p */
-    color: #f0dede; /* From last #intro p */
-    font-size: 1.05rem; /* From last #intro p */
-    line-height: 1.6; /* Kept from previous general #intro p */
-    margin-bottom: 30px; /* From last #intro p */
+    max-width: 900px;
+    /* From last #intro p */
+    color: #f0dede;
+    /* From last #intro p */
+    font-size: 1.05rem;
+    /* From last #intro p */
+    line-height: 1.6;
+    /* Kept from previous general #intro p */
+    margin-bottom: 30px;
+    /* From last #intro p */
 }
 
 /* --- Human Figure Comparison (Spreading to Corners) --- */
@@ -314,11 +362,13 @@ h1 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    position: relative; /* Kept from previous block */
+    position: relative;
+    /* Kept from previous block */
 }
 
 #intro .figure.meat {
-  transform: translateX(420px); /* Moves only the red figure to the right */
+    transform: translateX(420px);
+    /* Moves only the red figure to the right */
 }
 
 
@@ -327,11 +377,16 @@ h1 {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 10px;
-    text-shadow: 0 0 8px rgba(255,255,255,0.2);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
-#intro .figure.vegan h2 { color: #00ff88; }
-#intro .figure.meat h2 { color: #ff4b4b; }
+#intro .figure.vegan h2 {
+    color: #00ff88;
+}
+
+#intro .figure.meat h2 {
+    color: #ff4b4b;
+}
 
 /* SVG Container */
 #intro .body-svg {
@@ -350,19 +405,65 @@ h1 {
     white-space: nowrap;
 }
 
-#intro .labels.left .muscle { left: -140px; top: 40px; }
-#intro .labels.left .chol { right: -150px; top: 60px; }
-#intro .labels.left .risk { right: -150px; top: 110px; }
-#intro .labels.left .sugar { right: -150px; top: 160px; }
-#intro .labels.left .diabetes { left: -140px; top: 200px; }
-#intro .labels.left .life { bottom: -20px; left: 0; }
+#intro .labels.left .muscle {
+    left: -140px;
+    top: 40px;
+}
 
-#intro .labels.right .muscle { right: -140px; top: 40px; }
-#intro .labels.right .chol { left: -150px; top: 60px; }
-#intro .labels.right .risk { left: -150px; top: 110px; }
-#intro .labels.right .sugar { left: -150px; top: 160px; }
-#intro .labels.right .diabetes { right: -140px; top: 200px; }
-#intro .labels.right .life { bottom: -20px; left: 0; }
+#intro .labels.left .chol {
+    right: -150px;
+    top: 60px;
+}
+
+#intro .labels.left .risk {
+    right: -150px;
+    top: 110px;
+}
+
+#intro .labels.left .sugar {
+    right: -150px;
+    top: 160px;
+}
+
+#intro .labels.left .diabetes {
+    left: -140px;
+    top: 200px;
+}
+
+#intro .labels.left .life {
+    bottom: -20px;
+    left: 0;
+}
+
+#intro .labels.right .muscle {
+    right: -140px;
+    top: 40px;
+}
+
+#intro .labels.right .chol {
+    left: -150px;
+    top: 60px;
+}
+
+#intro .labels.right .risk {
+    left: -150px;
+    top: 110px;
+}
+
+#intro .labels.right .sugar {
+    left: -150px;
+    top: 160px;
+}
+
+#intro .labels.right .diabetes {
+    right: -140px;
+    top: 200px;
+}
+
+#intro .labels.right .life {
+    bottom: -20px;
+    left: 0;
+}
 
 /* Keep intro text and input centered */
 #intro .intro-header,
@@ -377,15 +478,19 @@ h1 {
 .human path,
 .human circle {
     fill: none;
-    stroke: rgba(255,255,255,0.8);
+    stroke: rgba(255, 255, 255, 0.8);
     stroke-width: 2px;
 }
+
 .human rect.liquid {
     stroke: none;
 }
+
 .liquid {
-    opacity: 0.8; /* Last opacity value provided */
-    transition: y 1s ease, height 1s ease; /* Last transition properties provided */
+    opacity: 0.8;
+    /* Last opacity value provided */
+    transition: y 1s ease, height 1s ease;
+    /* Last transition properties provided */
 }
 
 .liquid[style*="height: 0"],
@@ -393,7 +498,8 @@ h1 {
     opacity: 0;
 }
 
-.human, .outline {
+.human,
+.outline {
     fill: none;
     stroke: white;
     stroke-width: 3px;
@@ -423,7 +529,8 @@ h1 {
     top: 0 !important;
     left: 0 !important;
     transform: none !important;
-    margin: 20px auto 10px !important;
+    margin: 70px auto 5px !important;
+    /* Reduced bottom margin to bring close to human */
     display: flex;
     gap: 10px;
     align-items: center;
@@ -479,10 +586,10 @@ h1 {
     transform: translateX(-50%);
     color: #fff;
     text-align: center;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     padding: 12px 16px;
-    box-shadow: 0 0 15px rgba(0,255,120,0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 120, 0.2);
     min-width: 360px;
     max-width: 600px;
     font-family: 'Manrope', sans-serif;
@@ -496,10 +603,13 @@ h1 {
     margin-top: 8px;
     font-size: 0.9rem;
 }
-#resultsBox th, #resultsBox td {
+
+#resultsBox th,
+#resultsBox td {
     padding: 4px 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 #resultsBox th {
     color: #00ff99;
     font-weight: 600;
@@ -543,7 +653,7 @@ h1 {
 #comparisonResults td.leftVal {
     color: #44ffb3;
     text-align: right;
-    text-shadow: 0 0 8px rgba(68,255,179,0.25);
+    text-shadow: 0 0 8px rgba(68, 255, 179, 0.25);
 }
 
 /* CENTER (Metric) */
@@ -559,7 +669,7 @@ h1 {
 #comparisonResults td.rightVal {
     color: #ff6a6a;
     text-align: left;
-    text-shadow: 0 0 8px rgba(255,106,106,0.25);
+    text-shadow: 0 0 8px rgba(255, 106, 106, 0.25);
 }
 
 /* LIFE EXPECTANCY HIGHLIGHT */
@@ -567,29 +677,38 @@ h1 {
     color: #ffd166;
     font-weight: 400;
     font-size: 1.6rem;
-    text-shadow: 0 0 15px rgba(255,209,102,0.4);
+    text-shadow: 0 0 15px rgba(255, 209, 102, 0.4);
 }
 
 /* Hover effects */
 #comparisonResults td.metric:hover {
     color: #80d7ff;
-    text-shadow: 0 0 20px rgba(128,215,255,0.5);
+    text-shadow: 0 0 20px rgba(128, 215, 255, 0.5);
 }
 
 #comparisonResults td.leftVal:hover {
     color: #6affc7;
-    text-shadow: 0 0 20px rgba(106,255,199,0.5);
+    text-shadow: 0 0 20px rgba(106, 255, 199, 0.5);
 }
 
 #comparisonResults td.rightVal:hover {
     color: #ff8080;
-    text-shadow: 0 0 20px rgba(255,128,128,0.5);
+    text-shadow: 0 0 20px rgba(255, 128, 128, 0.5);
 }
 
 /* Fade + Blur Entry */
 @keyframes blurFadeIn {
-    from { opacity: 0; filter: blur(6px); transform: translate(-50%, -46%); }
-    to { opacity: 1; filter: blur(0); transform: translate(-50%, -52%); }
+    from {
+        opacity: 0;
+        filter: blur(6px);
+        transform: translate(-50%, -46%);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -52%);
+    }
 }
 
 /* Gentle slide for each row */
@@ -598,57 +717,77 @@ h1 {
 }
 
 @keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- Scroll Button (Explore Button) --- */
 /* The final button styles are a mix of #introPage button and the generic #exploreBtn */
 #exploreBtn {
-    margin-top: 40px; /* From last generic #exploreBtn */
-    background: #fff; /* From last generic #exploreBtn */
-    color: #000; /* From last generic #exploreBtn */
-    padding: 12px 22px; /* From last generic #exploreBtn */
-    border: none; /* Inherited from other buttons */
-    border-radius: 8px; /* From other buttons */
-    font-weight: 600; /* From other buttons */
+    margin-top: 40px;
+    /* From last generic #exploreBtn */
+    background: #fff;
+    /* From last generic #exploreBtn */
+    color: #000;
+    /* From last generic #exploreBtn */
+    padding: 12px 22px;
+    /* From last generic #exploreBtn */
+    border: none;
+    /* Inherited from other buttons */
+    border-radius: 8px;
+    /* From other buttons */
+    font-weight: 600;
+    /* From other buttons */
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 1.2rem; /* From early #exploreBtn */
-    box-shadow: 0 0 20px rgba(0,255,120,0.4); /* From earlier #exploreBtn */
+    font-size: 1.2rem;
+    /* From early #exploreBtn */
+    box-shadow: 0 0 20px rgba(0, 255, 120, 0.4);
+    /* From earlier #exploreBtn */
 }
 
 #exploreBtn:hover {
-    background: #00ff99; /* From last generic #exploreBtn:hover */
+    background: #00ff99;
+    /* From last generic #exploreBtn:hover */
     transform: translateY(-3px);
-    box-shadow: 0 0 30px rgba(0,255,120,0.6); /* From earlier #exploreBtn:hover */
+    box-shadow: 0 0 30px rgba(0, 255, 120, 0.6);
+    /* From earlier #exploreBtn:hover */
 }
 
 /* ------------------------
  * PAGE 2 TRANSITION
  * ------------------------- */
 #comparison {
-  background: #000;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-  padding: 100px 0;
-  min-height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    padding: 100px 0;
+    min-height: 100vh;
 }
+
 #introPage {
-  background: #000;
+    background: #000;
 }
 
 
 #comparison::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center top, rgba(0,255,153,0.05), transparent 70%);
-  z-index: 0;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center top, rgba(0, 255, 153, 0.05), transparent 70%);
+    z-index: 0;
 }
-#comparison > * {
-  position: relative;
-  z-index: 1;
+
+#comparison>* {
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -735,7 +874,7 @@ select {
     box-shadow: 0 4px 12px rgba(0, 255, 120, 0.08);
     backdrop-filter: blur(8px);
     transition: all 0.3s ease;
-    background-image: linear-gradient(135deg, rgba(0,255,150,0.05) 0%, rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(135deg, rgba(0, 255, 150, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 select:hover {
@@ -770,30 +909,30 @@ option {
 .card {
     width: 220px;
     min-height: 80px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
     text-align: center;
     padding: 15px 20px;
     font-size: 1.05rem;
     transition: 0.3s ease;
-    box-shadow: 0 0 15px rgba(255,255,255,0.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
 .card.red {
-    border-color: rgba(255,0,0,0.4);
-    box-shadow: 0 0 20px rgba(255,0,0,0.25);
+    border-color: rgba(255, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.25);
 }
 
 .card.green {
-    border-color: rgba(0,255,120,0.4);
-    box-shadow: 0 0 20px rgba(0,255,120,0.25);
+    border-color: rgba(0, 255, 120, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 120, 0.25);
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0 25px rgba(255,255,255,0.2);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
 /* -----------------------------------
@@ -905,11 +1044,13 @@ option {
 
 /* Headings inside info panels */
 .food-header {
-    font-size: 1.3em; /* Last declared size */
+    font-size: 1.3em;
+    /* Last declared size */
     font-weight: 600;
     margin-bottom: 8px;
     text-align: center;
-    color: #00ff88; /* From earlier food-header (green default) */
+    color: #00ff88;
+    /* From earlier food-header (green default) */
     transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
@@ -933,7 +1074,7 @@ option {
     justify-content: space-between;
     padding: 4px 0;
     font-size: 0.85em;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .nutri-list .label {
@@ -950,8 +1091,15 @@ option {
  * ANIMATIONS
  * ----------------------------------- */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive stacking for small screens */
@@ -961,144 +1109,187 @@ option {
         align-items: center;
         gap: 25px;
     }
+
     .info-panel {
         width: 85%;
         max-width: 400px;
     }
 }
+
 .meat-figure {
-  position: relative;
-  left: 150px; /* move further right — increase if needed */
-  z-index: 2;
+    position: relative;
+    left: 150px;
+    /* move further right — increase if needed */
+    z-index: 2;
 }
+
 @keyframes pulseAura {
-  0%   { opacity: 0; transform: translate(-55%, -50%) scale(0.8); filter: blur(180px); }
-  40%  { opacity: 1; transform: translate(-55%, -50%) scale(1.05); filter: blur(130px); }
-  100% { opacity: 1; transform: translate(-55%, -50%) scale(1); filter: blur(150px); }
+    0% {
+        opacity: 0;
+        transform: translate(-55%, -50%) scale(0.8);
+        filter: blur(180px);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translate(-55%, -50%) scale(1.05);
+        filter: blur(130px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-55%, -50%) scale(1);
+        filter: blur(150px);
+    }
 }
 
 /* Default visible aura (no animation until triggered) */
 .meat-figure::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-55%, -50%);
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 50, 50, 0.7) 0%, rgba(255, 0, 0, 0.2) 50%, transparent 80%);
-  filter: blur(150px);
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 50, 50, 0.7) 0%, rgba(255, 0, 0, 0.2) 50%, transparent 80%);
+    filter: blur(150px);
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
 }
 
 /* Animated state when Calculate is pressed */
 .meat-figure.animate-aura::after {
-  animation: pulseAura 1.2s ease-out forwards;
+    animation: pulseAura 1.2s ease-out forwards;
 }
+
 @keyframes pulseAuraGreen {
-  0%   { opacity: 0; transform: translate(-45%, -50%) scale(0.8); filter: blur(180px); }
-  40%  { opacity: 1; transform: translate(-45%, -50%) scale(1.05); filter: blur(130px); }
-  100% { opacity: 1; transform: translate(-45%, -50%) scale(1); filter: blur(150px); }
+    0% {
+        opacity: 0;
+        transform: translate(-45%, -50%) scale(0.8);
+        filter: blur(180px);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translate(-45%, -50%) scale(1.05);
+        filter: blur(130px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-45%, -50%) scale(1);
+        filter: blur(150px);
+    }
 }
 
 /* Start invisible */
 .vegan-figure::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-80%, -80%);
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-              rgba(0, 255, 153, 0.6) 0%,
-              rgba(0, 180, 120, 0.2) 50%,
-              transparent 80%);
-  filter: blur(150px);
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-80%, -80%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(0, 255, 153, 0.6) 0%,
+            rgba(0, 180, 120, 0.2) 50%,
+            transparent 80%);
+    filter: blur(150px);
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
 }
 
 /* Make visible after first Calculate */
 .vegan-figure.aura-visible::after {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* Animate each Calculate click */
 .vegan-figure.animate-aura::after {
-  animation: pulseAuraGreen 1.2s ease-out forwards;
+    animation: pulseAuraGreen 1.2s ease-out forwards;
 }
+
 .vegan-figure {
-  position: relative; /* Ensure aura positions relative to this figure */
+    position: relative;
+    /* Ensure aura positions relative to this figure */
 }
 
 .vegan-figure::after {
-  left: 50%;
-  transform: translate(-50%, -50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Fine-tuning option if it still looks off */
 .vegan-figure.adjust-aura::after {
-  left: 30%; /* shift a bit left (try 48–49 if needed) */
+    left: 30%;
+    /* shift a bit left (try 48–49 if needed) */
 }
+
 /* === Digital Font for Results Table & Life Expectancy === */
 #comparisonResults,
 #comparisonResults table,
 #comparisonResults td,
 .life-expectancy {
-  font-family: 'Orbitron', monospace !important;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 0 0 15px currentColor, 0 0 30px rgba(0,255,150,0.4);
+    font-family: 'Orbitron', monospace !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px currentColor, 0 0 30px rgba(0, 255, 150, 0.4);
 }
+
 /* Fix: Make "Blood Sugar %" blue instead of yellow */
 #comparisonResults tr:nth-child(6) td.metric {
-  color: #ffffff !important;
-  text-shadow: 0 0 12px rgb(255, 255, 255) !important;
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgb(255, 255, 255) !important;
 }
+
 .liquid {
-  opacity: 0.9;
-  filter: drop-shadow(0 0 20px rgba(0,255,150,0.3));
+    opacity: 0.9;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 150, 0.3));
 }
+
 #introPage .liquid,
 #waveLeft,
 #waveRight {
-  fill: currentColor !important;
-  stroke: none !important;
+    fill: currentColor !important;
+    stroke: none !important;
 }
+
 /* default state */
 #thankyouPage {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.6s ease-in-out;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.6s ease-in-out;
 }
 
 .thankyou-text {
-  font-size: 130px;
-  font-weight: 900;
-  letter-spacing: 6px;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: none !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
+    font-size: 130px;
+    font-weight: 900;
+    letter-spacing: 6px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
 }
 
 .qr-container img {
-  width: 230px;
-  height: 230px;
-  margin-top: 25px;
+    width: 230px;
+    height: 230px;
+    margin-top: 25px;
 }
+
 /* ============================================================
    FIX 1: CENTER BOTH HUMAN FIGURES PERFECTLY
    ============================================================ */
@@ -1107,11 +1298,10 @@ option {
    ========================================== */
 
 /* 1. Reset the stupid margin that pushed input down */
+/* 1. Reset the margin - Consolidating with main definition */
 .input-container {
-    margin: 0 !important;
-    margin-top: -40px !important;   /* Move box UP */
-    position: relative !important;
-    z-index: 200 !important;
+    /* Rules consolidated at line 528 */
+    display: flex !important;
 }
 
 /* 2. ResultsBox absolute positioning shouldn't push things */
@@ -1146,9 +1336,11 @@ option {
     align-items: center !important;
     justify-content: flex-start !important;
 }
+
 /* Align Calculate button perfectly with input */
 .input-container button {
-    height: 45px !important;      /* match input height */
+    height: 45px !important;
+    /* match input height */
     display: flex !important;
     margin-top: 1px !important;
     align-items: center !important;
@@ -1240,7 +1432,7 @@ option {
 
 /* Viz 3 Container Override */
 #viz3.viz-container {
-    background: #000 !important;
+    background: transparent !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 1rem 2rem !important;
@@ -1254,7 +1446,7 @@ option {
 }
 
 /* Viz 3 Tooltip Override */
-#viz3 + #tooltip,
+#viz3+#tooltip,
 #tooltip {
     background: rgba(20, 20, 20, 0.98) !important;
     border: 1px solid rgba(239, 83, 80, 0.4) !important;
@@ -1333,7 +1525,7 @@ option {
     font-weight: 600;
     border: 2px solid rgba(0, 255, 120, 0.3);
     border-radius: 20px;
-    background: transparent;
+    background: #000000;
     color: #9AD1B3;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1365,7 +1557,7 @@ option {
 #substitution-chart svg {
     width: 100%;
     height: auto;
-    background: transparent;
+    background: #000000;
 }
 
 /* Node Styles */
@@ -1512,7 +1704,7 @@ option {
 }
 
 .close-btn {
-    background: transparent;
+    background: #000000;
     border: none;
     color: #78909C;
     font-size: 1.5rem;
@@ -1553,13 +1745,97 @@ option {
     .viz-panel {
         min-width: 100%;
     }
-    
+
     #split-viz-container {
         flex-direction: column;
     }
-    
+
     .recipe-card {
         max-width: 100%;
         padding: 1rem;
     }
+}
+
+/* =========================================
+   VIZ 13: THANK YOU PAGE STYLES
+   ========================================= */
+#thankyouPage {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000000;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.thankyou-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+}
+
+.thankyou-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    color: #fff;
+    /* Fallback */
+    /* Gradient applied by JS */
+}
+
+.thankyou-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: #e2e8f0;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.qr-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(0, 255, 153, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qr-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 60px rgba(0, 255, 153, 0.2);
+    border-color: rgba(0, 255, 153, 0.3);
+}
+
+#qrCode {
+    width: 220px;
+    height: 220px;
+    display: block;
+    background: white;
+    /* Ensure contrast for the QR code */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.qr-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
 }
