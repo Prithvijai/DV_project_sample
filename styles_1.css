@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  background: transparent !important;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND LAYER */
+#bg-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -2;
+  transition: opacity 1s ease-out;
+}
+
+/* BURGER CENTER */
+#assembled-burger {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  filter: brightness(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 420px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Base for all layers */
+#assembled-burger img {
+  position: absolute;
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity .5s ease-out,
+    transform .6s ease-out;
+}
+
+/* ===========================================
+     LAYER CONTROLS (UNCHANGED BY REQUEST)
+   =========================================== */
+
+/* Bottom Bun */
+#layer-bottom {
+  top: 75px;
+  left: -21px;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Patty */
+#layer-patty {
+  top: -195px;
+  left: 0px;
+  width: 90%;
+  z-index: 2;
+}
+
+/* Cheese */
+#layer-cheese {
+  top: -30px;
+  left: 30px;
+  width: 88%;
+  z-index: 3;
+}
+
+/* Lettuce */
+#layer-lettuce {
+  top: -306px;
+  left: 0px;
+  width: 100%;
+  z-index: 4;
+}
+
+/* Top Bun */
+#layer-top {
+  top: -705px;
+  left: 0px;
+  width: 92%;
+  z-index: 5;
+}
+
+/* Scroll area */
+.scroll-zone {
+  height: 18000px !important;
+}
+
+
+/* Image background overlay */
+#image-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  /* FULLY VISIBLE (replaces white-bg) */
+  pointer-events: none;
+  z-index: -1;
+  /* MOVED TO BACK */
+  transition: opacity .4s ease-out;
+}
+
+#bg-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: -3;
+  /* BEHIND image-bg SO ZOOM WORKS SAME AS BEFORE */
+  transition: opacity 1s ease-out;
+}
