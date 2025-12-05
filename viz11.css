@@ -1,0 +1,419 @@
+/* ===================================== */
+/* VIZ 11: THE PRICE OF CHOICES */
+/* Scoped CSS - Full Isolation */
+/* ===================================== */
+
+#viz11 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f1419;
+    color: #e8eaed;
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block;
+    position: relative;
+}
+
+#viz11 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Scoped tooltip for viz11 - fully isolated from other viz tooltips */
+.viz11-tooltip {
+    position: fixed !important;
+    padding: 12px 16px !important;
+    background: rgba(15, 20, 25, 0.95) !important;
+    color: #e8eaed !important;
+    border-radius: 8px !important;
+    pointer-events: none !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    z-index: 9999 !important;
+    opacity: 0;
+    transition: opacity 0.2s ease !important;
+    white-space: nowrap !important;
+    max-width: 350px !important;
+}
+
+#viz11 .section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(100px) scale(0.95);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+#viz11 .section.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#viz11 .hero {
+    background: linear-gradient(135deg, #1a2332 0%, #1e293b 100%);
+    text-align: center;
+}
+
+#viz11 h1 {
+    font-size: 5em;
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 0;
+    animation: viz11-fadeInUp 1.5s ease;
+    text-shadow: none;
+    color: transparent;
+    text-align: center;
+    letter-spacing: normal;
+}
+
+#viz11 .subtitle {
+    font-size: 1.5em;
+    color: #9ca3af;
+    max-width: 800px;
+    line-height: 1.6;
+    animation: viz11-fadeInUp 1.8s ease;
+}
+
+@keyframes viz11-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#viz11 .content-wrapper {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+#viz11 h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    margin-top: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    text-shadow: none;
+    color: transparent;
+}
+
+#viz11 .section.active h2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#viz11 .narrative-text {
+    font-size: 1.3em;
+    line-height: 1.8;
+    color: #d1d5db;
+    max-width: 900px;
+    margin: 0 auto 50px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+#viz11 .section.active .narrative-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#viz11 #viz-container {
+    width: 100%;
+    height: 700px;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+}
+
+#viz11 .section.active #viz-container {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#viz11 svg {
+    display: block;
+    margin: 0 auto;
+}
+
+#viz11 .control-panel {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    margin-top: 40px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+}
+
+#viz11 .control-panel h3 {
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+#viz11 .section.active .control-panel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#viz11 .slider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+#viz11 .slider-item {
+    background: rgba(30, 41, 59, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 3px solid;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#viz11 .slider-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15);
+}
+
+#viz11 .slider-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+#viz11 .slider-value {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+#viz11 input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(71, 85, 105, 0.3);
+}
+
+#viz11 input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#viz11 input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+}
+
+#viz11 input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+#viz11 .insight-box {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+    border: 2px solid rgba(59, 130, 246, 0.25);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+}
+
+#viz11 .section.active .insight-box {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#viz11 .insight-box h3 {
+    color: #3b82f6;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+#viz11 .insight-box p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #d1d5db;
+    margin: 0;
+}
+
+#viz11 .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: viz11-bounce 2s infinite;
+}
+
+@keyframes viz11-bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-20px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+#viz11 .arrow-down {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #3b82f6;
+}
+
+#viz11 .particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#viz11 .section > * {
+    position: relative;
+    z-index: 1;
+}
+
+#viz11 .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.3s ease;
+}
+
+#viz11 .stat-highlight {
+    font-size: 3em;
+    font-weight: bold;
+    color: #3b82f6;
+    display: block;
+    margin: 20px 0;
+}
+
+#viz11 .balance-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    gap: 30px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+}
+
+#viz11 .section.active .balance-stats {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#viz11 .stat-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    flex: 1;
+    min-width: 250px;
+    border: 2px solid;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#viz11 .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+#viz11 .stat-card.vegan {
+    border-color: #10b981;
+}
+
+#viz11 .stat-card.non-vegan {
+    border-color: #ef4444;
+}
+
+#viz11 .stat-number {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#viz11 .stat-label {
+    font-size: 1.2em;
+    color: #9ca3af;
+}
+
+@keyframes viz11-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px currentColor);
+    }
+    50% {
+        filter: drop-shadow(0 0 20px currentColor);
+    }
+}
+
+#viz11 .glow-effect {
+    animation: viz11-glow 2s ease-in-out infinite;
+}

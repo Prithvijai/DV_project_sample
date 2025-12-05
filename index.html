@@ -19,10 +19,14 @@
     <script src="https://unpkg.com/scrollama"></script>
 
     <!-- Group CSS -->
-    <link rel="stylesheet" href="pjramesh.css">
+    <!-- pjramesh.css not present in workspace; comment out to avoid MIME/404 errors. Add back if available. -->
+    <!-- <link rel="stylesheet" href="pjramesh.css"> -->
 
     <!-- Your CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Viz 11 CSS -->
+    <link rel="stylesheet" href="viz11.css">
 
     <!-- ALIGNMENT FIX ONLY -->
     <style>
@@ -607,13 +611,140 @@
     <hr>
 
     <!-- Visualization 11 -->
-    <div class="row justify-content-center mb-4">
-        <div class="col-12">
-            <h4 class="text-center">Visualization 11</h4>
-            <div id="viz11" class="viz-container"></div>
-        </div>
+    <div id="viz11" class="viz-container">
+        <div class="progress-bar" id="progress"></div>
+
+        <section class="section hero active">
+            <canvas class="particles" id="particles"></canvas>
+            <h1>The Price of Choices</h1>
+            <p class="subtitle">
+                What if every meal you eat is an investment? 
+                Not just in your health, but in the planet's future.
+                Let's reveal the hidden returns of your daily food decisions.
+            </p>
+            <div class="scroll-indicator">
+                <div class="arrow-down">↓</div>
+            </div>
+        </section>
+
+        <section class="section" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);">
+            <div class="content-wrapper">
+                <h2>⚖️ The Balance of Choice</h2>
+                <p class="narrative-text">
+                    Your diet is a delicate balance. Watch as the see-saw tips with every decision you make.
+                    <br><br>
+                    <strong>Which side will you choose?</strong>
+                </p>
+                <div id="viz-container">
+                    <svg id="seesaw-viz" width="100%" height="700"></svg>
+                </div>
+                
+                <div class="control-panel">
+                    <h3 style="text-align: center; color: #667eea; margin-bottom: 30px; font-size: 1.8em;">
+                        Adjust Your Weekly Food Budget
+                    </h3>
+                    <div class="slider-grid" id="sliders"></div>
+                </div>
+
+                <div class="balance-stats">
+                    <div class="stat-card vegan">
+                        <div class="stat-label">🌱 Plant-Based</div>
+                        <div class="stat-number" style="color: #2ecc71;">$<span id="vegan-total">0</span></div>
+                        <div class="stat-label">Weekly Investment</div>
+                    </div>
+                    <div class="stat-card non-vegan">
+                        <div class="stat-label">🥩 Animal-Based</div>
+                        <div class="stat-number" style="color: #e74c3c;">$<span id="non-vegan-total">0</span></div>
+                        <div class="stat-label">Weekly Cost</div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h3>The Tipping Point</h3>
+                    <p id="balance-insight">
+                        Move the sliders and watch the balance shift. 
+                        The heavier side represents not just cost, but long-term burden.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);">
+            <div class="content-wrapper">
+                <h2>🌌 The Cosmic Web of Impact</h2>
+                <p class="narrative-text">
+                    Every food choice creates ripples across dimensions of health, environment, and economy.
+                    <br><br>
+                    <span class="stat-highlight" style="font-size: 1.5em;">
+                        Watch as your decisions weave through time and space.
+                    </span>
+                </p>
+                <div id="viz-container">
+                    <svg id="radial-viz" width="100%" height="800"></svg>
+                </div>
+
+                <div class="insight-box">
+                    <h3>🌟 The Hidden Universe</h3>
+                    <p>
+                        Each food orbits based on its true value. Distance from center = Combined ROI.
+                        <br>
+                        <span class="stat-highlight" style="font-size: 1.5em;">
+                            Plant-based foods orbit in the outer rings of prosperity.
+                        </span>
+                        <br>
+                        Animal products sink toward the center of long-term cost.
+                    </p>
+                </div>
+
+                <div class="balance-stats">
+                    <div class="stat-card" style="border-color: #2ecc71;">
+                        <div class="stat-label">💚 Health ROI</div>
+                        <div class="stat-number" style="color: #2ecc71;">+<span id="health-roi">0</span></div>
+                        <div class="stat-label">Long-term Benefit</div>
+                    </div>
+                    <div class="stat-card" style="border-color: #16a085;">
+                        <div class="stat-label">🌍 Environmental ROI</div>
+                        <div class="stat-number" style="color: #16a085;">+<span id="env-roi">0</span></div>
+                        <div class="stat-label">Planet Impact</div>
+                    </div>
+                    <div class="stat-card" style="border-color: #667eea;">
+                        <div class="stat-label">💰 Total ROI</div>
+                        <div class="stat-number" style="color: #667eea;">+<span id="total-roi">0</span></div>
+                        <div class="stat-label">Combined Return</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);">
+            <div class="content-wrapper" style="text-align: center;">
+                <h2>🌱 Your Choice Matters</h2>
+                <p class="narrative-text" style="font-size: 1.5em; max-width: 900px;">
+                    Every meal is an investment decision.
+                    <br><br>
+                    <span class="stat-highlight" style="font-size: 1.3em;">The question isn't "Can I afford to eat plant-based?"</span>
+                    <br>
+                    <span style="font-size: 1.4em; color: #2ecc71;">It's "Can I afford not to?"</span>
+                </p>
+                <div class="insight-box" style="max-width: 700px; margin: 60px auto;">
+                    <h3>📊 The Data Speaks</h3>
+                    <p style="font-size: 1.1em;">
+                        ✓ Plant-based diets save $750+ annually in groceries<br>
+                        ✓ Reduce lifetime healthcare costs by $50,000+<br>
+                        ✓ Cut personal carbon footprint by 73%<br>
+                        ✓ Save 1,100 gallons of water per day
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Viz11 tooltip (scoped inside viz11 container) -->
+        <div class="viz11-tooltip"></div>
     </div>
     <hr>
+
+    <!-- Shared tooltip for viz5/viz6 (MUST be outside viz11 to avoid CSS interference) -->
+    <div class="tooltip" id="tooltip"></div>
 
     <!-- Visualization 12 -->
     <div class="row justify-content-center mb-4">
@@ -650,11 +781,12 @@
 <script src="viz5.js"></script>
 <script src="viz6.js"></script>
 <script src="viz7.js"></script>
-<script src="viz8.js"></script>
+<!-- viz8.js is missing from the project and caused 404/MIME errors; comment out until added back -->
+<!-- <script src="viz8.js"></script> -->
 <script src="viz9.js"></script>
 <script src="viz10.js"></script>
 <script src="viz11.js"></script>
-<script src="viz12.js"></script>
+<script type="module" src="viz12.js"></script>
 
 </body>
 </html>
