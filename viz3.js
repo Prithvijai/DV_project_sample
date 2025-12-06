@@ -1,42 +1,39 @@
-//Rishikumar Senthilvel
-//rsenthi4@asu.edu
 
-// Store our data
-let lifespanData = [];
-let slaughterData = {};
-let slaughterTimeSeries = {};
-let selectedAnimal = null;
+let li_da = [];
+let sl_da = {};
+let sl_ti_se = {};
+let se_an = null;
 
-function parseTimeToWeeks(timeString) {
-    const cleaned = timeString.replace(/\*/g, '').replace(/Up to\s+/i, '').trim();
-    const rangeMatch = cleaned.match(/(\d+\.?\d*)-(\d+\.?\d*)\s*(day|days|week|weeks|month|months|year|years)/i);
-    if (rangeMatch) {
-        const min = parseFloat(rangeMatch[1]);
-        const max = parseFloat(rangeMatch[2]);
+function pa_ti_to_we(ti_st) {
+    const cl = ti_st.replace(/\*/g, '').replace(/Up to\s+/i, '').trim();
+    const ra_ma = cl.match(/(\d+\.?\d*)-(\d+\.?\d*)\s*(day|days|week|weeks|month|months|year|years)/i);
+    if (ra_ma) {
+        const min = parseFloat(ra_ma[1]);
+        const max = parseFloat(ra_ma[2]);
         const avg = (min + max) / 2;
-        const unit = rangeMatch[3].toLowerCase();
-        return convertToWeeks(avg, unit);
+        const un = ra_ma[3].toLowerCase();
+        return co_to_we(avg, un);
     }
-    const singleMatch = cleaned.match(/(\d+\.?\d*)\s*(day|days|week|weeks|month|months|year|years)/i);
-    if (singleMatch) {
-        const value = parseFloat(singleMatch[1]);
-        const unit = singleMatch[2].toLowerCase();
-        return convertToWeeks(value, unit);
+    const si_ma = cl.match(/(\d+\.?\d*)\s*(day|days|week|weeks|month|months|year|years)/i);
+    if (si_ma) {
+        const va = parseFloat(si_ma[1]);
+        const un = si_ma[2].toLowerCase();
+        return co_to_we(va, un);
     }
     return 0;
 }
 
-function convertToWeeks(value, unit) {
-    const unitLower = unit.toLowerCase();
-    if (unitLower.startsWith('day')) return value / 7;
-    if (unitLower.startsWith('week')) return value;
-    if (unitLower.startsWith('month')) return value * 4.33;
-    if (unitLower.startsWith('year')) return value * 52;
+function co_to_we(va, un) {
+    const un_lo = un.toLowerCase();
+    if (un_lo.startsWith('day')) return va / 7;
+    if (un_lo.startsWith('week')) return va;
+    if (un_lo.startsWith('month')) return va * 4.33;
+    if (un_lo.startsWith('year')) return va * 52;
     return 0;
 }
 
-function mapSpeciesToSlaughterData(category) {
-    const mapping = {
+function ma_sp_to_sl_da(ca) {
+    const mp = {
         'Chickens': 'chickens',
         'Cows': 'cattle',
         'Pigs': 'pigs',
@@ -47,138 +44,138 @@ function mapSpeciesToSlaughterData(category) {
         'Turkeys': 'turkeys',
         'Rabbits': 'rabbits'
     };
-    return mapping[category] || null;
+    return mp[ca] || null;
 }
 
-function getAnimalColor(species) {
+function ge_an_co(sp) {
     return '#B71C1C';
 }
 
-// Load and process both CSV files
-async function loadAllData() {
+
+async function lo_al_da() {
     try {
-        const lifespanRaw = await d3.csv('Rishikumar_data/lifespan.csv');
-        const slaughterRaw = await d3.csv('Rishikumar_data/Land animals slaughter.csv');
+        const li_ra = await d3.csv('Rishikumar_data/lifespan.csv');
+        const sl_ra = await d3.csv('Rishikumar_data/Land animals slaughter.csv');
 
-        const slaughterByAnimal = {};
-        const timeSeriesByAnimal = {};
+        const sl_by_an = {};
+        const ti_se_by_an = {};
 
-        slaughterRaw.forEach(row => {
-            const item = row.Item?.toLowerCase() || '';
-            const year = parseInt(row.Year);
-            const value = parseFloat(row.Value);
+        sl_ra.forEach(ro => {
+            const it = ro.Item?.toLowerCase() || '';
+            const ye = parseInt(ro.Year);
+            const va = parseFloat(ro.Value);
 
-            if (value && !isNaN(value) && year >= 1961) {
-                let animalType = null;
-                if (item.includes('cattle')) animalType = 'cattle';
-                else if (item.includes('chicken')) animalType = 'chickens';
-                else if (item.includes('pig')) animalType = 'pigs';
-                else if (item.includes('sheep')) animalType = 'sheep';
-                else if (item.includes('goat')) animalType = 'goat';
-                else if (item.includes('duck')) animalType = 'ducks';
-                else if (item.includes('turk')) animalType = 'turkeys';
-                else if (item.includes('rabbit') || item.includes('hare')) animalType = 'rabbits';
-                else if (item.includes('geese')) animalType = 'geese';
+            if (va && !isNaN(va) && ye >= 1961) {
+                let an_ty = null;
+                if (it.includes('cattle')) an_ty = 'cattle';
+                else if (it.includes('chicken')) an_ty = 'chickens';
+                else if (it.includes('pig')) an_ty = 'pigs';
+                else if (it.includes('sheep')) an_ty = 'sheep';
+                else if (it.includes('goat')) an_ty = 'goat';
+                else if (it.includes('duck')) an_ty = 'ducks';
+                else if (it.includes('turk')) an_ty = 'turkeys';
+                else if (it.includes('rabbit') || it.includes('hare')) an_ty = 'rabbits';
+                else if (it.includes('geese')) an_ty = 'geese';
 
-                if (animalType) {
-                    if (year === 2022) {
-                        slaughterByAnimal[animalType] = (slaughterByAnimal[animalType] || 0) + value;
+                if (an_ty) {
+                    if (ye === 2022) {
+                        sl_by_an[an_ty] = (sl_by_an[an_ty] || 0) + va;
                     }
-                    if (!timeSeriesByAnimal[animalType]) {
-                        timeSeriesByAnimal[animalType] = {};
+                    if (!ti_se_by_an[an_ty]) {
+                        ti_se_by_an[an_ty] = {};
                     }
-                    timeSeriesByAnimal[animalType][year] = (timeSeriesByAnimal[animalType][year] || 0) + value;
+                    ti_se_by_an[an_ty][ye] = (ti_se_by_an[an_ty][ye] || 0) + va;
                 }
             }
         });
 
-        slaughterData = slaughterByAnimal;
-        slaughterTimeSeries = timeSeriesByAnimal;
+        sl_da = sl_by_an;
+        sl_ti_se = ti_se_by_an;
 
-        const grouped = {};
-        lifespanRaw.forEach(row => {
-            if (!row.species || !row.typical_slaughter_age || !row.natural_lifespan) return;
+        const gr_da = {};
+        li_ra.forEach(ro => {
+            if (!ro.species || !ro.typical_slaughter_age || !ro.natural_lifespan) return;
 
-            const species = row.species;
-            let category = species;
+            const sp = ro.species;
+            let ca = sp;
 
-            if (species.toLowerCase().includes('chicken')) {
-                category = 'Chickens';
-            } else if (species.toLowerCase().includes('cattle') || species.toLowerCase().includes('cow') || species.toLowerCase().includes('beef') || species.toLowerCase().includes('veal')) {
-                category = 'Cows';
-            } else if (species.toLowerCase().includes('pig')) {
-                category = 'Pigs';
-            } else if (species.toLowerCase().includes('lamb')) {
-                category = 'Sheep';
+            if (sp.toLowerCase().includes('chicken')) {
+                ca = 'Chickens';
+            } else if (sp.toLowerCase().includes('cattle') || sp.toLowerCase().includes('cow') || sp.toLowerCase().includes('beef') || sp.toLowerCase().includes('veal')) {
+                ca = 'Cows';
+            } else if (sp.toLowerCase().includes('pig')) {
+                ca = 'Pigs';
+            } else if (sp.toLowerCase().includes('lamb')) {
+                ca = 'Sheep';
             } else {
-                category = species;
+                ca = sp;
             }
 
-            if (!grouped[category]) {
-                grouped[category] = {
+            if (!gr_da[ca]) {
+                gr_da[ca] = {
                     entries: [],
                     slaughterWeeks: [],
                     naturalWeeks: []
                 };
             }
 
-            grouped[category].entries.push(row);
-            grouped[category].slaughterWeeks.push(parseTimeToWeeks(row.typical_slaughter_age));
-            grouped[category].naturalWeeks.push(parseTimeToWeeks(row.natural_lifespan));
+            gr_da[ca].entries.push(ro);
+            gr_da[ca].slaughterWeeks.push(pa_ti_to_we(ro.typical_slaughter_age));
+            gr_da[ca].naturalWeeks.push(pa_ti_to_we(ro.natural_lifespan));
         });
 
-        lifespanData = Object.keys(grouped).map(category => {
-            const group = grouped[category];
-            const avgSlaughterWeeks = group.slaughterWeeks.reduce((a, b) => a + b, 0) / group.slaughterWeeks.length;
-            const avgNaturalWeeks = group.naturalWeeks.reduce((a, b) => a + b, 0) / group.naturalWeeks.length;
-            const animalType = mapSpeciesToSlaughterData(category);
-            const slaughterVolume = animalType ? slaughterData[animalType] : null;
+        li_da = Object.keys(gr_da).map(ca => {
+            const gr = gr_da[ca];
+            const av_sl_we = gr.slaughterWeeks.reduce((a, b) => a + b, 0) / gr.slaughterWeeks.length;
+            const av_na_we = gr.naturalWeeks.reduce((a, b) => a + b, 0) / gr.naturalWeeks.length;
+            const an_ty = ma_sp_to_sl_da(ca);
+            const sl_vo = an_ty ? sl_da[an_ty] : null;
 
             return {
-                species: category,
-                slaughterWeeks: avgSlaughterWeeks,
-                naturalWeeks: avgNaturalWeeks,
-                slaughterVolume: slaughterVolume,
-                color: getAnimalColor(category)
+                species: ca,
+                slaughterWeeks: av_sl_we,
+                naturalWeeks: av_na_we,
+                slaughterVolume: sl_vo,
+                color: ge_an_co(ca)
             };
         });
 
-        lifespanData.sort((a, b) => (b.naturalWeeks - b.slaughterWeeks) - (a.naturalWeeks - a.slaughterWeeks));
+        li_da.sort((a, b) => (b.naturalWeeks - b.slaughterWeeks) - (a.naturalWeeks - a.slaughterWeeks));
 
-        initializeVisualization();
-    } catch (error) {
-        console.error('Error loading CSV data:', error);
+        in_vi();
+    } catch (er) {
+        console.error('Error loading CSV data:', er);
     }
 }
 
-function initializeVisualization() {
-    createDropdown();
-    createPlaceholder();
+function in_vi() {
+    cr_dr();
+    cr_pl();
 }
 
-function createDropdown() {
-    const dropdown = d3.select("#animal-selector");
-    dropdown.append("option").attr("value", "").text("Select an animal to explore...");
+function cr_dr() {
+    const dr = d3.select("#animal-selector");
+    dr.append("option").attr("value", "").text("Select an animal to explore...");
 
-    lifespanData.forEach(d => {
-        dropdown.append("option").attr("value", d.species).text(d.species);
+    li_da.forEach(d => {
+        dr.append("option").attr("value", d.species).text(d.species);
     });
 
-    dropdown.on("change", function () {
-        const selected = this.value;
-        if (selected) {
-            selectedAnimal = lifespanData.find(d => d.species === selected);
-            updateVisualization();
+    dr.on("change", function () {
+        const se = this.value;
+        if (se) {
+            se_an = li_da.find(d => d.species === se);
+            up_vi();
         }
     });
 }
 
-// Show overview chart with all animals
-function createPlaceholder() {
-    const container = d3.select("#split-viz-container");
-    container.html("");
 
-    const overviewDiv = container.append("div")
+function cr_pl() {
+    const co = d3.select("#split-viz-container");
+    co.html("");
+
+    const ov_di = co.append("div")
         .style("padding", "0.5rem 1rem")
         .style("width", "100%")
         .style("max-width", "1500px")
@@ -188,7 +185,7 @@ function createPlaceholder() {
         .style("flex-direction", "column")
         .style("align-items", "center");
 
-    overviewDiv.append("h3")
+    ov_di.append("h3")
         .style("text-align", "center")
         .style("font-size", "28px")
         .style("font-weight", "700")
@@ -201,7 +198,7 @@ function createPlaceholder() {
         .text("Compare Animal Lifespans")
         .transition().duration(600).style("opacity", "1");
 
-    overviewDiv.append("p")
+    ov_di.append("p")
         .style("text-align", "center")
         .style("font-size", "14px")
         .style("color", "#9E9E9E")
@@ -210,134 +207,134 @@ function createPlaceholder() {
         .html("Click on any animal to explore detailed insights. <span style='color: #EF5350; font-weight: 600;'>Red</span> shows farming reality, <span style='color: #9E9E9E; font-weight: 600;'>gray</span> shows natural potential")
         .transition().duration(600).delay(200).style("opacity", "1");
 
-    const width = 1000;
-    const height = 650;
-    const margin = { top: 15, right: 120, bottom: 50, left: 120 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
+    const wi = 1000;
+    const he = 650;
+    const ma = { top: 15, right: 120, bottom: 50, left: 120 };
+    const in_wi = wi - ma.left - ma.right;
+    const in_he = he - ma.top - ma.bottom;
 
-    const svg = overviewDiv.append("svg")
-        .attr("width", width)
-        .attr("height", height)
+    const sv = ov_di.append("svg")
+        .attr("width", wi)
+        .attr("height", he)
         .style("opacity", "0")
         .style("background", "rgba(0, 0, 0, 0.3)")
         .style("border-radius", "16px");
 
-    svg.transition().duration(600).delay(400).style("opacity", "1");
+    sv.transition().duration(600).delay(400).style("opacity", "1");
 
-    const g = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
+    const g = sv.append("g").attr("transform", `translate(${ma.left}, ${ma.top})`);
 
-    const sortedData = lifespanData.slice().sort((a, b) => (b.naturalWeeks - b.slaughterWeeks) - (a.naturalWeeks - a.slaughterWeeks));
+    const so_da = li_da.slice().sort((a, b) => (b.naturalWeeks - b.slaughterWeeks) - (a.naturalWeeks - a.slaughterWeeks));
 
-    const maxWeeks = d3.max(sortedData, d => d.naturalWeeks);
-    const xScale = d3.scaleLinear().domain([0, maxWeeks]).range([0, innerWidth]);
-    const yScale = d3.scaleBand().domain(sortedData.map(d => d.species)).range([0, innerHeight]).padding(0.3);
+    const ma_we = d3.max(so_da, d => d.naturalWeeks);
+    const x_sc = d3.scaleLinear().domain([0, ma_we]).range([0, in_wi]);
+    const y_sc = d3.scaleBand().domain(so_da.map(d => d.species)).range([0, in_he]).padding(0.3);
 
-    const animalGroups = g.selectAll(".animal-group")
-        .data(sortedData)
+    const an_gr = g.selectAll(".animal-group")
+        .data(so_da)
         .enter().append("g")
         .attr("class", "animal-group")
-        .attr("transform", d => `translate(0, ${yScale(d.species)})`)
+        .attr("transform", d => `translate(0, ${y_sc(d.species)})`)
         .style("cursor", "pointer")
         .style("opacity", "0");
 
-    // Gray bars for natural lifespan - init width 0
-    const naturalBars = animalGroups.append("rect")
+
+    const na_ba = an_gr.append("rect")
         .attr("class", "natural-bar")
         .attr("x", 0).attr("y", 0)
         .attr("width", 0)
-        .attr("height", yScale.bandwidth())
+        .attr("height", y_sc.bandwidth())
         .attr("fill", "#4A4A4A")
         .attr("rx", 6);
 
-    // Red bars for slaughter age - init width 0
-    const slaughterBars = animalGroups.append("rect")
+
+    const sl_ba = an_gr.append("rect")
         .attr("class", "slaughter-bar")
         .attr("x", 0).attr("y", 0)
         .attr("width", 0)
-        .attr("height", yScale.bandwidth())
+        .attr("height", y_sc.bandwidth())
         .attr("fill", "#EF5350")
         .attr("rx", 6)
         .attr("opacity", 0.95);
 
-    // Observer to trigger animation
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+
+    const ob = new IntersectionObserver((en) => {
+        en.forEach(entry => {
             if (entry.isIntersecting) {
-                // Fade in groups
-                animalGroups.transition().duration(400).delay((d, i) => 100 + i * 80).style("opacity", "1");
 
-                // Animate gray bars
-                naturalBars.transition().duration(800).delay((d, i) => 200 + i * 80)
-                    .attr("width", d => xScale(d.naturalWeeks));
+                an_gr.transition().duration(400).delay((d, i) => 100 + i * 80).style("opacity", "1");
 
-                // Animate red bars
-                slaughterBars.transition().duration(800).delay((d, i) => 400 + i * 80)
-                    .attr("width", d => xScale(d.slaughterWeeks));
 
-                observer.disconnect();
+                na_ba.transition().duration(800).delay((d, i) => 200 + i * 80)
+                    .attr("width", d => x_sc(d.naturalWeeks));
+
+
+                sl_ba.transition().duration(800).delay((d, i) => 400 + i * 80)
+                    .attr("width", d => x_sc(d.slaughterWeeks));
+
+                ob.disconnect();
             }
         });
     }, { threshold: 0.3 });
 
-    const chartEl = document.getElementById("split-viz-container");
-    if (chartEl) observer.observe(chartEl);
+    const ch_el = document.getElementById("split-viz-container");
+    if (ch_el) ob.observe(ch_el);
 
-    animalGroups.append("text")
-        .attr("x", -12).attr("y", yScale.bandwidth() / 2).attr("dy", "0.35em")
+    an_gr.append("text")
+        .attr("x", -12).attr("y", y_sc.bandwidth() / 2).attr("dy", "0.35em")
         .attr("text-anchor", "end")
         .attr("font-size", "15px")
         .attr("font-weight", "600")
         .attr("fill", "#E0E0E0")
         .text(d => d.species);
 
-    animalGroups.append("text")
+    an_gr.append("text")
         .attr("class", "percent-label")
-        .attr("x", innerWidth + 15).attr("y", yScale.bandwidth() / 2).attr("dy", "0.35em")
+        .attr("x", in_wi + 15).attr("y", y_sc.bandwidth() / 2).attr("dy", "0.35em")
         .attr("font-size", "13px")
         .attr("font-weight", "600")
         .attr("fill", "#EF5350")
         .text(d => {
-            const percent = ((d.slaughterWeeks / d.naturalWeeks) * 100).toFixed(0);
-            return `${percent}% lived`;
+            const pe = ((d.slaughterWeeks / d.naturalWeeks) * 100).toFixed(0);
+            return `${pe}% lived`;
         });
 
-    animalGroups
-        .on("mouseenter", function (event, d) {
+    an_gr
+        .on("mouseenter", function (ev, d) {
             d3.select(this).select(".natural-bar").transition().duration(200).attr("fill", "#5A5A5A");
             d3.select(this).select(".slaughter-bar").transition().duration(200).attr("fill", "#FF6B6B").attr("opacity", 1);
             d3.select(this).select(".percent-label").transition().duration(200).attr("font-size", "14px").attr("font-weight", "700");
         })
-        .on("mouseleave", function (event, d) {
+        .on("mouseleave", function (ev, d) {
             d3.select(this).select(".natural-bar").transition().duration(200).attr("fill", "#4A4A4A");
             d3.select(this).select(".slaughter-bar").transition().duration(200).attr("fill", "#EF5350").attr("opacity", 0.95);
             d3.select(this).select(".percent-label").transition().duration(200).attr("font-size", "13px").attr("font-weight", "600");
         })
-        .on("click", function (event, d) {
+        .on("click", function (ev, d) {
             d3.select("#split-viz-container")
                 .transition().duration(400).style("opacity", 0)
                 .on("end", () => {
-                    selectedAnimal = d;
+                    se_an = d;
                     document.getElementById("animal-selector").value = d.species;
-                    updateVisualization();
+                    up_vi();
                     d3.select("#split-viz-container").style("opacity", 0).transition().duration(600).style("opacity", 1);
                 });
         });
 
-    const xAxis = d3.axisBottom(xScale).ticks(8).tickFormat(d => `${(d / 52).toFixed(0)}y`);
-    const xAxisGroup = g.append("g")
+    const x_ax = d3.axisBottom(x_sc).ticks(8).tickFormat(d => `${(d / 52).toFixed(0)}y`);
+    const x_ax_gr = g.append("g")
         .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${innerHeight})`)
-        .call(xAxis)
+        .attr("transform", `translate(0, ${in_he})`)
+        .call(x_ax)
         .style("opacity", "0");
 
-    xAxisGroup.selectAll("text").attr("fill", "#9E9E9E").attr("font-size", "12px");
-    xAxisGroup.selectAll("line").attr("stroke", "#555");
-    xAxisGroup.select(".domain").attr("stroke", "#555");
-    xAxisGroup.transition().duration(600).delay(1500).style("opacity", "1");
+    x_ax_gr.selectAll("text").attr("fill", "#9E9E9E").attr("font-size", "12px");
+    x_ax_gr.selectAll("line").attr("stroke", "#555");
+    x_ax_gr.select(".domain").attr("stroke", "#555");
+    x_ax_gr.transition().duration(600).delay(1500).style("opacity", "1");
 
     g.append("text")
-        .attr("x", innerWidth / 2).attr("y", innerHeight + 40)
+        .attr("x", in_wi / 2).attr("y", in_he + 40)
         .attr("text-anchor", "middle")
         .attr("font-size", "13px")
         .attr("fill", "#9E9E9E")
@@ -346,13 +343,13 @@ function createPlaceholder() {
         .transition().duration(600).delay(1600).style("opacity", "1");
 }
 
-function updateVisualization() {
-    if (!selectedAnimal) return;
+function up_vi() {
+    if (!se_an) return;
 
-    const container = d3.select("#split-viz-container");
-    container.html("");
+    const co = d3.select("#split-viz-container");
+    co.html("");
 
-    const backButton = container.append("div")
+    const ba_bu = co.append("div")
         .style("position", "absolute")
         .style("top", "-0.5rem").style("left", "0.5rem")
         .style("display", "inline-flex")
@@ -371,9 +368,9 @@ function updateVisualization() {
         .style("opacity", "0")
         .html("&larr; Back to overview");
 
-    backButton.transition().duration(400).delay(200).style("opacity", "1");
+    ba_bu.transition().duration(400).delay(200).style("opacity", "1");
 
-    backButton
+    ba_bu
         .on("mouseenter", function () {
             d3.select(this).style("background", "#333333").style("border-color", "#B71C1C").style("color", "#B71C1C").style("transform", "translateX(-2px)");
         })
@@ -384,267 +381,267 @@ function updateVisualization() {
             d3.select("#split-viz-container")
                 .transition().duration(300).style("opacity", 0)
                 .on("end", () => {
-                    selectedAnimal = null;
+                    se_an = null;
                     document.getElementById("animal-selector").value = "";
-                    createPlaceholder();
+                    cr_pl();
                     d3.select("#split-viz-container").style("opacity", 0).transition().duration(400).style("opacity", 1);
                 });
         });
 
-    const leftPanel = container.append("div").attr("class", "viz-panel left-panel");
-    const rightPanel = container.append("div").attr("class", "viz-panel right-panel");
+    const le_pa = co.append("div").attr("class", "viz-panel left-panel");
+    const ri_pa = co.append("div").attr("class", "viz-panel right-panel");
 
-    const leftTitle = leftPanel.append("h3").attr("class", "panel-title");
-    leftTitle.append("span").text("Natural Life vs Reality: ");
-    leftTitle.append("span").style("color", "#EF5350").text(selectedAnimal.species);
-    drawLifespanBars(leftPanel);
+    const le_ti = le_pa.append("h3").attr("class", "panel-title");
+    le_ti.append("span").text("Natural Life vs Reality: ");
+    le_ti.append("span").style("color", "#EF5350").text(se_an.species);
+    dr_li_ba(le_pa);
 
-    const rightTitle = rightPanel.append("h3").attr("class", "panel-title");
-    rightTitle.append("span").text("Global Slaughter Over Time: ");
-    rightTitle.append("span").style("color", "#EF5350").text(selectedAnimal.species);
-    drawTimeSeries(rightPanel);
+    const ri_ti = ri_pa.append("h3").attr("class", "panel-title");
+    ri_ti.append("span").text("Global Slaughter Over Time: ");
+    ri_ti.append("span").style("color", "#EF5350").text(se_an.species);
+    dr_ti_se(ri_pa);
 }
 
-// Draw the lifespan comparison bars
-function drawLifespanBars(container) {
-    const width = 650;
-    const height = 420;
-    const margin = { top: 60, right: 60, bottom: 60, left: 60 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
 
-    const svg = container.append("svg").attr("width", width).attr("height", height);
-    const g = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
+function dr_li_ba(co) {
+    const wi = 650;
+    const he = 420;
+    const ma = { top: 60, right: 60, bottom: 60, left: 60 };
+    const in_wi = wi - ma.left - ma.right;
+    const in_he = he - ma.top - ma.bottom;
 
-    const maxWeeks = selectedAnimal.naturalWeeks;
-    const xScale = d3.scaleLinear().domain([0, maxWeeks]).range([0, innerWidth]);
-    const yPos = innerHeight / 2;
+    const sv = co.append("svg").attr("width", wi).attr("height", he);
+    const g = sv.append("g").attr("transform", `translate(${ma.left}, ${ma.top})`);
 
-    const slaughterYears = (selectedAnimal.slaughterWeeks / 52).toFixed(1);
-    const naturalYears = (maxWeeks / 52).toFixed(1);
-    const percentLived = ((selectedAnimal.slaughterWeeks / maxWeeks) * 100).toFixed(0);
-    const percentStolen = (100 - percentLived).toFixed(0);
+    const ma_we = se_an.naturalWeeks;
+    const x_sc = d3.scaleLinear().domain([0, ma_we]).range([0, in_wi]);
+    const y_po = in_he / 2;
 
-    const leftGroup = g.append("g").attr("opacity", 0);
-    leftGroup.append("text").attr("x", 0).attr("y", -20).attr("font-size", "28px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${Math.round(selectedAnimal.slaughterWeeks)} weeks`);
-    leftGroup.append("text").attr("x", 0).attr("y", 0).attr("font-size", "14px").attr("fill", "#9E9E9E").text("Slaughtered at");
-    leftGroup.append("text").attr("x", 0).attr("y", 20).attr("font-size", "16px").attr("font-weight", "600").attr("fill", "#EF5350").text(`(${slaughterYears} years old)`);
-    leftGroup.transition().duration(600).delay(1200).attr("opacity", 1);
+    const sl_ye = (se_an.slaughterWeeks / 52).toFixed(1);
+    const na_ye = (ma_we / 52).toFixed(1);
+    const pe_li = ((se_an.slaughterWeeks / ma_we) * 100).toFixed(0);
+    const pe_st = (100 - pe_li).toFixed(0);
 
-    const rightGroup = g.append("g").attr("opacity", 0);
-    rightGroup.append("text").attr("x", innerWidth).attr("y", -20).attr("text-anchor", "end").attr("font-size", "28px").attr("font-weight", "700").attr("fill", "#9E9E9E").text(`${Math.round(maxWeeks)} weeks`);
-    rightGroup.append("text").attr("x", innerWidth).attr("y", 0).attr("text-anchor", "end").attr("font-size", "14px").attr("fill", "#9E9E9E").text("Natural lifespan");
-    rightGroup.append("text").attr("x", innerWidth).attr("y", 20).attr("text-anchor", "end").attr("font-size", "16px").attr("font-weight", "600").attr("fill", "#9E9E9E").text(`(${naturalYears} years)`);
-    rightGroup.transition().duration(600).delay(700).attr("opacity", 1);
+    const le_gr = g.append("g").attr("opacity", 0);
+    le_gr.append("text").attr("x", 0).attr("y", -20).attr("font-size", "28px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${Math.round(se_an.slaughterWeeks)} weeks`);
+    le_gr.append("text").attr("x", 0).attr("y", 0).attr("font-size", "14px").attr("fill", "#9E9E9E").text("Slaughtered at");
+    le_gr.append("text").attr("x", 0).attr("y", 20).attr("font-size", "16px").attr("font-weight", "600").attr("fill", "#EF5350").text(`(${sl_ye} years old)`);
+    le_gr.transition().duration(600).delay(1200).attr("opacity", 1);
 
-    g.append("rect").attr("x", 0).attr("y", yPos - 20).attr("width", 0).attr("height", 40).attr("fill", "#4A4A4A").attr("rx", 6).transition().duration(800).attr("width", xScale(maxWeeks));
-    g.append("rect").attr("x", 0).attr("y", yPos - 20).attr("width", 0).attr("height", 40).attr("fill", "#EF5350").attr("rx", 6).attr("opacity", 0.95).transition().duration(1000).delay(400).attr("width", xScale(selectedAnimal.slaughterWeeks));
+    const ri_gr = g.append("g").attr("opacity", 0);
+    ri_gr.append("text").attr("x", in_wi).attr("y", -20).attr("text-anchor", "end").attr("font-size", "28px").attr("font-weight", "700").attr("fill", "#9E9E9E").text(`${Math.round(ma_we)} weeks`);
+    ri_gr.append("text").attr("x", in_wi).attr("y", 0).attr("text-anchor", "end").attr("font-size", "14px").attr("fill", "#9E9E9E").text("Natural lifespan");
+    ri_gr.append("text").attr("x", in_wi).attr("y", 20).attr("text-anchor", "end").attr("font-size", "16px").attr("font-weight", "600").attr("fill", "#9E9E9E").text(`(${na_ye} years)`);
+    ri_gr.transition().duration(600).delay(700).attr("opacity", 1);
 
-    const cutLineX = xScale(selectedAnimal.slaughterWeeks);
-    const cutLine = g.append("line").attr("x1", cutLineX).attr("x2", cutLineX).attr("y1", yPos - 35).attr("y2", yPos + 35).attr("stroke", "#EF5350").attr("stroke-width", 3).attr("stroke-dasharray", "5,5").attr("opacity", 0);
-    cutLine.transition().duration(600).delay(1400).attr("opacity", 0.9);
+    g.append("rect").attr("x", 0).attr("y", y_po - 20).attr("width", 0).attr("height", 40).attr("fill", "#4A4A4A").attr("rx", 6).transition().duration(800).attr("width", x_sc(ma_we));
+    g.append("rect").attr("x", 0).attr("y", y_po - 20).attr("width", 0).attr("height", 40).attr("fill", "#EF5350").attr("rx", 6).attr("opacity", 0.95).transition().duration(1000).delay(400).attr("width", x_sc(se_an.slaughterWeeks));
 
-    function pulse() {
-        cutLine.transition().duration(1200).attr("opacity", 0.5).transition().duration(1200).attr("opacity", 0.9).on("end", pulse);
+    const cu_li_x = x_sc(se_an.slaughterWeeks);
+    const cu_li = g.append("line").attr("x1", cu_li_x).attr("x2", cu_li_x).attr("y1", y_po - 35).attr("y2", y_po + 35).attr("stroke", "#EF5350").attr("stroke-width", 3).attr("stroke-dasharray", "5,5").attr("opacity", 0);
+    cu_li.transition().duration(600).delay(1400).attr("opacity", 0.9);
+
+    function pu_ls() {
+        cu_li.transition().duration(1200).attr("opacity", 0.5).transition().duration(1200).attr("opacity", 0.9).on("end", pu_ls);
     }
-    setTimeout(pulse, 2000);
+    setTimeout(pu_ls, 2000);
 
-    g.append("text").attr("x", cutLineX).attr("y", yPos - 45).attr("text-anchor", "middle").attr("font-size", "20px").attr("opacity", 0).text("✂").transition().duration(400).delay(1600).attr("opacity", 0.7);
+    g.append("text").attr("x", cu_li_x).attr("y", y_po - 45).attr("text-anchor", "middle").attr("font-size", "20px").attr("opacity", 0).text("✂").transition().duration(400).delay(1600).attr("opacity", 0.7);
 
-    const percentLivedBox = g.append("g").attr("transform", `translate(0, ${yPos + 70})`).attr("opacity", 0);
-    percentLivedBox.append("rect").attr("x", 0).attr("y", 0).attr("width", innerWidth * 0.45).attr("height", 60).attr("fill", "rgba(239, 83, 80, 0.15)").attr("rx", 8).attr("stroke", "#EF5350").attr("stroke-width", 1.5).attr("opacity", 0.8);
-    percentLivedBox.append("text").attr("x", (innerWidth * 0.45) / 2).attr("y", 25).attr("text-anchor", "middle").attr("font-size", "24px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${percentLived}%`);
-    percentLivedBox.append("text").attr("x", (innerWidth * 0.45) / 2).attr("y", 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("of potential life lived");
-    percentLivedBox.transition().duration(600).delay(1900).attr("opacity", 1);
+    const pe_li_bo = g.append("g").attr("transform", `translate(0, ${y_po + 70})`).attr("opacity", 0);
+    pe_li_bo.append("rect").attr("x", 0).attr("y", 0).attr("width", in_wi * 0.45).attr("height", 60).attr("fill", "rgba(239, 83, 80, 0.15)").attr("rx", 8).attr("stroke", "#EF5350").attr("stroke-width", 1.5).attr("opacity", 0.8);
+    pe_li_bo.append("text").attr("x", (in_wi * 0.45) / 2).attr("y", 25).attr("text-anchor", "middle").attr("font-size", "24px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${pe_li}%`);
+    pe_li_bo.append("text").attr("x", (in_wi * 0.45) / 2).attr("y", 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("of potential life lived");
+    pe_li_bo.transition().duration(600).delay(1900).attr("opacity", 1);
 
-    const percentUnlivedBox = g.append("g").attr("transform", `translate(${innerWidth * 0.55}, ${yPos + 70})`).attr("opacity", 0);
-    percentUnlivedBox.append("rect").attr("x", 0).attr("y", 0).attr("width", innerWidth * 0.45).attr("height", 60).attr("fill", "rgba(239, 83, 80, 0.2)").attr("rx", 8).attr("stroke", "#EF5350").attr("stroke-width", 2).attr("opacity", 0.9);
-    percentUnlivedBox.append("text").attr("x", (innerWidth * 0.45) / 2).attr("y", 25).attr("text-anchor", "middle").attr("font-size", "24px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${percentStolen}%`);
-    percentUnlivedBox.append("text").attr("x", (innerWidth * 0.45) / 2).attr("y", 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("of life unlived");
-    percentUnlivedBox.transition().duration(600).delay(2100).attr("opacity", 1);
+    const pe_un_bo = g.append("g").attr("transform", `translate(${in_wi * 0.55}, ${y_po + 70})`).attr("opacity", 0);
+    pe_un_bo.append("rect").attr("x", 0).attr("y", 0).attr("width", in_wi * 0.45).attr("height", 60).attr("fill", "rgba(239, 83, 80, 0.2)").attr("rx", 8).attr("stroke", "#EF5350").attr("stroke-width", 2).attr("opacity", 0.9);
+    pe_un_bo.append("text").attr("x", (in_wi * 0.45) / 2).attr("y", 25).attr("text-anchor", "middle").attr("font-size", "24px").attr("font-weight", "700").attr("fill", "#EF5350").text(`${pe_st}%`);
+    pe_un_bo.append("text").attr("x", (in_wi * 0.45) / 2).attr("y", 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("of life unlived");
+    pe_un_bo.transition().duration(600).delay(2100).attr("opacity", 1);
 
-    const bottomInfo = g.append("g").attr("transform", `translate(0, ${yPos + 145})`).attr("opacity", 0);
+    const bo_in = g.append("g").attr("transform", `translate(0, ${y_po + 145})`).attr("opacity", 0);
 
-    let contextText;
-    if (selectedAnimal.species === "Chickens") {
-        contextText = `Broiler chickens are bred for rapid growth and slaughtered at just 5-7 weeks, having lived only ${percentLived}% of their potential ${naturalYears}-year lifespan`;
-    } else if (selectedAnimal.species === "Pigs") {
-        contextText = `Pigs are intelligent animals that could live 10-12 years, but are slaughtered at just ${slaughterYears} years old—only ${percentLived}% of their natural lifespan`;
-    } else if (selectedAnimal.species === "Cattle") {
-        contextText = `Cattle can naturally live 15-20 years, but beef cattle are slaughtered at just ${slaughterYears} years—having experienced only ${percentLived}% of their potential life`;
-    } else if (selectedAnimal.species === "Turkeys") {
-        contextText = `Turkeys are slaughtered at 10-17 weeks for meat production, living only ${percentLived}% of their natural 15-year lifespan`;
-    } else if (selectedAnimal.species === "Ducks") {
-        contextText = `Ducks raised for meat are slaughtered at 7-8 weeks old, experiencing only ${percentLived}% of their 6-8 year natural lifespan`;
-    } else if (selectedAnimal.species === "Rabbits") {
-        contextText = `Rabbits are slaughtered at just 10-12 weeks old, living only ${percentLived}% of their potential 8-12 year lifespan`;
-    } else if (selectedAnimal.species === "Goats") {
-        contextText = `Goats can live 12-14 years in natural conditions, but are slaughtered at just ${slaughterYears} years—only ${percentLived}% of their lifespan`;
-    } else if (selectedAnimal.species === "Geese") {
-        contextText = `Geese are slaughtered at 15-20 weeks for meat, having lived only ${percentLived}% of their potential 8-15 year lifespan`;
-    } else if (selectedAnimal.species === "Sheep") {
-        contextText = `Lambs are slaughtered at 4-12 months old, experiencing only ${percentLived}% of their natural 12-14 year lifespan`;
+    let co_te;
+    if (se_an.species === "Chickens") {
+        co_te = `Broiler chickens are bred for rapid growth and slaughtered at just 5-7 weeks, having lived only ${pe_li}% of their potential ${na_ye}-year lifespan`;
+    } else if (se_an.species === "Pigs") {
+        co_te = `Pigs are intelligent animals that could live 10-12 years, but are slaughtered at just ${sl_ye} years old—only ${pe_li}% of their natural lifespan`;
+    } else if (se_an.species === "Cattle") {
+        co_te = `Cattle can naturally live 15-20 years, but beef cattle are slaughtered at just ${sl_ye} years—having experienced only ${pe_li}% of their potential life`;
+    } else if (se_an.species === "Turkeys") {
+        co_te = `Turkeys are slaughtered at 10-17 weeks for meat production, living only ${pe_li}% of their natural 15-year lifespan`;
+    } else if (se_an.species === "Ducks") {
+        co_te = `Ducks raised for meat are slaughtered at 7-8 weeks old, experiencing only ${pe_li}% of their 6-8 year natural lifespan`;
+    } else if (se_an.species === "Rabbits") {
+        co_te = `Rabbits are slaughtered at just 10-12 weeks old, living only ${pe_li}% of their potential 8-12 year lifespan`;
+    } else if (se_an.species === "Goats") {
+        co_te = `Goats can live 12-14 years in natural conditions, but are slaughtered at just ${sl_ye} years—only ${pe_li}% of their lifespan`;
+    } else if (se_an.species === "Geese") {
+        co_te = `Geese are slaughtered at 15-20 weeks for meat, having lived only ${pe_li}% of their potential 8-15 year lifespan`;
+    } else if (se_an.species === "Sheep") {
+        co_te = `Lambs are slaughtered at 4-12 months old, experiencing only ${pe_li}% of their natural 12-14 year lifespan`;
     } else {
-        contextText = `These animals could naturally live ${naturalYears} years, but are slaughtered at ${slaughterYears} years—only ${percentLived}% of their potential lifespan`;
+        co_te = `These animals could naturally live ${na_ye} years, but are slaughtered at ${sl_ye} years—only ${pe_li}% of their potential lifespan`;
     }
 
-    bottomInfo.append("text")
-        .attr("x", innerWidth / 2).attr("y", 0)
+    bo_in.append("text")
+        .attr("x", in_wi / 2).attr("y", 0)
         .attr("text-anchor", "middle")
         .attr("font-size", "11px")
         .attr("font-style", "italic")
         .attr("fill", "#9E9E9E")
         .attr("opacity", 0.9)
-        .text(contextText)
-        .call(wrap, innerWidth - 40);
+        .text(co_te)
+        .call(wr_te, in_wi - 40);
 
-    bottomInfo.transition().duration(500).delay(2300).attr("opacity", 1);
+    bo_in.transition().duration(500).delay(2300).attr("opacity", 1);
 }
 
-function wrap(text, width) {
-    text.each(function () {
-        const text = d3.select(this);
-        const words = text.text().split(/\s+/).reverse();
-        let word, line = [], lineNumber = 0;
-        const lineHeight = 1.3, y = text.attr("y"), dy = 0;
-        let tspan = text.text(null).append("tspan").attr("x", text.attr("x")).attr("y", y).attr("dy", dy + "em");
+function wr_te(te, wi) {
+    te.each(function () {
+        const te_el = d3.select(this);
+        const wo = te_el.text().split(/\s+/).reverse();
+        let wo_it, li = [], li_nu = 0;
+        const li_he = 1.3, y = te_el.attr("y"), dy = 0;
+        let ts = te_el.text(null).append("tspan").attr("x", te_el.attr("x")).attr("y", y).attr("dy", dy + "em");
 
-        while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-                line.pop();
-                tspan.text(line.join(" "));
-                line = [word];
-                tspan = text.append("tspan").attr("x", text.attr("x")).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        while (wo_it = wo.pop()) {
+            li.push(wo_it);
+            ts.text(li.join(" "));
+            if (ts.node().getComputedTextLength() > wi) {
+                li.pop();
+                ts.text(li.join(" "));
+                li = [wo_it];
+                ts = te_el.append("tspan").attr("x", te_el.attr("x")).attr("y", y).attr("dy", ++li_nu * li_he + dy + "em").text(wo_it);
             }
         }
     });
 }
 
-// Draw the historical slaughter data chart
-function drawTimeSeries(container) {
-    const animalType = mapSpeciesToSlaughterData(selectedAnimal.species);
-    if (!animalType || !slaughterTimeSeries[animalType]) {
-        container.append("div").style("padding", "2rem").style("color", "#90A4AE").text("No historical data available for this species");
+
+function dr_ti_se(co) {
+    const an_ty = ma_sp_to_sl_da(se_an.species);
+    if (!an_ty || !sl_ti_se[an_ty]) {
+        co.append("div").style("padding", "2rem").style("color", "#90A4AE").text("No historical data available for this species");
         return;
     }
 
-    const timeData = slaughterTimeSeries[animalType];
-    const dataPoints = Object.keys(timeData).map(year => ({ year: parseInt(year), value: timeData[year] })).sort((a, b) => a.year - b.year);
+    const ti_da = sl_ti_se[an_ty];
+    const da_po = Object.keys(ti_da).map(ye => ({ year: parseInt(ye), value: ti_da[ye] })).sort((a, b) => a.year - b.year);
 
-    const width = 650, height = 420;
-    const margin = { top: 40, right: 40, bottom: 70, left: 90 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
+    const wi = 650, he = 420;
+    const ma = { top: 40, right: 40, bottom: 70, left: 90 };
+    const in_wi = wi - ma.left - ma.right;
+    const in_he = he - ma.top - ma.bottom;
 
-    const svg = container.append("svg").attr("width", width).attr("height", height);
-    const g = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
+    const sv = co.append("svg").attr("width", wi).attr("height", he);
+    const g = sv.append("g").attr("transform", `translate(${ma.left}, ${ma.top})`);
 
-    const xScale = d3.scaleLinear().domain(d3.extent(dataPoints, d => d.year)).range([0, innerWidth]);
-    const yScale = d3.scaleLinear().domain([0, d3.max(dataPoints, d => d.value)]).range([innerHeight, 0]).nice();
+    const x_sc = d3.scaleLinear().domain(d3.extent(da_po, d => d.year)).range([0, in_wi]);
+    const y_sc = d3.scaleLinear().domain([0, d3.max(da_po, d => d.value)]).range([in_he, 0]).nice();
 
-    const area = d3.area().x(d => xScale(d.year)).y0(innerHeight).y1(d => yScale(d.value)).curve(d3.curveMonotoneX);
-    const line = d3.line().x(d => xScale(d.year)).y(d => yScale(d.value)).curve(d3.curveMonotoneX);
+    const ar = d3.area().x(d => x_sc(d.year)).y0(in_he).y1(d => y_sc(d.value)).curve(d3.curveMonotoneX);
+    const li = d3.line().x(d => x_sc(d.year)).y(d => y_sc(d.value)).curve(d3.curveMonotoneX);
 
-    const areaPath = g.append("path").datum(dataPoints).attr("fill", "#EF5350").attr("opacity", 0.25).attr("d", area);
-    const totalLength = areaPath.node().getTotalLength();
-    areaPath.attr("stroke-dasharray", totalLength + " " + totalLength).attr("stroke-dashoffset", totalLength).attr("stroke", "none").transition().duration(1500).ease(d3.easeLinear).attr("stroke-dashoffset", 0);
+    const ar_pa = g.append("path").datum(da_po).attr("fill", "#EF5350").attr("opacity", 0.25).attr("d", ar);
+    const to_le = ar_pa.node().getTotalLength();
+    ar_pa.attr("stroke-dasharray", to_le + " " + to_le).attr("stroke-dashoffset", to_le).attr("stroke", "none").transition().duration(1500).ease(d3.easeLinear).attr("stroke-dashoffset", 0);
 
-    const linePath = g.append("path").datum(dataPoints).attr("fill", "none").attr("stroke", "#EF5350").attr("stroke-width", 3).attr("d", line);
-    const lineLength = linePath.node().getTotalLength();
-    linePath.attr("stroke-dasharray", lineLength + " " + lineLength).attr("stroke-dashoffset", lineLength).transition().duration(1500).ease(d3.easeLinear).attr("stroke-dashoffset", 0);
+    const li_pa = g.append("path").datum(da_po).attr("fill", "none").attr("stroke", "#EF5350").attr("stroke-width", 3).attr("d", li);
+    const li_le = li_pa.node().getTotalLength();
+    li_pa.attr("stroke-dasharray", li_le + " " + li_le).attr("stroke-dashoffset", li_le).transition().duration(1500).ease(d3.easeLinear).attr("stroke-dashoffset", 0);
 
-    const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
-    const yAxis = d3.axisLeft(yScale).ticks(5).tickFormat(d => {
+    const x_ax = d3.axisBottom(x_sc).ticks(5).tickFormat(d3.format("d"));
+    const y_ax = d3.axisLeft(y_sc).ticks(5).tickFormat(d => {
         if (d >= 1e9) return (d / 1e9).toFixed(1) + 'B';
         if (d >= 1e6) return (d / 1e6).toFixed(0) + 'M';
         return d;
     });
 
-    const xAxisGroup2 = g.append("g").attr("transform", `translate(0, ${innerHeight})`).call(xAxis).attr("opacity", 0);
-    xAxisGroup2.selectAll("text").attr("fill", "#9E9E9E");
-    xAxisGroup2.selectAll("line").attr("stroke", "#555");
-    xAxisGroup2.select(".domain").attr("stroke", "#555");
-    xAxisGroup2.transition().duration(400).delay(1500).attr("opacity", 1);
+    const x_ax_gr_2 = g.append("g").attr("transform", `translate(0, ${in_he})`).call(x_ax).attr("opacity", 0);
+    x_ax_gr_2.selectAll("text").attr("fill", "#9E9E9E");
+    x_ax_gr_2.selectAll("line").attr("stroke", "#555");
+    x_ax_gr_2.select(".domain").attr("stroke", "#555");
+    x_ax_gr_2.transition().duration(400).delay(1500).attr("opacity", 1);
 
-    const yAxisGroup = g.append("g").call(yAxis).attr("opacity", 0);
-    yAxisGroup.selectAll("text").attr("fill", "#9E9E9E");
-    yAxisGroup.selectAll("line").attr("stroke", "#555");
-    yAxisGroup.select(".domain").attr("stroke", "#555");
-    yAxisGroup.transition().duration(400).delay(1500).attr("opacity", 1);
+    const y_ax_gr = g.append("g").call(y_ax).attr("opacity", 0);
+    y_ax_gr.selectAll("text").attr("fill", "#9E9E9E");
+    y_ax_gr.selectAll("line").attr("stroke", "#555");
+    y_ax_gr.select(".domain").attr("stroke", "#555");
+    y_ax_gr.transition().duration(400).delay(1500).attr("opacity", 1);
 
-    g.append("text").attr("x", innerWidth / 2).attr("y", innerHeight + 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("Year");
-    g.append("text").attr("transform", "rotate(-90)").attr("x", -innerHeight / 2).attr("y", -60).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("Animals Slaughtered");
+    g.append("text").attr("x", in_wi / 2).attr("y", in_he + 45).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("Year");
+    g.append("text").attr("transform", "rotate(-90)").attr("x", -in_he / 2).attr("y", -60).attr("text-anchor", "middle").attr("font-size", "12px").attr("fill", "#9E9E9E").text("Animals Slaughtered");
 
-    const firstValue = dataPoints[0].value;
-    const lastValue = dataPoints[dataPoints.length - 1].value;
-    const percentIncrease = (((lastValue - firstValue) / firstValue) * 100).toFixed(0);
+    const fi_va = da_po[0].value;
+    const la_va = da_po[da_po.length - 1].value;
+    const pe_in = (((la_va - fi_va) / fi_va) * 100).toFixed(0);
 
-    const statsBox = container.append("div").attr("class", "stats-box").style("opacity", 0);
-    statsBox.append("div").attr("class", "stat-large").style("color", "#EF5350").html(`&uarr; ${percentIncrease}%`);
-    statsBox.append("div").attr("class", "stat-label").text("increase since 1961");
-    statsBox.transition().duration(400).delay(2000).style("opacity", 1);
+    const st_bo = co.append("div").attr("class", "stats-box").style("opacity", 0);
+    st_bo.append("div").attr("class", "stat-large").style("color", "#EF5350").html(`&uarr; ${pe_in}%`);
+    st_bo.append("div").attr("class", "stat-label").text("increase since 1961");
+    st_bo.transition().duration(400).delay(2000).style("opacity", 1);
 
-    // Add hover interaction
-    const crosshairLine = g.append("line").attr("class", "crosshair-line").attr("y1", 0).attr("y2", innerHeight).attr("stroke", "#EF5350").attr("stroke-width", 1).attr("stroke-dasharray", "4,4").attr("opacity", 0).attr("pointer-events", "none");
-    const hoverCircle = g.append("circle").attr("class", "hover-circle").attr("r", 5).attr("fill", "#EF5350").attr("stroke", "#000").attr("stroke-width", 2).attr("opacity", 0).attr("pointer-events", "none");
-    const tooltip = d3.select("#tooltip");
-    const overlay = g.append("rect").attr("class", "overlay").attr("width", innerWidth).attr("height", innerHeight).attr("fill", "none").attr("pointer-events", "all").style("cursor", "crosshair");
 
-    const bisect = d3.bisector(d => d.year).left;
+    const cr_li = g.append("line").attr("class", "crosshair-line").attr("y1", 0).attr("y2", in_he).attr("stroke", "#EF5350").attr("stroke-width", 1).attr("stroke-dasharray", "4,4").attr("opacity", 0).attr("pointer-events", "none");
+    const ho_ci = g.append("circle").attr("class", "hover-circle").attr("r", 5).attr("fill", "#EF5350").attr("stroke", "#000").attr("stroke-width", 2).attr("opacity", 0).attr("pointer-events", "none");
+    const to = d3.select("#tooltip");
+    const ov = g.append("rect").attr("class", "overlay").attr("width", in_wi).attr("height", in_he).attr("fill", "none").attr("pointer-events", "all").style("cursor", "crosshair");
 
-    overlay
-        .on("mousemove", function (event) {
-            const [mouseX] = d3.pointer(event);
-            const year = xScale.invert(mouseX);
-            const index = bisect(dataPoints, year);
+    const bis = d3.bisector(d => d.year).left;
 
-            let closestPoint;
-            if (index === 0) {
-                closestPoint = dataPoints[0];
-            } else if (index >= dataPoints.length) {
-                closestPoint = dataPoints[dataPoints.length - 1];
+    ov
+        .on("mousemove", function (ev) {
+            const [mo_x] = d3.pointer(ev);
+            const ye = x_sc.invert(mo_x);
+            const in_idx = bis(da_po, ye);
+
+            let cl_po;
+            if (in_idx === 0) {
+                cl_po = da_po[0];
+            } else if (in_idx >= da_po.length) {
+                cl_po = da_po[da_po.length - 1];
             } else {
-                const d0 = dataPoints[index - 1];
-                const d1 = dataPoints[index];
-                closestPoint = year - d0.year > d1.year - year ? d1 : d0;
+                const d0 = da_po[in_idx - 1];
+                const d1 = da_po[in_idx];
+                cl_po = ye - d0.year > d1.year - ye ? d1 : d0;
             }
 
-            const x = xScale(closestPoint.year);
-            const y = yScale(closestPoint.value);
-            crosshairLine.attr("x1", x).attr("x2", x).attr("opacity", 0.6);
-            hoverCircle.attr("cx", x).attr("cy", y).attr("opacity", 1);
+            const x = x_sc(cl_po.year);
+            const y = y_sc(cl_po.value);
+            cr_li.attr("x1", x).attr("x2", x).attr("opacity", 0.6);
+            ho_ci.attr("cx", x).attr("cy", y).attr("opacity", 1);
 
-            const percentChange = (((closestPoint.value - firstValue) / firstValue) * 100).toFixed(1);
-            const changeText = percentChange >= 0 ? `+${percentChange}%` : `${percentChange}%`;
+            const pe_ch = (((cl_po.value - fi_va) / fi_va) * 100).toFixed(1);
+            const ch_te = pe_ch >= 0 ? `+${pe_ch}%` : `${pe_ch}%`;
 
-            let formattedValue;
-            if (closestPoint.value >= 1e9) {
-                formattedValue = (closestPoint.value / 1e9).toFixed(2) + 'B';
-            } else if (closestPoint.value >= 1e6) {
-                formattedValue = (closestPoint.value / 1e6).toFixed(1) + 'M';
+            let fo_va;
+            if (cl_po.value >= 1e9) {
+                fo_va = (cl_po.value / 1e9).toFixed(2) + 'B';
+            } else if (cl_po.value >= 1e6) {
+                fo_va = (cl_po.value / 1e6).toFixed(1) + 'M';
             } else {
-                formattedValue = closestPoint.value.toLocaleString();
+                fo_va = cl_po.value.toLocaleString();
             }
 
-            tooltip.style("opacity", 1).html(`
+            to.style("opacity", 1).html(`
                 <div style="font-weight: 600; font-size: 14px; margin-bottom: 6px; color: #EF5350;">
-                    ${closestPoint.year}
+                    ${cl_po.year}
                 </div>
                 <div style="font-size: 13px; margin-bottom: 4px; color: #fff;">
-                    <strong>${formattedValue}</strong> animals
+                    <strong>${fo_va}</strong> animals
                 </div>
                 <div style="font-size: 12px; color: #9E9E9E;">
-                    ${changeText} since 1961
+                    ${ch_te} since 1961
                 </div>
-            `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 15) + "px");
+            `).style("left", (ev.pageX + 15) + "px").style("top", (ev.pageY - 15) + "px");
         })
         .on("mouseleave", function () {
-            crosshairLine.attr("opacity", 0);
-            hoverCircle.attr("opacity", 0);
-            tooltip.style("opacity", 0);
+            cr_li.attr("opacity", 0);
+            ho_ci.attr("opacity", 0);
+            to.style("opacity", 0);
         });
 }
 
-loadAllData();
+lo_al_da();

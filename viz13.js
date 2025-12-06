@@ -1,20 +1,18 @@
-// ================================
-// LIVE GOOGLE SHEET CSV URL
-// ================================
-const SHEET_CSV_URL =
+
+
+
+const sh_cs_ur =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRX4JFdcOJMJkUJmnMxKWJ9qtmoLofmMdIVwGjg7_04F0B5PnxU58Qvx6ts-IYOvXgYKJZzxfYClr_/pub?output=csv";
 
-// how many latest responses to use for the ratio
-// set to null to use ALL rows
-const USE_LAST_N_ROWS = null; // e.g. 2 if you want just last 2
+const us_la_n_ro = null;
 
 
-// ================================
-// FETCH LIVE FORM RESPONSES (with d3.csv)
-// ================================
-async function loadDietDataFromSheet() {
+
+
+
+async function lo_di_da_fr_sh() {
   try {
-    const data = await d3.csv(SHEET_CSV_URL);
+    const data = await d3.csv(sh_cs_ur);
     return data;
   } catch (err) {
     console.error("Error loading CSV:", err);
@@ -23,25 +21,25 @@ async function loadDietDataFromSheet() {
 }
 
 
-// ================================
-// COUNT DIETS FROM LIVE DATA
-// ================================
-function countDiet(responses) {
+
+
+
+function co_di(responses) {
   let vegan = 0;
   let meat = 0;
 
-  // auto-detect the diet column (contains "diet")
+
   if (!responses.length) return { vegan, meat };
 
-  const sampleRow = responses[0];
-  const dietKey = Object.keys(sampleRow).find(k =>
+  const sa_ro = responses[0];
+  const di_ke = Object.keys(sa_ro).find(k =>
     k.toLowerCase().includes("diet")
   );
 
-  console.log("Diet column detected as:", dietKey);
+  console.log("Diet column detected as:", di_ke);
 
   responses.forEach(row => {
-    const diet = (row[dietKey] || "").trim();
+    const diet = (row[di_ke] || "").trim();
 
     if (diet === "Vegan") vegan++;
     if (diet === "Meat") meat++;
@@ -51,24 +49,24 @@ function countDiet(responses) {
 }
 
 
-// ================================
-// APPLY DIAGONAL GRADIENT
-// ================================
-function applyDynamicGradient(vegan, meat) {
+
+
+
+function ap_dy_gr(vegan, meat) {
   const total = vegan + meat;
   if (total === 0) return;
 
-  const score = vegan / total;          // 0 = all Meat, 1 = all Vegan
-  const splitPoint = 10 + score * 80;   // 10% → 90%
+  const score = vegan / total;
+  const sp_po = 10 + score * 80;
 
-  const meatColor = "#ee0202ff";
-  const veganColor = "#00ff99";
+  const me_co = "#ee0202ff";
+  const ve_co = "#00ff99";
 
   const gradient = `linear-gradient(45deg,
-                    ${meatColor} ${splitPoint}%,
-                    ${veganColor} ${splitPoint}%)`;
+                    ${ve_co} ${sp_po}%,
+                    ${me_co} ${sp_po}%)`;
 
-  console.log("Vegan:", vegan, "Meat:", meat, "Score:", score, "Split:", splitPoint);
+  console.log("Vegan:", vegan, "Meat:", meat, "Score:", score, "Split:", sp_po);
 
   const text = document.getElementById("thankyouText");
   text.style.background = "";
@@ -78,7 +76,7 @@ function applyDynamicGradient(vegan, meat) {
     text.style.webkitTextFillColor = "transparent";
   }, 30);
 
-  // OPTIONAL: show counts on screen for debugging
+
   const countsEl = document.getElementById("dietCounts");
   if (countsEl) {
     countsEl.textContent = `Vegan: ${vegan}   |   Meat: ${meat}`;
@@ -86,35 +84,42 @@ function applyDynamicGradient(vegan, meat) {
 }
 
 
-// ================================
-// QR CODE FOR YOUR FORM
-// ================================
-function generateQR() {
-  const formURL =
+
+
+
+function ge_qr() {
+  const fo_ur =
     "https://docs.google.com/forms/d/e/1FAIpQLSeKWhOey2Fnub4We1R65JzPYFEGG86PISleW0Gdp0PWFuuFJA/viewform?usp=dialog";
 
-  const qrAPI =
-    `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(formURL)}`;
+  const qr_ap =
+    `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(fo_ur)}`;
 
-  document.getElementById("qrCode").src = qrAPI;
+  document.getElementById("qrCode").src = qr_ap;
 }
 
 
-// ================================
-// INIT
-// ================================
-document.addEventListener("DOMContentLoaded", async () => {
-  generateQR();
 
-  let responses = await loadDietDataFromSheet();
 
-  // if you only want last N responses, slice here
-  if (USE_LAST_N_ROWS && responses.length > USE_LAST_N_ROWS) {
-    responses = responses.slice(-USE_LAST_N_ROWS);
+
+async function updateGradient() {
+  let responses = await lo_di_da_fr_sh();
+
+  if (us_la_n_ro && responses.length > us_la_n_ro) {
+    responses = responses.slice(-us_la_n_ro);
   }
 
   console.log("Total responses read:", responses.length);
 
-  const { vegan, meat } = countDiet(responses);
-  applyDynamicGradient(vegan, meat);
+  const { vegan, meat } = co_di(responses);
+  ap_dy_gr(vegan, meat);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  ge_qr();
+
+  // Initial load
+  await updateGradient();
+
+  // Auto-refresh every 5 seconds
+  setInterval(updateGradient, 5000);
 });

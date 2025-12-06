@@ -1,14 +1,11 @@
-/***************************************
- * LOAD REAL DATASET FROM CSV
- ***************************************/
-let foodData = [];
-let spending = {};
-let tutorialMode = false;
-let tutorialStep = 0;
 
-d3.csv("hanif_data/food_dataset.csv").then(data => {
-    // Convert CSV rows into usable objects
-    foodData = data.map(d => ({
+let fo_da = [];
+let sp = {};
+let tu_mo = false;
+let tu_st = 0;
+
+d3.csv("hanif_data/food_dataset.csv").then(da => {
+    fo_da = da.map(d => ({
         name: d.name,
         type: d.type,
         basePrice: +d.basePrice,
@@ -19,94 +16,79 @@ d3.csv("hanif_data/food_dataset.csv").then(data => {
         mass: +d.mass
     }));
 
-    // Initialize spending object
-    foodData.forEach(f => spending[f.name] = f.basePrice);
+    fo_da.forEach(f => sp[f.name] = f.basePrice);
 
-    // Build sliders dynamically
-    buildSliders();
+    bu_sl();
 
-    // Render all D3 visualizations
-    updateAllVisualizations();
+    up_al_vi();
 });
 
+const ca = document.getElementById('particles');
+const ct = ca.getContext('2d');
+ca.width = window.innerWidth;
+ca.height = window.innerHeight;
 
-/***************************************
- * PARTICLE BACKGROUND ANIMATION
- ***************************************/
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const particles = [];
+const pa = [];
 for (let i = 0; i < 100; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+    pa.push({
+        x: Math.random() * ca.width,
+        y: Math.random() * ca.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         radius: Math.random() * 2 + 1
     });
 }
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+function an_pa() {
+    ct.clearRect(0, 0, ca.width, ca.height);
 
-    particles.forEach((p, i) => {
+    pa.forEach((p, i) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        if (p.x < 0 || p.x > ca.width) p.vx *= -1;
+        if (p.y < 0 || p.y > ca.height) p.vy *= -1;
 
-        ctx.fillStyle = `rgba(59, 130, 246, ${0.3 + Math.sin(Date.now() / 1000 + i) * 0.2})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
+        ct.fillStyle = `rgba(59, 130, 246, ${0.3 + Math.sin(Date.now() / 1000 + i) * 0.2})`;
+        ct.beginPath();
+        ct.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ct.fill();
 
-        particles.forEach((p2, j) => {
+        pa.forEach((p2, j) => {
             if (i < j) {
                 const dx = p.x - p2.x;
                 const dy = p.y - p2.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < 100) {
-                    ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 * (1 - dist / 100)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
+                    ct.strokeStyle = `rgba(59, 130, 246, ${0.2 * (1 - dist / 100)})`;
+                    ct.lineWidth = 0.5;
+                    ct.beginPath();
+                    ct.moveTo(p.x, p.y);
+                    ct.lineTo(p2.x, p2.y);
+                    ct.stroke();
                 }
             }
         });
     });
 
-    requestAnimationFrame(animateParticles);
+    requestAnimationFrame(an_pa);
 }
-animateParticles();
+an_pa();
 
-
-/***************************************
- * SCROLL PROGRESS BAR & SECTION REVEAL
- ***************************************/
 window.addEventListener('scroll', () => {
-    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    document.getElementById('progress').style.width = scrolled + '%';
+    const sc = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progress').style.width = sc + '%';
 
-    document.querySelectorAll('.section').forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.75) {
-            section.classList.add('active');
+    document.querySelectorAll('.section').forEach(se => {
+        const re = se.getBoundingClientRect();
+        if (re.top < window.innerHeight * 0.75) {
+            se.classList.add('active');
         }
     });
 });
 
-
-/***************************************
- * ENHANCED AUTO-SCROLL TUTORIAL SYSTEM
- ***************************************/
-const tutorialScenarios = [
+const tu_sc = [
     {
         section: 0,
         duration: 4000,
@@ -114,8 +96,6 @@ const tutorialScenarios = [
         message: "🌍 Welcome to Your Food Impact Journey! Let's explore how different diets affect your health and our planet.",
         title: "Introduction"
     },
-
-    // THE STANDARD AMERICAN DIET
     {
         section: 1,
         duration: 5000,
@@ -130,8 +110,6 @@ const tutorialScenarios = [
         message: "📊 Impact Check: This diet shows negative environmental ROI. The planets cluster toward the center, indicating lower combined benefits.",
         title: "Traditional Diet Impact"
     },
-
-    // FLEXITARIAN APPROACH
     {
         section: 1,
         duration: 5000,
@@ -146,8 +124,6 @@ const tutorialScenarios = [
         message: "📈 Getting Better: Notice how the planets spread outward? That's improved health and environmental scores combining!",
         title: "Flexitarian Results"
     },
-
-    // MEDITERRANEAN DIET
     {
         section: 1,
         duration: 5000,
@@ -162,8 +138,6 @@ const tutorialScenarios = [
         message: "✨ Strong Performance: Planets move further out, showing positive ROI. Health and environment both benefit!",
         title: "Mediterranean Impact"
     },
-
-    // PESCATARIAN
     {
         section: 1,
         duration: 5000,
@@ -178,8 +152,6 @@ const tutorialScenarios = [
         message: "🌟 Excellent Progress: The cosmic view shows planets pushing into the outer orbits. Strong combined benefits!",
         title: "Pescatarian Benefits"
     },
-
-    // VEGETARIAN
     {
         section: 1,
         duration: 5000,
@@ -194,8 +166,6 @@ const tutorialScenarios = [
         message: "🚀 Outstanding Impact: Most planets reach the outer orbits. High positive ROI for both health and environment!",
         title: "Vegetarian Results"
     },
-
-    // FULL PLANT-BASED
     {
         section: 1,
         duration: 5000,
@@ -210,8 +180,6 @@ const tutorialScenarios = [
         message: "🌈 Peak Performance: The planets reach their maximum distance from center. Optimal ROI across both dimensions!",
         title: "Plant-Based Impact"
     },
-
-    // PROTEIN-FOCUSED CARNIVORE (For Comparison)
     {
         section: 1,
         duration: 5000,
@@ -226,8 +194,6 @@ const tutorialScenarios = [
         message: "⚠️ Reality Check: Planets cluster near center with lower scores. This shows the trade-offs of protein-heavy animal diets.",
         title: "Carnivore Trade-offs"
     },
-
-    // OPTIMAL BALANCED
     {
         section: 1,
         duration: 5000,
@@ -242,8 +208,6 @@ const tutorialScenarios = [
         message: "💚 Finding Balance: Strong planetary distribution showing excellent overall performance. A realistic, sustainable approach!",
         title: "Balanced Results"
     },
-
-    // FINAL SUMMARY
     {
         section: 0,
         duration: 6000,
@@ -253,170 +217,156 @@ const tutorialScenarios = [
     }
 ];
 
-function startTutorial() {
-    tutorialMode = true;
-    tutorialStep = 0;
+function st_tu() {
+    tu_mo = true;
+    tu_st = 0;
     document.getElementById('tutorial-btn').style.display = 'none';
     document.getElementById('stop-tutorial-btn').style.display = 'inline-block';
     document.getElementById('tutorial-progress').style.opacity = '1';
-    runTutorialStep();
+    ru_tu_st();
 }
 
-function stopTutorial() {
-    tutorialMode = false;
+function so_tu() {
+    tu_mo = false;
     document.getElementById('tutorial-btn').style.display = 'inline-block';
     document.getElementById('stop-tutorial-btn').style.display = 'none';
-    hideTutorialMessage();
+    hi_tu_me();
 }
 
-function runTutorialStep() {
-    if (!tutorialMode || tutorialStep >= tutorialScenarios.length) {
-        stopTutorial();
+function ru_tu_st() {
+    if (!tu_mo || tu_st >= tu_sc.length) {
+        so_tu();
         return;
     }
 
-    const scenario = tutorialScenarios[tutorialStep];
+    const sc = tu_sc[tu_st];
 
-    // Show message with title
-    showTutorialMessage(scenario.message, scenario.title);
+    sh_tu_me(sc.message, sc.title);
 
-    // Update progress indicator
-    updateTutorialProgress();
+    up_tu_pr();
 
-    // Scroll to section
-    const sections = document.querySelectorAll('.section');
-    if (sections[scenario.section]) {
-        sections[scenario.section].scrollIntoView({ behavior: 'smooth' });
+    const se = document.querySelectorAll('.section');
+    if (se[sc.section]) {
+        se[sc.section].scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Apply spending changes gradually
     setTimeout(() => {
-        applySpendingChanges(scenario.changes);
+        ap_sp_ch(sc.changes);
     }, 1000);
 
-    // Move to next step
-    tutorialStep++;
+    tu_st++;
     setTimeout(() => {
-        if (tutorialMode) runTutorialStep();
-    }, scenario.duration);
+        if (tu_mo) ru_tu_st();
+    }, sc.duration);
 }
 
-function updateTutorialProgress() {
-    const progressBar = document.getElementById('tutorial-progress-fill');
-    const progressText = document.getElementById('tutorial-progress-text');
+function up_tu_pr() {
+    const pr_ba = document.getElementById('tutorial-progress-fill');
+    const pr_te = document.getElementById('tutorial-progress-text');
 
-    const progress = ((tutorialStep + 1) / tutorialScenarios.length) * 100;
-    progressBar.style.width = progress + '%';
-    progressText.textContent = `Chapter ${tutorialStep + 1} of ${tutorialScenarios.length}`;
+    const pr = ((tu_st + 1) / tu_sc.length) * 100;
+    pr_ba.style.width = pr + '%';
+    pr_te.textContent = `Chapter ${tu_st + 1} of ${tu_sc.length}`;
 }
 
-function applySpendingChanges(changes) {
-    const hasCustomScenario = Object.keys(changes).length > 0;
+function ap_sp_ch(ch) {
+    const ha_cu_sc = Object.keys(ch).length > 0;
 
-    foodData.forEach(food => {
-        const targetValue = hasCustomScenario
-            ? (Object.prototype.hasOwnProperty.call(changes, food.name) ? changes[food.name] : 0)
-            : food.basePrice;
-        animateSliderChange(food.name, targetValue);
+    fo_da.forEach(f => {
+        const ta_va = ha_cu_sc
+            ? (Object.prototype.hasOwnProperty.call(ch, f.name) ? ch[f.name] : 0)
+            : f.basePrice;
+        an_sl_ch(f.name, ta_va);
     });
 }
 
-function animateSliderChange(foodName, targetValue) {
-    const currentValue = spending[foodName];
-    const duration = 1500;
-    const steps = 30;
-    const increment = (targetValue - currentValue) / steps;
-    let step = 0;
+function an_sl_ch(fo_na, ta_va) {
+    const cu_va = sp[fo_na];
+    const du = 1500;
+    const st_ps = 30;
+    const in_cr = (ta_va - cu_va) / st_ps;
+    let st = 0;
 
-    const interval = setInterval(() => {
-        step++;
-        spending[foodName] = currentValue + (increment * step);
+    const in_vl = setInterval(() => {
+        st++;
+        sp[fo_na] = cu_va + (in_cr * st);
 
-        // Update slider
-        const slider = d3.select(`#slider-${foodName}`).node();
-        if (slider) {
-            slider.value = spending[foodName];
-            d3.select(`#val-${foodName}`).text('$' + spending[foodName].toFixed(1));
+        const sl = d3.select(`#slider-${fo_na}`).node();
+        if (sl) {
+            sl.value = sp[fo_na];
+            d3.select(`#val-${fo_na}`).text('$' + sp[fo_na].toFixed(1));
         }
 
-        updateAllVisualizations();
+        up_al_vi();
 
-        if (step >= steps) {
-            clearInterval(interval);
-            spending[foodName] = targetValue;
+        if (st >= st_ps) {
+            clearInterval(in_vl);
+            sp[fo_na] = ta_va;
         }
-    }, duration / steps);
+    }, du / st_ps);
 }
 
-function showTutorialMessage(message, title) {
-    const msgBox = document.getElementById('tutorial-message');
-    const titleBox = document.getElementById('tutorial-title');
-    const container = document.getElementById('tutorial-message-container');
+function sh_tu_me(me, ti) {
+    const ms_bo = document.getElementById('tutorial-message');
+    const ti_bo = document.getElementById('tutorial-title');
+    const co = document.getElementById('tutorial-message-container');
 
-    titleBox.textContent = title || '';
-    msgBox.textContent = message;
+    ti_bo.textContent = ti || '';
+    ms_bo.textContent = me;
 
-    container.style.opacity = '1';
-    msgBox.style.opacity = '1';
-    msgBox.style.transform = 'translateY(0)';
+    co.style.opacity = '1';
+    ms_bo.style.opacity = '1';
+    ms_bo.style.transform = 'translateY(0)';
 }
 
-function hideTutorialMessage() {
-    const msgBox = document.getElementById('tutorial-message');
-    const container = document.getElementById('tutorial-message-container');
-    const progressContainer = document.getElementById('tutorial-progress');
+function hi_tu_me() {
+    const ms_bo = document.getElementById('tutorial-message');
+    const co = document.getElementById('tutorial-message-container');
+    const pr_co = document.getElementById('tutorial-progress');
 
-    container.style.opacity = '0';
-    msgBox.style.opacity = '0';
-    msgBox.style.transform = 'translateY(-20px)';
-    progressContainer.style.opacity = '0';
+    co.style.opacity = '0';
+    ms_bo.style.opacity = '0';
+    ms_bo.style.transform = 'translateY(-20px)';
+    pr_co.style.opacity = '0';
 }
 
 
-/***************************************
- * SLIDER BUILDER (Runs after CSV loads)
- ***************************************/
-function buildSliders() {
-    const sliderContainer = d3.select('#sliders');
-    sliderContainer.selectAll('*').remove();
+function bu_sl() {
+    const sl_co = d3.select('#sliders');
+    sl_co.selectAll('*').remove();
 
-    foodData.forEach(food => {
-        const item = sliderContainer.append('div')
+    fo_da.forEach(f => {
+        const it = sl_co.append('div')
             .attr('class', 'slider-item')
-            .style('border-left-color', food.color);
+            .style('border-left-color', f.color);
 
-        item.append('div')
+        it.append('div')
             .attr('class', 'slider-label')
             .html(`
-                <span>${food.emoji} ${food.name}</span>
-                <span class="slider-value" id="val-${food.name}">$${food.basePrice}</span>
+                <span>${f.emoji} ${f.name}</span>
+                <span class="slider-value" id="val-${f.name}">$${f.basePrice}</span>
             `);
 
-        item.append('input')
+        it.append('input')
             .attr('type', 'range')
-            .attr('id', `slider-${food.name}`)
+            .attr('id', `slider-${f.name}`)
             .attr('min', 0)
             .attr('max', 30)
             .attr('step', 0.5)
-            .attr('value', food.basePrice)
+            .attr('value', f.basePrice)
             .on('input', function () {
-                if (tutorialMode) return; // Disable manual control during tutorial
-                spending[food.name] = +this.value;
-                d3.select(`#val-${food.name}`).text('$' + this.value);
-                updateAllVisualizations();
+                if (tu_mo) return;
+                sp[f.name] = +this.value;
+                d3.select(`#val-${f.name}`).text('$' + this.value);
+                up_al_vi();
             });
     });
 }
 
+let v11_to = d3.select('.viz11-tooltip');
 
-/***************************************
- * TOOLTIP SYSTEM (SCOPED TO VIZ11)
- ***************************************/
-// Scoped tooltip utilities
-let viz11Tooltip = d3.select('.viz11-tooltip');
-
-function applyViz11TooltipStyles(selection) {
-    selection
+function ap_v11_to_st(se) {
+    se
         .style('position', 'fixed')
         .style('padding', '12px 16px')
         .style('background', 'rgba(15, 20, 25, 0.95)')
@@ -433,114 +383,104 @@ function applyViz11TooltipStyles(selection) {
         .style('white-space', 'nowrap');
 }
 
-function ensureViz11Tooltip() {
-    if (viz11Tooltip.empty() || !viz11Tooltip.node() || !viz11Tooltip.node().isConnected) {
-        viz11Tooltip = d3.select('.viz11-tooltip');
-        if (viz11Tooltip.empty()) {
-            viz11Tooltip = d3.select('body').append('div').attr('class', 'viz11-tooltip');
+function en_v11_to() {
+    if (v11_to.empty() || !v11_to.node() || !v11_to.node().isConnected) {
+        v11_to = d3.select('.viz11-tooltip');
+        if (v11_to.empty()) {
+            v11_to = d3.select('body').append('div').attr('class', 'viz11-tooltip');
         }
     }
 
-    const node = viz11Tooltip.node();
-    if (node && node.parentNode !== document.body) {
-        document.body.appendChild(node);
+    const no = v11_to.node();
+    if (no && no.parentNode !== document.body) {
+        document.body.appendChild(no);
     }
 
-    applyViz11TooltipStyles(viz11Tooltip);
+    ap_v11_to_st(v11_to);
 }
 
-ensureViz11Tooltip();
+en_v11_to();
 
-function showTooltip(event, food) {
-    ensureViz11Tooltip();
-    const weight = spending[food.name] * food.mass;
-    viz11Tooltip.html(`
+function sh_to(ev, f) {
+    en_v11_to();
+    const we = sp[f.name] * f.mass;
+    v11_to.html(`
         <div style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">
-            ${food.emoji} ${food.name}
+            ${f.emoji} ${f.name}
         </div>
-        <div style="margin-bottom: 4px;">Type: <span style="color: ${food.color}">${food.type}</span></div>
-        <div style="margin-bottom: 4px;">Spending: $${spending[food.name].toFixed(2)}</div>
-        <div style="margin-bottom: 4px;">Weight: ${weight.toFixed(1)} units</div>
-        <div style="margin-bottom: 4px;">Health ROI: <span style="color: ${food.healthROI > 0 ? '#10b981' : '#ef4444'}">${food.healthROI > 0 ? '+' : ''}${food.healthROI}</span></div>
-        <div>Environment ROI: <span style="color: ${food.envROI > 0 ? '#10b981' : '#ef4444'}">${food.envROI > 0 ? '+' : ''}${food.envROI}</span></div>
+        <div style="margin-bottom: 4px;">Type: <span style="color: ${f.color}">${f.type}</span></div>
+        <div style="margin-bottom: 4px;">Spending: $${sp[f.name].toFixed(2)}</div>
+        <div style="margin-bottom: 4px;">Weight: ${we.toFixed(1)} units</div>
+        <div style="margin-bottom: 4px;">Health ROI: <span style="color: ${f.healthROI > 0 ? '#10b981' : '#ef4444'}">${f.healthROI > 0 ? '+' : ''}${f.healthROI}</span></div>
+        <div>Environment ROI: <span style="color: ${f.envROI > 0 ? '#10b981' : '#ef4444'}">${f.envROI > 0 ? '+' : ''}${f.envROI}</span></div>
     `)
-        .style('left', (event.clientX + 15) + 'px')
-        .style('top', (event.clientY - 15) + 'px')
+        .style('left', (ev.clientX + 15) + 'px')
+        .style('top', (ev.clientY - 15) + 'px')
         .style('display', 'block')
         .style('opacity', 1);
 }
 
-function hideTooltip() {
-    ensureViz11Tooltip();
-    viz11Tooltip
+function hi_to() {
+    en_v11_to();
+    v11_to
         .style('opacity', 0)
         .style('display', 'none');
 }
 
+const se_wi = 1200;
+const se_he = 700;
+const se_sv = d3.select('#seesaw-viz')
+    .attr('viewBox', `0 0 ${se_wi} ${se_he}`);
 
-/***************************************
- * SEE-SAW VISUALIZATION
- ***************************************/
-const seesawWidth = 1200;
-const seesawHeight = 700;
-const seesawSvg = d3.select('#seesaw-viz')
-    .attr('viewBox', `0 0 ${seesawWidth} ${seesawHeight}`);
+const ce_x = se_wi / 2;
+const fu_y = se_he / 2 + 50;
 
-const centerX = seesawWidth / 2;
-const fulcrumY = seesawHeight / 2 + 50;
+const de = se_sv.append('defs');
 
-const defs = seesawSvg.append('defs');
-
-// Ground Gradient
-const groundGrad = defs.append('linearGradient')
+const gr_gr = de.append('linearGradient')
     .attr('id', 'groundGradient')
     .attr('x1', '0%').attr('y1', '0%')
     .attr('x2', '0%').attr('y2', '100%');
-groundGrad.append('stop').attr('offset', '0%').attr('stop-color', '#1a2332');
-groundGrad.append('stop').attr('offset', '100%').attr('stop-color', '#0f1419');
+gr_gr.append('stop').attr('offset', '0%').attr('stop-color', '#1a2332');
+gr_gr.append('stop').attr('offset', '100%').attr('stop-color', '#0f1419');
 
-// Draw ground
-seesawSvg.append('rect')
+se_sv.append('rect')
     .attr('x', 0)
-    .attr('y', fulcrumY + 80)
-    .attr('width', seesawWidth)
+    .attr('y', fu_y + 80)
+    .attr('width', se_wi)
     .attr('height', 200)
     .attr('fill', 'url(#groundGradient)');
 
-// Fulcrum Gradient
-const fulcrumGrad = defs.append('linearGradient')
+const fu_gr = de.append('linearGradient')
     .attr('id', 'fulcrumGradient')
     .attr('x1', '0%').attr('y1', '0%')
     .attr('x2', '0%').attr('y2', '100%');
-fulcrumGrad.append('stop').attr('offset', '0%').attr('stop-color', '#2563eb');
-fulcrumGrad.append('stop').attr('offset', '100%').attr('stop-color', '#3b82f6');
+fu_gr.append('stop').attr('offset', '0%').attr('stop-color', '#2563eb');
+fu_gr.append('stop').attr('offset', '100%').attr('stop-color', '#3b82f6');
 
-// Fulcrum triangle
-const fulcrum = seesawSvg.append('g')
-    .attr('transform', `translate(${centerX},${fulcrumY})`);
-fulcrum.append('polygon')
+const fu = se_sv.append('g')
+    .attr('transform', `translate(${ce_x},${fu_y})`);
+fu.append('polygon')
     .attr('points', '-40,80 40,80 0,0')
     .attr('fill', 'url(#fulcrumGradient)')
     .attr('stroke', '#3b82f6')
     .attr('stroke-width', 3);
 
-// Plank group
-const plankGroup = seesawSvg.append('g').attr('class', 'plank-group');
-const plankLength = 500;
+const pl_gr = se_sv.append('g').attr('class', 'plank-group');
+const pl_le = 500;
 
-// Plank graphic
-const plankGrad = defs.append('linearGradient')
+const pl_gr_ad = de.append('linearGradient')
     .attr('id', 'plankGradient')
     .attr('x1', '0%').attr('y1', '0%')
     .attr('x2', '100%').attr('y2', '0%');
-plankGrad.append('stop').attr('offset', '0%').attr('stop-color', '#ef4444');
-plankGrad.append('stop').attr('offset', '50%').attr('stop-color', '#64748b');
-plankGrad.append('stop').attr('offset', '100%').attr('stop-color', '#10b981');
+pl_gr_ad.append('stop').attr('offset', '0%').attr('stop-color', '#ef4444');
+pl_gr_ad.append('stop').attr('offset', '50%').attr('stop-color', '#64748b');
+pl_gr_ad.append('stop').attr('offset', '100%').attr('stop-color', '#10b981');
 
-plankGroup.append('rect')
-    .attr('x', -plankLength / 2)
+pl_gr.append('rect')
+    .attr('x', -pl_le / 2)
     .attr('y', -15)
-    .attr('width', plankLength)
+    .attr('width', pl_le)
     .attr('height', 30)
     .attr('rx', 15)
     .attr('fill', 'url(#plankGradient)')
@@ -548,30 +488,25 @@ plankGroup.append('rect')
     .attr('stroke-width', 2)
     .style('filter', 'drop-shadow(0 10px 20px rgba(0,0,0,0.5))');
 
-const leftSide = plankGroup.append('g').attr('class', 'left-side');
-const rightSide = plankGroup.append('g').attr('class', 'right-side');
+const le_si = pl_gr.append('g').attr('class', 'left-side');
+const ri_si = pl_gr.append('g').attr('class', 'right-side');
 
+const ra_wi = 1200;
+const ra_he = 800;
 
-/***************************************
- * RADIAL COSMIC VISUALIZATION
- ***************************************/
-const radialWidth = 1200;
-const radialHeight = 800;
+const ra_sv = d3.select('#radial-viz')
+    .attr('viewBox', `0 0 ${ra_wi} ${ra_he}`);
 
-const radialSvg = d3.select('#radial-viz')
-    .attr('viewBox', `0 0 ${radialWidth} ${radialHeight}`);
+const ra_ce_x = ra_wi / 2;
+const ra_ce_y = ra_he / 2;
 
-const radialCenterX = radialWidth / 2;
-const radialCenterY = radialHeight / 2;
+const co_bg = ra_sv.append('g').attr('class', 'cosmic-bg');
 
-const cosmicBg = radialSvg.append('g').attr('class', 'cosmic-bg');
-
-// Orbital rings
-const orbits = [50, 100, 150, 200, 250, 300];
-orbits.forEach((radius, i) => {
-    cosmicBg.append('circle')
-        .attr('cx', radialCenterX)
-        .attr('cy', radialCenterY)
+const or = [50, 100, 150, 200, 250, 300];
+or.forEach((ra, i) => {
+    co_bg.append('circle')
+        .attr('cx', ra_ce_x)
+        .attr('cy', ra_ce_y)
         .attr('r', 0)
         .attr('fill', 'none')
         .attr('stroke', `rgba(59, 130, 246, ${0.3 - i * 0.04})`)
@@ -580,12 +515,12 @@ orbits.forEach((radius, i) => {
         .transition()
         .delay(i * 200)
         .duration(1500)
-        .attr('r', radius);
+        .attr('r', ra);
 
     if (i > 0) {
-        cosmicBg.append('text')
-            .attr('x', radialCenterX)
-            .attr('y', radialCenterY - radius)
+        co_bg.append('text')
+            .attr('x', ra_ce_x)
+            .attr('y', ra_ce_y - ra)
             .attr('text-anchor', 'middle')
             .attr('fill', `rgba(59, 130, 246, ${0.5 - i * 0.05})`)
             .attr('font-size', '12px')
@@ -598,11 +533,10 @@ orbits.forEach((radius, i) => {
     }
 });
 
-// Core
-const core = radialSvg.append('g')
-    .attr('transform', `translate(${radialCenterX},${radialCenterY})`);
+const co = ra_sv.append('g')
+    .attr('transform', `translate(${ra_ce_x},${ra_ce_y})`);
 
-core.append('circle')
+co.append('circle')
     .attr('r', 0)
     .attr('fill', 'url(#coreGradient)')
     .style('filter', 'drop-shadow(0 0 30px rgba(59, 130, 246, 0.8))')
@@ -610,13 +544,12 @@ core.append('circle')
     .duration(2000)
     .attr('r', 40);
 
-// Core gradient
-const coreGrad = defs.append('radialGradient')
+const co_gr = de.append('radialGradient')
     .attr('id', 'coreGradient');
-coreGrad.append('stop').attr('offset', '0%').attr('stop-color', '#3b82f6');
-coreGrad.append('stop').attr('offset', '100%').attr('stop-color', '#2563eb');
+co_gr.append('stop').attr('offset', '0%').attr('stop-color', '#3b82f6');
+co_gr.append('stop').attr('offset', '100%').attr('stop-color', '#2563eb');
 
-core.append('text')
+co.append('text')
     .attr('text-anchor', 'middle')
     .attr('dy', '.3em')
     .attr('fill', '#fff')
@@ -629,166 +562,158 @@ core.append('text')
     .duration(500)
     .attr('opacity', 1);
 
-
-function pulseCore() {
-    core.select('circle')
+function pu_co() {
+    co.select('circle')
         .transition()
         .duration(2000)
         .attr('r', 45)
         .transition()
         .duration(2000)
         .attr('r', 40)
-        .on('end', pulseCore);
+        .on('end', pu_co);
 }
-setTimeout(pulseCore, 2000);
+setTimeout(pu_co, 2000);
 
-const foodPlanets = radialSvg.append('g').attr('class', 'food-planets');
+const fo_pl = ra_sv.append('g').attr('class', 'food-planets');
 
+function up_se() {
+    const no_ve = fo_da.filter(f => f.type === 'animal');
+    const ve = fo_da.filter(f => f.type === 'plant');
 
-/***************************************
- * SEE-SAW UPDATE FUNCTION
- ***************************************/
-function updateSeeSaw() {
-    const nonVegan = foodData.filter(f => f.type === 'animal');
-    const vegan = foodData.filter(f => f.type === 'plant');
+    const no_ve_to = no_ve.reduce((s, f) => s + sp[f.name] * f.mass, 0);
+    const ve_to = ve.reduce((s, f) => s + sp[f.name] * f.mass, 0);
 
-    const nonVeganTotal = nonVegan.reduce((sum, f) => sum + spending[f.name] * f.mass, 0);
-    const veganTotal = vegan.reduce((sum, f) => sum + spending[f.name] * f.mass, 0);
+    const to_we = no_ve_to + ve_to;
+    const ba = (ve_to - no_ve_to) / (to_we || 1);
+    const an = ba * 25;
 
-    const totalWeight = nonVeganTotal + veganTotal;
-    const balance = (veganTotal - nonVeganTotal) / (totalWeight || 1);
-    const angle = balance * 25;
+    pl_gr.transition().duration(1000).ease(d3.easeBounceOut)
+        .attr('transform', `translate(${ce_x},${fu_y}) rotate(${an})`);
 
-    plankGroup.transition().duration(1000).ease(d3.easeBounceOut)
-        .attr('transform', `translate(${centerX},${fulcrumY}) rotate(${angle})`);
+    d3.select('#non-vegan-total').text(no_ve.reduce((s, f) => s + sp[f.name], 0).toFixed(2));
+    d3.select('#vegan-total').text(ve.reduce((s, f) => s + sp[f.name], 0).toFixed(2));
 
-    d3.select('#non-vegan-total').text(nonVegan.reduce((s, f) => s + spending[f.name], 0).toFixed(2));
-    d3.select('#vegan-total').text(vegan.reduce((s, f) => s + spending[f.name], 0).toFixed(2));
+    le_si.selectAll('*').remove();
+    ri_si.selectAll('*').remove();
 
-    leftSide.selectAll('*').remove();
-    rightSide.selectAll('*').remove();
+    function re_si(it, gr, is_ve) {
+        it.forEach((f, i) => {
+            const we = sp[f.name] * f.mass;
+            const si = Math.sqrt(we) * 8 + 20;
+            const x = is_ve ? pl_le / 2 - 60 : -pl_le / 2 + 60;
+            const y = -si - 20 - i * (si + 10);
 
-    function renderSide(items, group, isVegan) {
-        items.forEach((food, i) => {
-            const weight = spending[food.name] * food.mass;
-            const size = Math.sqrt(weight) * 8 + 20;
-            const xPos = isVegan ? plankLength / 2 - 60 : -plankLength / 2 + 60;
-            const yPos = -size - 20 - i * (size + 10);
-
-            const g = group.append('g')
+            const g = gr.append('g')
                 .attr('class', 'food-item')
                 .style('cursor', 'pointer')
-                .on('mouseover', function (event) {
-                    showTooltip(event, food);
+                .on('mouseover', function (ev) {
+                    sh_to(ev, f);
                 })
-                .on('mousemove', function (event) {
-                    viz11Tooltip.style('left', (event.clientX + 15) + 'px')
-                        .style('top', (event.clientY - 15) + 'px');
+                .on('mousemove', function (ev) {
+                    v11_to.style('left', (ev.clientX + 15) + 'px')
+                        .style('top', (ev.clientY - 15) + 'px');
                 })
-                .on('mouseout', hideTooltip);
+                .on('mouseout', hi_to);
 
-            g.attr('transform', `translate(${xPos},${-200})`)
+            g.attr('transform', `translate(${x},${-200})`)
                 .transition().delay(i * 100).duration(800).ease(d3.easeBounceOut)
-                .attr('transform', `translate(${xPos},${yPos})`);
+                .attr('transform', `translate(${x},${y})`);
 
             g.append('circle')
                 .attr('r', 0)
-                .attr('fill', food.color)
+                .attr('fill', f.color)
                 .attr('stroke', '#e8eaed')
                 .attr('stroke-width', 3)
-                .style('filter', `drop-shadow(0 5px 15px ${food.color})`)
+                .style('filter', `drop-shadow(0 5px 15px ${f.color})`)
                 .transition().delay(i * 100 + 400).duration(400)
-                .attr('r', size / 2);
+                .attr('r', si / 2);
 
             g.append('text')
                 .attr('text-anchor', 'middle')
                 .attr('dy', '.3em')
-                .style('font-size', `${size / 2.5}px`)
+                .style('font-size', `${si / 2.5}px`)
                 .style('opacity', 0)
-                .text(food.emoji)
+                .text(f.emoji)
                 .transition().delay(i * 100 + 600).duration(300)
                 .style('opacity', 1);
 
             g.append('text')
-                .attr('y', size / 2 + 20)
+                .attr('y', si / 2 + 20)
                 .attr('text-anchor', 'middle')
                 .attr('fill', '#e8eaed')
                 .style('font-size', '11px')
                 .style('font-weight', 'bold')
                 .style('opacity', 0)
-                .text(`${spending[food.name].toFixed(1)}`)
+                .text(`${sp[f.name].toFixed(1)}`)
                 .transition().delay(i * 100 + 700).duration(300)
                 .style('opacity', 1);
         });
     }
 
-    renderSide(nonVegan, leftSide, false);
-    renderSide(vegan, rightSide, true);
+    re_si(no_ve, le_si, false);
+    re_si(ve, ri_si, true);
 }
 
 
-/***************************************
- * RADIAL UPDATE FUNCTION
- ***************************************/
-function updateRadial() {
-    foodPlanets.selectAll('*').remove();
+function up_ra() {
+    fo_pl.selectAll('*').remove();
 
-    const roiScale = d3.scaleLinear().domain([-70, 100]).range([80, 300]);
+    const ro_sc = d3.scaleLinear().domain([-70, 100]).range([80, 300]);
 
-    foodData.forEach((food, i) => {
-        const combined = food.healthROI + food.envROI;
-        const angle = (i / foodData.length) * 2 * Math.PI - Math.PI / 2;
-        const dist = roiScale(combined);
+    fo_da.forEach((f, i) => {
+        const co_sc = f.healthROI + f.envROI;
+        const an = (i / fo_da.length) * 2 * Math.PI - Math.PI / 2;
+        const dist = ro_sc(co_sc);
 
-        const x = Math.cos(angle) * dist;
-        const y = Math.sin(angle) * dist;
+        const x = Math.cos(an) * dist;
+        const y = Math.sin(an) * dist;
 
-        const size = Math.sqrt(spending[food.name]) * 6 + 15;
+        const si = Math.sqrt(sp[f.name]) * 6 + 15;
 
-        const planet = foodPlanets.append('g')
-            .attr('transform', `translate(${radialCenterX},${radialCenterY})`)
+        const pl = fo_pl.append('g')
+            .attr('transform', `translate(${ra_ce_x},${ra_ce_y})`)
             .style('cursor', 'pointer')
-            .on('mouseover', function (event) {
-                showTooltip(event, food);
+            .on('mouseover', function (ev) {
+                sh_to(ev, f);
             })
-            .on('mousemove', function (event) {
-                viz11Tooltip.style('left', (event.clientX + 15) + 'px')
-                    .style('top', (event.clientY - 15) + 'px');
+            .on('mousemove', function (ev) {
+                v11_to.style('left', (ev.clientX + 15) + 'px')
+                    .style('top', (ev.clientY - 15) + 'px');
             })
-            .on('mouseout', hideTooltip);
+            .on('mouseout', hi_to);
 
-        planet.append('circle')
+        pl.append('circle')
             .attr('r', 0)
-            .attr('fill', food.color)
+            .attr('fill', f.color)
             .attr('opacity', 0.2)
             .transition().delay(i * 150).duration(1000)
             .attr('transform', `translate(${x},${y})`)
-            .attr('r', size * 1.5);
+            .attr('r', si * 1.5);
 
-        planet.append('circle')
+        pl.append('circle')
             .attr('r', 0)
-            .attr('fill', food.color)
+            .attr('fill', f.color)
             .attr('stroke', '#e8eaed')
             .attr('stroke-width', 2)
-            .style('filter', `drop-shadow(0 0 15px ${food.color})`)
+            .style('filter', `drop-shadow(0 0 15px ${f.color})`)
             .transition().delay(i * 150).duration(1000)
             .attr('transform', `translate(${x},${y})`)
-            .attr('r', size);
+            .attr('r', si);
 
-        planet.append('text')
+        pl.append('text')
             .attr('text-anchor', 'middle')
             .attr('dy', '.3em')
-            .text(food.emoji)
-            .style('font-size', `${size * 0.8}px`)
+            .text(f.emoji)
+            .style('font-size', `${si * 0.8}px`)
             .style('opacity', 0)
             .transition().delay(i * 150 + 800).duration(400)
             .attr('transform', `translate(${x},${y})`)
             .style('opacity', 1);
 
-        planet.append('text')
+        pl.append('text')
             .attr('text-anchor', 'middle')
             .attr('dy', '2.8em')
-            .text(food.name)
+            .text(f.name)
             .style('fill', '#e8eaed')
             .style('font-weight', 'bold')
             .style('opacity', 0)
@@ -797,52 +722,39 @@ function updateRadial() {
             .style('opacity', 1);
     });
 
-    // ROI totals
-    let totalHealth = 0;
-    let totalEnv = 0;
-    foodData.forEach(food => {
-        const weight = spending[food.name] / 30;
-        totalHealth += food.healthROI * weight;
-        totalEnv += food.envROI * weight;
+    let to_he = 0;
+    let to_en = 0;
+    fo_da.forEach(f => {
+        const we = sp[f.name] / 30;
+        to_he += f.healthROI * we;
+        to_en += f.envROI * we;
     });
 
-    d3.select('#health-roi').text(totalHealth.toFixed(0));
-    d3.select('#env-roi').text(totalEnv.toFixed(0));
-    d3.select('#total-roi').text((totalHealth + totalEnv).toFixed(0));
+    d3.select('#health-roi').text(to_he.toFixed(0));
+    d3.select('#env-roi').text(to_en.toFixed(0));
+    d3.select('#total-roi').text((to_he + to_en).toFixed(0));
 }
 
-
-/***************************************
- * MASTER UPDATE FUNCTION
- ***************************************/
-function updateAllVisualizations() {
-    if (!foodData.length) return;
-    updateSeeSaw();
-    updateRadial();
+function up_al_vi() {
+    if (!fo_da.length) return;
+    up_se();
+    up_ra();
 }
 
-
-/***************************************
- * SECTION FADE-IN OBSERVER
- ***************************************/
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
+const ob = new IntersectionObserver((en) => {
+    en.forEach(it => {
+        if (it.isIntersecting) it.target.classList.add('active');
     });
 }, { threshold: 0.3 });
 
-document.querySelectorAll('.section').forEach(section => observer.observe(section));
+document.querySelectorAll('.section').forEach(se => ob.observe(se));
 
-
-/***************************************
- * INITIALIZE TUTORIAL BUTTONS & UI
- ***************************************/
 window.addEventListener('DOMContentLoaded', () => {
-    // STATIC BUTTON INJECTION
-    const container = document.getElementById('story-mode-container');
 
-    if (container) {
-        container.innerHTML = `
+    const co = document.getElementById('story-mode-container');
+
+    if (co) {
+        co.innerHTML = `
             <div id="tutorial-controls-container" style="display: flex; gap: 10px; pointer-events: auto;">
                 <button id="tutorial-btn" style="
                     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
@@ -872,9 +784,8 @@ window.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Enhanced Tutorial Message Box (Keep Fixed)
-        const msgContainer = document.createElement('div');
-        msgContainer.style.cssText = `
+        const ms_co = document.createElement('div');
+        ms_co.style.cssText = `
             position: fixed;
             top: 100px;
             left: 50%;
@@ -884,8 +795,8 @@ window.addEventListener('DOMContentLoaded', () => {
             transition: all 0.3s;
             pointer-events: none;
         `;
-        msgContainer.setAttribute('id', 'tutorial-message-container');
-        msgContainer.innerHTML = `
+        ms_co.setAttribute('id', 'tutorial-message-container');
+        ms_co.innerHTML = `
             <div style="
                 background: linear-gradient(135deg, rgba(15, 20, 25, 0.98) 0%, rgba(20, 25, 35, 0.98) 100%);
                 padding: 25px 40px;
@@ -947,35 +858,32 @@ window.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        document.body.appendChild(msgContainer);
+        document.body.appendChild(ms_co);
 
-        // Add hover effects and listeners
-        const tutorialBtn = document.getElementById('tutorial-btn');
-        const stopBtn = document.getElementById('stop-tutorial-btn');
+        const tu_bu = document.getElementById('tutorial-btn');
+        const st_bu = document.getElementById('stop-tutorial-btn');
 
-        if (tutorialBtn && stopBtn) {
-            tutorialBtn.addEventListener('mouseenter', function () {
+        if (tu_bu && st_bu) {
+            tu_bu.addEventListener('mouseenter', function () {
                 this.style.transform = 'scale(1.05)';
                 this.style.boxShadow = '0 6px 20px rgba(59, 130, 246, 0.6)';
             });
-            tutorialBtn.addEventListener('mouseleave', function () {
+            tu_bu.addEventListener('mouseleave', function () {
                 this.style.transform = 'scale(1)';
                 this.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.4)';
             });
 
-            stopBtn.addEventListener('mouseenter', function () {
+            st_bu.addEventListener('mouseenter', function () {
                 this.style.transform = 'scale(1.05)';
                 this.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.6)';
             });
-            stopBtn.addEventListener('mouseleave', function () {
+            st_bu.addEventListener('mouseleave', function () {
                 this.style.transform = 'scale(1)';
                 this.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.4)';
             });
 
-            // Attach click handlers
-            tutorialBtn.addEventListener('click', startTutorial);
-            stopBtn.addEventListener('click', stopTutorial);
+            tu_bu.addEventListener('click', st_tu);
+            st_bu.addEventListener('click', so_tu);
         }
     }
 });
-

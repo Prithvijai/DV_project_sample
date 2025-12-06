@@ -1,5 +1,5 @@
-/* FORCE TRANSPARENT BACKGROUNDS - STRICT OVERRIDE */
-/* Exception: World Map (Viz 2) keeps its background */
+
+
 
 html {
     background: transparent !important;
@@ -29,7 +29,7 @@ div:not(#viz2):not(#viz2 *) {
     background-image: none !important;
 }
 
-/* Ensure World Map (Viz 2) keeps its background */
+
 #viz2,
 #viz2 * {
     background: initial;

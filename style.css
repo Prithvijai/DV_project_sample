@@ -2,15 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
 
-/* -----------------------------------
- * GLOBAL STYLES
- * ----------------------------------- */
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
     background: #000000;
-    /* Pure black */
+    
     color: #fff;
     overflow-x: hidden;
 }
@@ -18,9 +16,9 @@ body {
 h1 {
     text-align: center;
     margin-top: 30px;
-    /* From Global H1 */
+    
     color: #00ff99;
-    /* From Global H1 */
+    
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     letter-spacing: 1px;
@@ -36,16 +34,9 @@ h1 {
     margin-top: 6px;
 }
 
-/* -----------------------------------
- * PAGE 1: INTRO SECTION (#introPage)
- * NOTE: The provided code uses #introPage for one set of styles and #intro for another.
- * I am merging the #introPage styles, then the #intro styles, and finally cleaning up
- * the various conflicting #intro/generic selectors, preserving the LAST declared value.
- *
- * The final, prevailing #intro styles will be a merge of the last set provided.
- * ----------------------------------- */
 
-/* Base #introPage Styles (Only used in the first block) */
+
+
 #introPage {
     background: #000000;
     display: flex;
@@ -59,7 +50,7 @@ h1 {
 
 }
 
-/* Base SVG and Liquid Styles (Using #introPage selector) */
+
 #introPage svg {
     width: 500px;
     height: 950px;
@@ -85,7 +76,7 @@ h1 {
     filter: drop-shadow(0 0 15px rgba(0, 255, 120, 0.4));
 }
 
-/* Figure Container (Using #introPage selector) */
+
 #introPage .figure-container {
     position: relative !important;
     display: flex;
@@ -93,7 +84,7 @@ h1 {
     align-items: flex-start;
     gap: clamp(50px, 7vw, 120px);
     margin: 10px auto 30px !important;
-    /* Pull figures closer to input box */
+    
     padding: 0 clamp(30px, 4vw, 80px);
     max-width: 1200px;
     width: 100%;
@@ -118,18 +109,18 @@ h1 {
     width: 100%;
 }
 
-/* Labels and Inputs (Using #introPage selector) */
+
 .figure {
     position: relative;
-    /* make the figure the positioning anchor */
+    
 }
 
 .figure .label {
     position: absolute;
     top: -10px;
-    /* vertical position above the SVG */
+    
     left: 100%;
-    /* center horizontally */
+    
     transform: translateX(-50%);
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
@@ -140,37 +131,37 @@ h1 {
     margin: 0;
     padding: 0;
     pointer-events: none;
-    /* ensure it doesn't block clicks */
+    
 }
 
 .vegan-figure .label {
     color: #00ff99;
     text-shadow: 0 0 15px rgba(0, 255, 150, 0.6);
     top: -70px;
-    /* move Meat title up/down */
+    
     left: 40px;
-    /* fine-tune horizontal offset */
+    
 }
 
 .meat-figure .label {
     color: #ff4b4b;
     top: -70px;
-    /* move Vegan title up/down */
+    
     left: -20px;
-    /* fine-tune horizontal offset */
+    
     text-shadow: 0 0 15px rgba(255, 75, 75, 0.6);
 }
 
 
 .figure {
     position: relative;
-    /* anchor for absolute children */
+    
 }
 
 .figure .label {
     position: absolute;
     top: 40px;
-    /* move above the figure */
+    
     left: 35%;
     transform: translateX(-50%);
     font-family: 'Orbitron', sans-serif;
@@ -209,7 +200,7 @@ h1 {
     transform: scale(1.02);
 }
 
-/* Scroll button (Using #introPage selector) */
+
 #introPage button {
     margin-top: 35px;
     padding: 12px 28px;
@@ -230,7 +221,7 @@ h1 {
     box-shadow: 0 0 25px rgba(0, 255, 120, 0.6);
 }
 
-/* Life expectancy styling */
+
 .life-expectancy {
     font-family: 'Outfit', sans-serif;
     font-size: 1.4rem;
@@ -246,7 +237,7 @@ h1 {
     text-align: center;
     margin: 0;
     margin-top: 0px;
-    /* increase spacing from viz */
+    
     position: relative;
     top: calc(100% - 1000px);
 }
@@ -288,7 +279,7 @@ h1 {
 
 .life-expectancy {
     visibility: hidden;
-    /* hidden until first calculate */
+    
     opacity: 0;
     transition: opacity 0.5s ease;
 }
@@ -298,53 +289,51 @@ h1 {
     opacity: 1;
 }
 
-/* -----------------------------------
- * PAGE 1: INTRO SECTION (#intro) - Final Consolidated Styles
- * ----------------------------------- */
 
-/* The last declared background and layout properties for #intro are used */
+
+
 #intro {
     background: transparent !important;
-    /* From last #intro */
+    
     color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: flex-start;
-    /* From last #intro */
+    
     align-items: center;
     text-align: center;
     padding: 60px 8% 40px;
-    /* From last #intro */
+    
     flex-direction: column;
 }
 
 #intro h1 {
     font-family: 'Outfit', sans-serif;
     font-size: 2rem;
-    /* From last #intro h1 */
+    
     font-weight: 600;
     color: #f5e9c8;
-    /* From last #intro h1 */
+    
     margin-bottom: 15px;
-    /* From last #intro h1 */
+    
     text-shadow: none;
-    /* Removed redundant text-shadow from earlier H1 */
+    
 }
 
 #intro p {
     max-width: 900px;
-    /* From last #intro p */
+    
     color: #f0dede;
-    /* From last #intro p */
+    
     font-size: 1.05rem;
-    /* From last #intro p */
+    
     line-height: 1.6;
-    /* Kept from previous general #intro p */
+    
     margin-bottom: 30px;
-    /* From last #intro p */
+    
 }
 
-/* --- Human Figure Comparison (Spreading to Corners) --- */
+
 #intro .comparison-scene {
     display: flex;
     justify-content: space-between;
@@ -363,12 +352,12 @@ h1 {
     align-items: center;
     text-align: center;
     position: relative;
-    /* Kept from previous block */
+    
 }
 
 #intro .figure.meat {
     transform: translateX(420px);
-    /* Moves only the red figure to the right */
+    
 }
 
 
@@ -388,7 +377,7 @@ h1 {
     color: #ff4b4b;
 }
 
-/* SVG Container */
+
 #intro .body-svg {
     width: 130px;
     height: 300px;
@@ -396,7 +385,7 @@ h1 {
     background: none !important;
 }
 
-/* Label positioning around humans */
+
 #intro .labels p {
     color: #fff;
     font-size: 0.95rem;
@@ -465,7 +454,7 @@ h1 {
     left: 0;
 }
 
-/* Keep intro text and input centered */
+
 #intro .intro-header,
 #intro .meat-input,
 #intro .note {
@@ -474,7 +463,7 @@ h1 {
     text-align: center;
 }
 
-/* === Human Body SVG Elements === */
+
 .human path,
 .human circle {
     fill: none;
@@ -488,9 +477,9 @@ h1 {
 
 .liquid {
     opacity: 0.8;
-    /* Last opacity value provided */
+    
     transition: y 1s ease, height 1s ease;
-    /* Last transition properties provided */
+    
 }
 
 .liquid[style*="height: 0"],
@@ -511,7 +500,7 @@ h1 {
     background: none;
 }
 
-/* === Ensure separate colors for each liquid === */
+
 .liquid.green {
     fill: #00ff99 !important;
 }
@@ -520,17 +509,15 @@ h1 {
     fill: #ff4444 !important;
 }
 
-/* =======================
- * PAGE 1 INPUT + RESULTS
- * ======================= */
-/* RESET INPUT CONTAINER FOR VIZ 9 */
+
+
 .input-container {
     position: relative !important;
     top: 0 !important;
     left: 0 !important;
     transform: none !important;
     margin: 70px auto 5px !important;
-    /* Reduced bottom margin to bring close to human */
+    
     display: flex;
     gap: 10px;
     align-items: center;
@@ -578,7 +565,7 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 255, 120, 0.4);
 }
 
-/* Results summary box below input */
+
 #resultsBox {
     position: absolute;
     top: 110px;
@@ -615,9 +602,7 @@ h1 {
     font-weight: 600;
 }
 
-/* ===============================
- * BEAUTIFIED RESULTS TYPOGRAPHY
- * =============================== */
+
 #comparisonResults {
     position: absolute !important;
     top: 50% !important;
@@ -649,14 +634,14 @@ h1 {
     transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
-/* LEFT SIDE (Vegan) */
+
 #comparisonResults td.leftVal {
     color: #44ffb3;
     text-align: right;
     text-shadow: 0 0 8px rgba(68, 255, 179, 0.25);
 }
 
-/* CENTER (Metric) */
+
 #comparisonResults td.metric {
     color: #ffffff;
     text-align: center;
@@ -665,14 +650,14 @@ h1 {
     letter-spacing: 0.4px;
 }
 
-/* RIGHT SIDE (Meat) */
+
 #comparisonResults td.rightVal {
     color: #ff6a6a;
     text-align: left;
     text-shadow: 0 0 8px rgba(255, 106, 106, 0.25);
 }
 
-/* LIFE EXPECTANCY HIGHLIGHT */
+
 #comparisonResults tr:last-child td.metric {
     color: #ffd166;
     font-weight: 400;
@@ -680,7 +665,7 @@ h1 {
     text-shadow: 0 0 15px rgba(255, 209, 102, 0.4);
 }
 
-/* Hover effects */
+
 #comparisonResults td.metric:hover {
     color: #80d7ff;
     text-shadow: 0 0 20px rgba(128, 215, 255, 0.5);
@@ -696,7 +681,7 @@ h1 {
     text-shadow: 0 0 20px rgba(255, 128, 128, 0.5);
 }
 
-/* Fade + Blur Entry */
+
 @keyframes blurFadeIn {
     from {
         opacity: 0;
@@ -711,7 +696,7 @@ h1 {
     }
 }
 
-/* Gentle slide for each row */
+
 #comparisonResults.visible tr {
     animation: fadeSlideUp 0.8s ease forwards;
 }
@@ -728,42 +713,40 @@ h1 {
     }
 }
 
-/* --- Scroll Button (Explore Button) --- */
-/* The final button styles are a mix of #introPage button and the generic #exploreBtn */
+
+
 #exploreBtn {
     margin-top: 40px;
-    /* From last generic #exploreBtn */
+    
     background: #fff;
-    /* From last generic #exploreBtn */
+    
     color: #000;
-    /* From last generic #exploreBtn */
+    
     padding: 12px 22px;
-    /* From last generic #exploreBtn */
+    
     border: none;
-    /* Inherited from other buttons */
+    
     border-radius: 8px;
-    /* From other buttons */
+    
     font-weight: 600;
-    /* From other buttons */
+    
     cursor: pointer;
     transition: 0.3s ease;
     font-size: 1.2rem;
-    /* From early #exploreBtn */
+    
     box-shadow: 0 0 20px rgba(0, 255, 120, 0.4);
-    /* From earlier #exploreBtn */
+    
 }
 
 #exploreBtn:hover {
     background: #00ff99;
-    /* From last generic #exploreBtn:hover */
+    
     transform: translateY(-3px);
     box-shadow: 0 0 30px rgba(0, 255, 120, 0.6);
-    /* From earlier #exploreBtn:hover */
+    
 }
 
-/* ------------------------
- * PAGE 2 TRANSITION
- * ------------------------- */
+
 #comparison {
     background: #000;
     color: #fff;
@@ -791,9 +774,7 @@ h1 {
 }
 
 
-/* -----------------------------------
- * SELECTORS PANEL (CENTERED)
- * ----------------------------------- */
+
 .selectors {
     display: flex;
     justify-content: center;
@@ -815,9 +796,7 @@ h1 {
     transform: scale(1.02);
 }
 
-/* -----------------------------------
- * CONTROL PANEL THEMING
- * ----------------------------------- */
+
 .control {
     display: flex;
     flex-direction: column;
@@ -832,23 +811,21 @@ h1 {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
-/* Red glow for carnivore */
+
 .control.carnivore {
     border: 1px solid rgba(255, 80, 80, 0.4);
     box-shadow: 0 0 25px rgba(255, 50, 50, 0.25);
     background: radial-gradient(circle at top, rgba(40, 0, 0, 0.5), rgba(10, 0, 0, 0.6));
 }
 
-/* Green glow for vegan */
+
 .control.vegan {
     border: 1px solid rgba(0, 255, 100, 0.4);
     box-shadow: 0 0 25px rgba(0, 255, 100, 0.25);
     background: radial-gradient(circle at top, rgba(0, 50, 20, 0.5), rgba(0, 20, 10, 0.6));
 }
 
-/* -----------------------------------
- * MODERN DROPDOWNS (Label and Select)
- * ----------------------------------- */
+
 label {
     font-family: 'Outfit', sans-serif;
     font-size: 1.1rem;
@@ -895,9 +872,7 @@ option {
     font-size: 0.95rem;
 }
 
-/* -----------------------------------
- * CALORIE CARDS
- * ----------------------------------- */
+
 .calorie-cards {
     display: flex;
     justify-content: center;
@@ -935,9 +910,7 @@ option {
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
-/* -----------------------------------
- * LEGEND
- * ----------------------------------- */
+
 #legend {
     text-align: center;
     margin: 10px 0 60px;
@@ -953,9 +926,7 @@ option {
     color: #00ff99;
 }
 
-/* -----------------------------------
- * TOOLTIP
- * ----------------------------------- */
+
 .tooltip {
     position: absolute;
     background: rgba(0, 0, 0, 0.9);
@@ -971,9 +942,7 @@ option {
 }
 
 
-/* -----------------------------------
- * CHART LAYOUT & STYLES
- * ----------------------------------- */
+
 #viz-layout {
     display: flex;
     justify-content: center;
@@ -1021,7 +990,7 @@ option {
     stroke-width: 2;
 }
 
-/* Compact info panels */
+
 .info-panel {
     flex: 0 0 240px;
     background: rgba(255, 255, 255, 0.06);
@@ -1042,15 +1011,15 @@ option {
     display: none;
 }
 
-/* Headings inside info panels */
+
 .food-header {
     font-size: 1.3em;
-    /* Last declared size */
+    
     font-weight: 600;
     margin-bottom: 8px;
     text-align: center;
     color: #00ff88;
-    /* From earlier food-header (green default) */
+    
     transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
@@ -1062,7 +1031,7 @@ option {
     text-shadow: 0 0 12px rgba(0, 255, 120, 0.4);
 }
 
-/* Nutrient list styling */
+
 .nutri-list {
     list-style: none;
     padding: 0;
@@ -1087,9 +1056,7 @@ option {
     font-weight: 500;
 }
 
-/* -----------------------------------
- * ANIMATIONS
- * ----------------------------------- */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -1102,7 +1069,7 @@ option {
     }
 }
 
-/* Responsive stacking for small screens */
+
 @media (max-width: 1100px) {
     #viz-layout {
         flex-direction: column;
@@ -1119,7 +1086,7 @@ option {
 .meat-figure {
     position: relative;
     left: 150px;
-    /* move further right — increase if needed */
+    
     z-index: 2;
 }
 
@@ -1143,7 +1110,7 @@ option {
     }
 }
 
-/* Default visible aura (no animation until triggered) */
+
 .meat-figure::after {
     content: "";
     position: absolute;
@@ -1161,7 +1128,7 @@ option {
     transition: opacity 0.4s ease;
 }
 
-/* Animated state when Calculate is pressed */
+
 .meat-figure.animate-aura::after {
     animation: pulseAura 1.2s ease-out forwards;
 }
@@ -1186,7 +1153,7 @@ option {
     }
 }
 
-/* Start invisible */
+
 .vegan-figure::after {
     content: "";
     position: absolute;
@@ -1207,19 +1174,19 @@ option {
     transition: opacity 0.6s ease;
 }
 
-/* Make visible after first Calculate */
+
 .vegan-figure.aura-visible::after {
     opacity: 1;
 }
 
-/* Animate each Calculate click */
+
 .vegan-figure.animate-aura::after {
     animation: pulseAuraGreen 1.2s ease-out forwards;
 }
 
 .vegan-figure {
     position: relative;
-    /* Ensure aura positions relative to this figure */
+    
 }
 
 .vegan-figure::after {
@@ -1227,13 +1194,13 @@ option {
     transform: translate(-50%, -50%);
 }
 
-/* Fine-tuning option if it still looks off */
+
 .vegan-figure.adjust-aura::after {
     left: 30%;
-    /* shift a bit left (try 48–49 if needed) */
+    
 }
 
-/* === Digital Font for Results Table & Life Expectancy === */
+
 #comparisonResults,
 #comparisonResults table,
 #comparisonResults td,
@@ -1244,7 +1211,7 @@ option {
     text-shadow: 0 0 15px currentColor, 0 0 30px rgba(0, 255, 150, 0.4);
 }
 
-/* Fix: Make "Blood Sugar %" blue instead of yellow */
+
 #comparisonResults tr:nth-child(6) td.metric {
     color: #ffffff !important;
     text-shadow: 0 0 12px rgb(255, 255, 255) !important;
@@ -1262,7 +1229,7 @@ option {
     stroke: none !important;
 }
 
-/* default state */
+
 #thankyouPage {
     width: 100%;
     height: 100vh;
@@ -1290,38 +1257,34 @@ option {
     margin-top: 25px;
 }
 
-/* ============================================================
-   FIX 1: CENTER BOTH HUMAN FIGURES PERFECTLY
-   ============================================================ */
-/* ==========================================
-   FINAL FIX — REMOVE ALL CONFLICTS CLEANLY
-   ========================================== */
 
-/* 1. Reset the stupid margin that pushed input down */
-/* 1. Reset the margin - Consolidating with main definition */
+
+
+
+
 .input-container {
-    /* Rules consolidated at line 528 */
+    
     display: flex !important;
 }
 
-/* 2. ResultsBox absolute positioning shouldn't push things */
+
 #resultsBox {
     position: relative !important;
     top: 20px !important;
 }
 
-/* 3. Remove huge top margin on figures */
+
 #intro .comparison-scene {
     margin-top: 10px !important;
 }
 
-/* 4. Hard center the figures */
+
 #intro .comparison-scene {
     justify-content: center !important;
     gap: 180px !important;
 }
 
-/* 5. Remove leftover transforms */
+
 .meat-figure,
 .vegan-figure {
     left: 0 !important;
@@ -1329,7 +1292,7 @@ option {
     margin: 0 !important;
 }
 
-/* 6. Align everything to the center cleanly */
+
 #intro {
     display: flex !important;
     flex-direction: column !important;
@@ -1337,10 +1300,10 @@ option {
     justify-content: flex-start !important;
 }
 
-/* Align Calculate button perfectly with input */
+
 .input-container button {
     height: 45px !important;
-    /* match input height */
+    
     display: flex !important;
     margin-top: 1px !important;
     align-items: center !important;
@@ -1350,11 +1313,9 @@ option {
 }
 
 
-/* ========================================
-   VIZ 3: LIFESPAN CHART STYLES
-   ======================================== */
 
-/* Header Row - Title left, Selector right */
+
+
 .lifespan-header-row {
     display: flex;
     align-items: center;
@@ -1373,7 +1334,7 @@ option {
     margin: 0;
 }
 
-/* Selector Wrapper */
+
 .lifespan-selector-wrapper {
     display: flex;
     align-items: center;
@@ -1414,7 +1375,7 @@ option {
     box-shadow: 0 0 20px rgba(0, 255, 120, 0.3);
 }
 
-/* Split Viz Container */
+
 #split-viz-container {
     position: relative;
     display: flex;
@@ -1430,7 +1391,7 @@ option {
     background: transparent;
 }
 
-/* Viz 3 Container Override */
+
 #viz3.viz-container {
     background: transparent !important;
     width: 100% !important;
@@ -1438,14 +1399,14 @@ option {
     padding: 1rem 2rem !important;
 }
 
-/* Viz 3 SVG overrides */
+
 #viz3 svg {
     background: transparent !important;
     height: auto !important;
     width: auto !important;
 }
 
-/* Viz 3 Tooltip Override */
+
 #viz3+#tooltip,
 #tooltip {
     background: rgba(20, 20, 20, 0.98) !important;
@@ -1453,7 +1414,7 @@ option {
     color: #fff !important;
 }
 
-/* Viz Panels */
+
 .viz-panel {
     flex: 1;
     min-width: 600px;
@@ -1474,7 +1435,7 @@ option {
     text-align: center;
 }
 
-/* Stats Box */
+
 .stats-box {
     display: flex;
     flex-direction: column;
@@ -1498,11 +1459,9 @@ option {
     margin-top: 0.25rem;
 }
 
-/* ========================================
-   VIZ 4: SUBSTITUTION FLOW STYLES
-   ======================================== */
 
-/* Filter Bar */
+
+
 .filter-bar {
     display: flex;
     align-items: center;
@@ -1542,7 +1501,7 @@ option {
     border-color: #00ff99;
 }
 
-/* Flow Chart Container */
+
 #substitution-chart {
     flex-shrink: 0;
     width: 970px;
@@ -1560,7 +1519,7 @@ option {
     background: #000000;
 }
 
-/* Node Styles */
+
 .dish-node rect,
 .substitute-node rect {
     fill: rgba(30, 40, 35, 0.95);
@@ -1596,7 +1555,7 @@ option {
     font-weight: 600;
 }
 
-/* Flow Link Styles */
+
 .flow-link {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1615,7 +1574,7 @@ option {
     opacity: 0.2;
 }
 
-/* Flow Tooltip */
+
 #flow-tooltip,
 .flow-tooltip {
     position: fixed;
@@ -1645,7 +1604,7 @@ option {
     color: #9AD1B3;
 }
 
-/* Nutrition Badges */
+
 .nutrition-badge {
     display: inline-block;
     padding: 3px 10px;
@@ -1667,7 +1626,7 @@ option {
     border: 1px solid rgba(102, 187, 106, 0.4);
 }
 
-/* Recipe Card */
+
 .recipe-card {
     width: 280px;
     flex-shrink: 0;
@@ -1740,7 +1699,7 @@ option {
     font-weight: 600;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 1200px) {
     .viz-panel {
         min-width: 100%;
@@ -1756,9 +1715,7 @@ option {
     }
 }
 
-/* =========================================
-   VIZ 13: THANK YOU PAGE STYLES
-   ========================================= */
+
 #thankyouPage {
     min-height: 100vh;
     width: 100%;
@@ -1789,8 +1746,8 @@ option {
     letter-spacing: 4px;
     margin-bottom: 1rem;
     color: #fff;
-    /* Fallback */
-    /* Gradient applied by JS */
+    
+    
 }
 
 .thankyou-sub {
@@ -1826,7 +1783,7 @@ option {
     height: 220px;
     display: block;
     background: white;
-    /* Ensure contrast for the QR code */
+    
     padding: 10px;
     border-radius: 10px;
 }

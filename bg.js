@@ -1,7 +1,4 @@
-// =====================
-// INDIVIDUAL BACKGROUND + ZOOM CONTROL
-// =====================
-const BG_DATA = {
+const bg_da = {
   "layer-top": {
     img: "Images/bunw.png",
     transform: "scale(1.5) translateY(-5%)"
@@ -24,7 +21,7 @@ const BG_DATA = {
   }
 };
 
-const layers = [
+const la = [
   "layer-top",
   "layer-lettuce",
   "layer-cheese",
@@ -32,101 +29,100 @@ const layers = [
   "layer-bottom"
 ];
 
-// =====================
-// INTERSECTION OBSERVER LOGIC - EVENLY DISTRIBUTED
-// =====================
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Observer options - increased threshold for longer visibility
-  const options = {
+  const op = {
     root: null,
-    threshold: 0.5, // Trigger when 50% visible (stays longer)
+    threshold: 0.5,
     rootMargin: "0px"
   };
 
-  let currentLayer = null; // Track current layer to prevent rapid switching
+  let cu_la = null;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
+  const ob = new IntersectionObserver((en) => {
+    en.forEach(en_i => {
+      if (en_i.isIntersecting) {
+        const id = en_i.target.id;
         console.log("Burger BG Stage:", id);
 
-        // EVENLY DISTRIBUTED MAPPING ACROSS ALL VISUALIZATIONS
-        // Viz 1-2: Top Bun
         if (id === 'viz1' || id === 'viz2') {
-          if (currentLayer !== 'layer-top') {
-            currentLayer = 'layer-top';
-            showLayer('layer-top');
+          if (cu_la !== 'layer-top') {
+            cu_la = 'layer-top';
+            sh_la('layer-top');
           }
         }
-        // Viz 3: Lettuce
-        else if (id === 'viz3') {
-          if (currentLayer !== 'layer-lettuce') {
-            currentLayer = 'layer-lettuce';
-            showLayer('layer-lettuce');
+
+        else if (id === 'viz3' || id === 'viz4') {
+          if (cu_la !== 'layer-lettuce') {
+            cu_la = 'layer-lettuce';
+            sh_la('layer-lettuce');
           }
         }
-        // Viz 4: Cheese
-        else if (id === 'viz4') {
-          if (currentLayer !== 'layer-cheese') {
-            currentLayer = 'layer-cheese';
-            showLayer('layer-cheese');
+
+        else if (id === 'viz5_div' || id === 'viz6_div') {
+          if (cu_la !== 'layer-cheese') {
+            cu_la = 'layer-cheese';
+            sh_la('layer-cheese');
           }
         }
-        // Viz 5-6-7: Patty
-        else if (id === 'viz5_div' || id === 'viz6_div' || id === 'viz7' || id === 'intro' || id === 'outro') {
-          if (currentLayer !== 'layer-patty') {
-            currentLayer = 'layer-patty';
-            showLayer('layer-patty');
+
+        else if (id === 'viz7') {
+          if (cu_la !== 'layer-patty') {
+            cu_la = 'layer-patty';
+            sh_la('layer-patty');
           }
         }
-        // Viz 9-10: Bottom Bun
-        else if (id === 'viz9' || id === 'viz10') {
-          if (currentLayer !== 'layer-bottom') {
-            currentLayer = 'layer-bottom';
-            showLayer('layer-bottom');
+
+        else if (
+          id === 'viz9' ||
+          id === 'intro' ||
+          id === 'outro'
+        ) {
+          if (cu_la !== 'layer-patty') {
+            cu_la = 'layer-patty';
+            sh_la('layer-patty');
           }
         }
-        // Viz 11 onwards: Full Burger
+
+        else if (id === 'viz10') {
+          if (cu_la !== 'layer-bottom') {
+            cu_la = 'layer-bottom';
+            sh_la('layer-bottom');
+          }
+        }
+
         else if (id === 'viz11' || id === 'thankyouPage') {
-          if (currentLayer !== 'full') {
-            currentLayer = 'full';
-            showFull();
+          if (cu_la !== 'full') {
+            cu_la = 'full';
+            sh_fu();
           }
         }
       }
     });
-  }, options);
+  }, op);
 
-  // Elements to observe - expanded to cover all major sections
-  const targets = [
+
+  const ta = [
     '#viz1', '#viz2', '#viz3', '#viz4', '#viz5_div',
-    '#viz6_div', '#viz7', '#viz9', '#viz10', '#viz11', '#thankyouPage', '#intro'
+    '#viz6_div', '#viz7', '#viz9', '#viz10', '#viz11',
+    '#thankyouPage', '#intro'
   ];
 
-  targets.forEach(selector => {
-    const el = document.querySelector(selector);
+  ta.forEach(se => {
+    const el = document.querySelector(se);
     if (el) {
-      observer.observe(el);
-      console.log("Observing:", selector);
+      ob.observe(el);
     } else {
-      console.warn("Element not found:", selector);
+      console.warn("Element not found:", se);
     }
   });
 
-  // Initial state
-  showFull();
+  sh_fu();
 });
 
 
-// ========================
-// FUNCTIONS
-// ========================
 
-// Show full burger
-function showFull() {
+function sh_fu() {
   const bg = document.getElementById("image-bg");
   if (!bg) return;
 
@@ -134,7 +130,7 @@ function showFull() {
   bg.style.backgroundImage = "none";
   bg.style.transform = "scale(1) translateY(0)";
 
-  layers.forEach(id => {
+  la.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.style.opacity = "1";
@@ -144,38 +140,36 @@ function showFull() {
   });
 }
 
-// Show one layer (zoom)
-function showLayer(id) {
-  const TOP_LAYERS = ["layer-top", "layer-lettuce", "layer-cheese"];
-  const BOTTOM_LAYERS = ["layer-patty", "layer-bottom"];
+
+function sh_la(id) {
+  const to_la = ["layer-top", "layer-lettuce", "layer-cheese"];
+  const bo_la = ["layer-patty", "layer-bottom"];
 
   const bg = document.getElementById("image-bg");
   if (!bg) return;
 
-  // Apply the correct background + zoom
-  if (BG_DATA[id]) {
-    bg.style.backgroundImage = `url('${BG_DATA[id].img}')`;
-    bg.style.opacity = "0.4"; // Increased from 0.3 for better visibility
-    bg.style.transform = BG_DATA[id].transform;
+  if (bg_da[id]) {
+    bg.style.backgroundImage = `url('${bg_da[id].img}')`;
+    bg.style.opacity = "0.4";
+    bg.style.transform = bg_da[id].transform;
   }
 
-  layers.forEach(layer => {
-    const el = document.getElementById(layer);
+  la.forEach(lr => {
+    const el = document.getElementById(lr);
     if (!el) return;
 
-    if (layer === id) {
+    if (lr === id) {
       el.style.opacity = "1";
 
-      if (TOP_LAYERS.includes(id)) {
+      if (to_la.includes(id)) {
         el.style.transform = "scale(3.5)";
-      } else if (BOTTOM_LAYERS.includes(id)) {
+      } else if (bo_la.includes(id)) {
         el.style.transform = "scale(3.5) translateY(-25%)";
       }
 
-      // Keep the layer visible longer before fading to background
       setTimeout(() => {
         el.style.opacity = "0";
-      }, 1000); // Increased from 500ms
+      }, 1000);
 
     } else {
       el.style.opacity = "0";
