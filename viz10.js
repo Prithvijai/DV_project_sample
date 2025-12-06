@@ -1,6 +1,4 @@
-// -----------------------------
-// CONFIG
-// -----------------------------
+
 const nutrients = ["Protein", "Fiber", "Fat", "Carbohydrates", "Sodium Content", "Water Content"];
 const width = 700, height = 700, margin = 80;
 const radius = Math.min(width, height) / 2 - margin;
@@ -9,9 +7,6 @@ const maxScaleValue = 40;
 let allPredData = [];
 let allFoodData = [];
 
-// -----------------------------
-// SVG & SCALES
-// -----------------------------
 const svg = d3.select("#chart")
   .attr("width", width)
   .attr("height", height)
@@ -26,15 +21,12 @@ const rScale = d3.scaleLinear()
 
 const angleSlice = (Math.PI * 2) / nutrients.length;
 
-// Radar line uses d.value (already clamped)
 const radarLine = d3.lineRadial()
   .radius(d => rScale(d.value))
   .angle((d, i) => i * angleSlice)
   .curve(d3.curveLinearClosed);
 
-// -----------------------------
-// GRID & AXES
-// -----------------------------
+
 for (let i = 1; i <= 4; i++) {
   svg.append("circle")
     .attr("class", "radar-ring")
@@ -47,6 +39,7 @@ for (let i = 1; i <= 4; i++) {
     .text((maxScaleValue / 4) * i);
 }
 
+
 svg.selectAll(".axis-line")
   .data(nutrients)
   .enter()
@@ -57,6 +50,7 @@ svg.selectAll(".axis-line")
   .attr("x2", (d, i) => radius * Math.cos(angleSlice * i - Math.PI / 2))
   .attr("y2", (d, i) => radius * Math.sin(angleSlice * i - Math.PI / 2))
   .attr("stroke", "#ffffff22");
+
 
 svg.selectAll(".label")
   .data(nutrients)
@@ -69,9 +63,7 @@ svg.selectAll(".label")
   .attr("fill", "#fff")
   .text(d => d);
 
-// -----------------------------
-// LOAD DATA
-// -----------------------------
+
 Promise.all([
   d3.csv("PrithviSasikumar_data/pred_food.csv"),
   d3.csv("PrithviSasikumar_data/food.csv")
@@ -81,27 +73,19 @@ Promise.all([
   setupDropdowns(predData, foodData);
 }).catch(err => console.error("Error loading CSV:", err));
 
-// -----------------------------
-// NAME MAPPING
-// -----------------------------
-const NAME_MAP_FOOD = {
+const nameMapFood = {
   "Beef": 'BEEF, GROUND, 95% LN MEAT / 5% FAT, RAW',
   "Chicken": 'CHICKEN, BROILERS OR FRYERS, BREAST, MEAT ONLY, RAW',
   "Lamb": 'LAMB, DOM, LEG, SIRLOIN HALF, LN, 1/4" FAT, CHOIC, RAW',
   "Fish": 'SALMON, ATLANTIC, WILD, RAW',
   "Vegetables": 'VEGETABLES, MXD (CORN,LIMA BNS,PEAS,GRN BNS,CRRT) CND,NO SALT',
   "Turkey": "TURKEY BREAST,PRE-BASTED,MEAT&SKN,CKD,RSTD",
-
-  // Tofu, Beans, Nuts etc will be matched by contains
 };
 
-const NAME_MAP_PRED = {
+const nameMapPred = {
   "Vegan Meat": "Vegan Meat"
 };
 
-// -----------------------------
-// HELPERS
-// -----------------------------
 function normalizeText(str) {
   return (str || "")
     .toLowerCase()
@@ -117,33 +101,27 @@ function cleanNumber(v) {
 }
 
 function findFoodRow(foodData, name) {
-  const mapped = NAME_MAP_FOOD[name] || name;
-  const targetNorm = normalizeText(mapped);
+  const mappedName = nameMapFood[name] || name;
+  const targetName = normalizeText(mappedName);
 
-  // 1. Exact normalized match
-  let row = foodData.find(d => normalizeText(d["Description"]) === targetNorm);
+  let row = foodData.find(d => normalizeText(d["Description"]) === targetName);
   if (row) return row;
 
-  // 2. Fallback: contains
-  row = foodData.find(d => normalizeText(d["Description"]).includes(targetNorm));
+  row = foodData.find(d => normalizeText(d["Description"]).includes(targetName));
   if (row) return row;
 
-  // 3. Last resort: contains simple name (e.g. "tofu")
-  const simple = normalizeText(name);
-  return foodData.find(d => normalizeText(d["Description"]).includes(simple)) || null;
+  const simpleName = normalizeText(name);
+  return foodData.find(d => normalizeText(d["Description"]).includes(simpleName)) || null;
 }
 
 function findPredRow(predData, name) {
-  const mapped = NAME_MAP_PRED[name] || name;
-  const targetNorm = normalizeText(mapped);
-  let row = predData.find(d => normalizeText(d["Food Name"]) === targetNorm);
+  const mappedName = nameMapPred[name] || name;
+  const targetName = normalizeText(mappedName);
+  let row = predData.find(d => normalizeText(d["Food Name"]) === targetName);
   if (row) return row;
-  return predData.find(d => normalizeText(d["Food Name"]).includes(targetNorm)) || null;
+  return predData.find(d => normalizeText(d["Food Name"]).includes(targetName)) || null;
 }
 
-// -----------------------------
-// DATA RETRIEVAL (FINAL LOGIC)
-// -----------------------------
 function getValues(predData, foodData, name) {
   if (!name) return null;
 
@@ -151,10 +129,8 @@ function getValues(predData, foodData, name) {
   let p = null;
 
   if (name === "Vegan Meat") {
-    // ONLY from pred_food
     p = findPredRow(predData, name);
   } else {
-    // EVERYONE ELSE ONLY from food.csv
     f = findFoodRow(foodData, name);
   }
 
@@ -163,7 +139,6 @@ function getValues(predData, foodData, name) {
     return null;
   }
 
-  // Extract from food.csv row
   const fromFood = row => {
     if (!row) return {};
     const sodiumKey = Object.keys(row).find(k => k.toLowerCase().includes("sodium"));
@@ -178,7 +153,6 @@ function getValues(predData, foodData, name) {
     };
   };
 
-  // Extract from pred_food row (for Vegan Meat)
   const fromPred = row => {
     if (!row) return {};
     return {
@@ -200,18 +174,14 @@ function getValues(predData, foodData, name) {
   };
 }
 
-// -----------------------------
-// DROPDOWNS
-// -----------------------------
 function setupDropdowns(predData, foodData) {
   const veganOptions = [
     { name: "Tofu", label: "Tofu / Tempeh 🥢" },
     { name: "Beans", label: "Beans / Legumes 🫘" },
     { name: "Vegan Meat", label: "Vegan Meat 🌱" },
-    { name: "Quinoa", label: "Quinoa 🌾" }, 
+    { name: "Quinoa", label: "Quinoa 🌾" },
     { name: "Nuts", label: "Nuts / Seeds 🌰" },
     { name: "Vegetables", label: "Mixed Vegetables 🥦" }
-    
   ];
 
   const meatOptions = [
@@ -220,18 +190,18 @@ function setupDropdowns(predData, foodData) {
     { name: "Lamb", label: "Lamb 🐑" },
     { name: "Pork", label: "Pork 🐖" },
     { name: "Fish", label: "Fish 🐟" },
-    { name: "Turkey", label: "Turkey 🦃" }    
+    { name: "Turkey", label: "Turkey 🦃" }
   ];
 
   setupSide("Left", veganOptions, meatOptions, predData, foodData);
   setupSide("Right", veganOptions, meatOptions, predData, foodData);
 }
 
-function setupSide(side, veganOpts, meatOpts, predData, foodData) {
-  const styleSel = d3.select(`#style${side}`);
+function setupSide(side, veganOptions, meatOptions, predData, foodData) {
+  const styleSelect = d3.select(`#style${side}`);
   const container = d3.select(`#food${side}Container`);
 
-  styleSel.on("change", function () {
+  styleSelect.on("change", function () {
     const style = this.value;
 
     d3.select(`#${side.toLowerCase()}Control`)
@@ -244,9 +214,9 @@ function setupSide(side, veganOpts, meatOpts, predData, foodData) {
       container.html("");
 
       if (style === "vegan") {
-        container.html(makeSelectHTML(`food${side}`, "vegan-dropdown", veganOpts));
+        container.html(makeSelectHTML(`food${side}`, "vegan-dropdown", veganOptions));
       } else if (style === "carnivore") {
-        container.html(makeSelectHTML(`food${side}`, "meat-dropdown", meatOpts));
+        container.html(makeSelectHTML(`food${side}`, "meat-dropdown", meatOptions));
       }
 
       container.classed("active", !!style);
@@ -266,17 +236,14 @@ function makeSelectHTML(id, cssClass, options) {
   return html;
 }
 
-// -----------------------------
-// SIDE PANEL RENDER
-// -----------------------------
 function renderInfo(panelId, name, data) {
   const panel = d3.select(`#${panelId}`);
   panel.html("");
   if (!data) return;
 
   const isLeft = panelId === "leftinfo";
-  const styleSel = d3.select(`#style${isLeft ? "Left" : "Right"}`).property("value");
-  const headerColor = styleSel === "carnivore" ? "#ff4444" : "#00ff88";
+  const styleSelect = d3.select(`#style${isLeft ? "Left" : "Right"}`).property("value");
+  const headerColor = styleSelect === "carnivore" ? "#ff4444" : "#00ff88";
 
   const rows = [
     ["Calories (kcal)", data.Calories],
@@ -310,55 +277,49 @@ function renderInfo(panelId, name, data) {
     .style("opacity", 1);
 }
 
-// -----------------------------
-// RADAR UPDATE (CLAMP > 40)
-// -----------------------------
 function updateRadar(predData, foodData) {
-  const left = d3.select("#foodLeft").property("value");
-  const right = d3.select("#foodRight").property("value");
-  if (!left || !right) return;
+  const leftFood = d3.select("#foodLeft").property("value");
+  const rightFood = d3.select("#foodRight").property("value");
+  if (!leftFood || !rightFood) return;
 
-  const leftData = getValues(predData, foodData, left);
-  const rightData = getValues(predData, foodData, right);
+  const leftData = getValues(predData, foodData, leftFood);
+  const rightData = getValues(predData, foodData, rightFood);
   if (!leftData || !rightData) return;
 
-  // Update calories
-  d3.select("#leftCalories").html(`${left}<br>${(leftData.Calories || 0).toFixed(0)} kcal`);
-  d3.select("#rightCalories").html(`${right}<br>${(rightData.Calories || 0).toFixed(0)} kcal`);
+  d3.select("#leftCalories").html(`${leftFood}<br>${(leftData.Calories || 0).toFixed(0)} kcal`);
+  d3.select("#rightCalories").html(`${rightFood}<br>${(rightData.Calories || 0).toFixed(0)} kcal`);
 
-  // Update side panels
-  renderInfo("leftinfo", left, leftData);
-  addFullFoodDetails("leftinfo", left);
+  renderInfo("leftinfo", leftFood, leftData);
+  addFullFoodDetails("leftinfo", leftFood);
 
-  renderInfo("rightinfo", right, rightData);
-  addFullFoodDetails("rightinfo", right);
+  renderInfo("rightinfo", rightFood, rightData);
+  addFullFoodDetails("rightinfo", rightFood);
 
   const dataset = [
-    { name: left, color: "red", values: leftData },
-    { name: right, color: "green", values: rightData }
+    { name: leftFood, color: "red", values: leftData },
+    { name: rightFood, color: "green", values: rightData }
   ];
 
   svg.selectAll(".radar-shape").remove();
   svg.selectAll(".data-dot").remove();
 
-  dataset.forEach(set => {
-    const arr = nutrients.map(axis => {
-      const raw = Number(set.values[axis] ?? 0);
+  dataset.forEach(item => {
+    const radarData = nutrients.map(axis => {
+      const raw = Number(item.values[axis] ?? 0);
       return {
-        axis,
-        raw,
+        axis: axis,
+        raw: raw,
         value: Math.min(raw, maxScaleValue),
-        color: set.color,
-        name: set.name
+        color: item.color,
+        name: item.name
       };
     });
 
-    // Area
     svg.append("path")
-      .datum(arr)
+      .datum(radarData)
       .attr("class", "radar-shape")
-      .attr("fill", set.color === "red" ? "rgba(255,0,0,0.35)" : "rgba(0,255,100,0.35)")
-      .attr("stroke", set.color)
+      .attr("fill", item.color === "red" ? "rgba(255,0,0,0.35)" : "rgba(0,255,100,0.35)")
+      .attr("stroke", item.color)
       .attr("stroke-width", 2)
       .attr("d", radarLine)
       .attr("opacity", 0)
@@ -369,20 +330,19 @@ function updateRadar(predData, foodData) {
       .attr("opacity", 1)
       .attr("transform", "scale(1)");
 
-    // Dots (with small offset so both visible)
-    const cls = "data-dot-" + set.name.replace(/\s+/g, "");
-    svg.selectAll("." + cls)
-      .data(arr)
+    const className = "data-dot-" + item.name.replace(/\s+/g, "");
+    svg.selectAll("." + className)
+      .data(radarData)
       .enter()
       .append("circle")
-      .attr("class", "data-dot " + cls)
+      .attr("class", "data-dot " + className)
       .attr("r", 0)
-      .attr("fill", set.color)
+      .attr("fill", item.color)
       .attr("stroke", "#fff")
       .attr("stroke-width", 1)
       .attr("cx", d => {
         const baseX = rScale(d.value) * Math.cos(angleSlice * nutrients.indexOf(d.axis) - Math.PI / 2);
-        return baseX + (set.color === "red" ? -3 : 3); // small offset
+        return baseX + (item.color === "red" ? -3 : 3);
       })
       .attr("cy", d => {
         const baseY = rScale(d.value) * Math.sin(angleSlice * nutrients.indexOf(d.axis) - Math.PI / 2);
@@ -394,7 +354,6 @@ function updateRadar(predData, foodData) {
       .attr("r", 5);
   });
 
-  // ✅ Combined Tooltip for overlapping values
   const allDots = svg.selectAll(".data-dot");
 
   allDots
@@ -423,15 +382,15 @@ function updateRadar(predData, foodData) {
       tooltip.transition().duration(200).style("opacity", 0);
     });
 }
+
 function addFullFoodDetails(panelId, name) {
   const panel = d3.select(`#${panelId}`);
-  const mappedName = NAME_MAP_FOOD[name] || name;
-  const targetNorm = normalizeText(mappedName);
+  const mappedName = nameMapFood[name] || name;
+  const targetName = normalizeText(mappedName);
 
-  const f = allFoodData.find(d => normalizeText(d["Description"]).includes(targetNorm));
+  const f = allFoodData.find(d => normalizeText(d["Description"]).includes(targetName));
   if (!f) return;
 
-  // Collect all Data.* fields and clean labels
   const cleanRows = Object.keys(f)
     .filter(k => k.startsWith("Data."))
     .map(k => {
@@ -443,7 +402,6 @@ function addFullFoodDetails(panelId, name) {
     })
     .filter(Boolean);
 
-  // Append these rows directly below previous panel content (no line)
   const list = panel.append("ul")
     .attr("class", "nutri-list")
     .style("opacity", 0);

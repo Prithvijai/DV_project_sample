@@ -29,7 +29,7 @@
         .style("height", "100%")
         .style("display", "block");
 
-    // Add legend
+
     const legend = viz2Container.append("div")
         .attr("class", "lg22")
         .style("position", "absolute")

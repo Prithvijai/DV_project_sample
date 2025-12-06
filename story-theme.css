@@ -1,82 +1,82 @@
-/* Premium Dark Mode Theme */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
 
 :root {
     --story-bg: #000000;
-    /* Pure Black for Premium Feel */
+    
     --story-text: #e0e0e0;
-    /* High contrast silver/white */
+    
     --story-accent: #00ff99;
-    /* Maintain Green Identity */
+    
     --story-gold: #d4af37;
-    /* Metallic Gold for special highlights */
+    
 }
 
 body {
     background-color: #000000;
     background-image: none;
-    /* Remove gradient for pure black */
+    
     color: var(--story-text);
     margin: 0;
     font-family: 'Inter', sans-serif;
-    /* Base font */
+    
 }
 
-/* Container for story text blocks - Floating Text */
+
 .story-panel {
     max-width: 800px;
     margin: 100px auto;
-    /* More generous spacing */
+    
     padding: 0 20px;
     background: transparent;
     border: none;
     box-shadow: none;
     text-align: center;
-    /* Center alignment often feels more premium/editorial */
+    
 }
 
-/* Headers - Premium Typography */
+
 .story-panel h2,
 .story-panel h3 {
     font-family: 'Playfair Display', serif;
-    /* Elegant Serif */
+    
     color: #ffffff;
     margin-bottom: 2rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    /* Tighter tracking for headers */
+    
 }
 
 .story-panel h2 {
     font-size: 3rem;
-    /* Larger, more impactful */
+    
     font-weight: 700;
     background: none;
     -webkit-text-fill-color: #ffffff;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-    /* Subtle glow */
+    
 }
 
 .story-panel h3 {
     font-size: 2rem;
     font-weight: 400;
-    /* Lighter weight for subheads looks cleaner */
+    
     font-style: italic;
-    /* Editorial flair */
+    
     margin-top: 3rem;
     color: var(--story-accent);
     text-shadow: 0 0 15px rgba(0, 255, 153, 0.3);
 }
 
-/* Body Text - Refined Readability */
+
 .story-panel p {
     font-family: 'Inter', sans-serif;
     font-size: 1.35rem;
-    /* Slightly larger */
+    
     line-height: 1.9;
-    /* Relaxed line height */
+    
     color: #cccccc;
-    /* Soft white */
+    
     margin-bottom: 2rem;
     font-weight: 300;
     max-width: 700px;
@@ -89,12 +89,12 @@ body {
     color: #ffffff;
 }
 
-/* Scroll Animation Classes */
+
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(50px);
     transition: all 1.4s cubic-bezier(0.19, 1, 0.22, 1);
-    /* significantly smoother 'luxury' feel */
+    
 }
 
 .reveal-on-scroll.active {
@@ -102,7 +102,7 @@ body {
     transform: translateY(0);
 }
 
-/* Special Highlighting */
+
 .highlight-text {
     color: var(--story-accent);
     font-weight: 500;

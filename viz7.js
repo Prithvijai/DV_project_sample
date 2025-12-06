@@ -1,10 +1,10 @@
-// ========================================
-// KRISHNA VINOD VISUALIZATION
-// ========================================
+
+
+
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3Zpbm9kIiwiYSI6ImNtaHg3YXlqaDAweGMyanB4cTRoczFjMDYifQ.g7Q7Ejb2zh-GMPnz_f0XbA';
 
-// === GLOBAL STATE ===
+
 let map;
 let metricsData;
 let treemapStateSeries;
@@ -12,7 +12,7 @@ let treemapYears;
 let treemapCurrentYear;
 let treemapCurrentFocus = 'all';
 let treemapSelectedState = null;
-// ========================================
+
 let activeChapterId = null;
 let fertilizerFireHandle = null;
 let fertilizerFirePhase = 0;
@@ -22,7 +22,7 @@ const FIRE_GRADIENT_STOPS = [1, 5, 10, 25, 50, 100, 200, 500];
 const FIRE_BASE_COLORS = ['#fef3d3', '#fed18c', '#fda762', '#f86f3c', '#d9442e', '#a92424', '#6b1015', '#37060d'];
 const FIRE_GLOW_COLORS = ['#fff8e1', '#ffd27a', '#ff9b45', '#ff6137', '#ff2d1c', '#ff6215', '#ff9711', '#ffd400'];
 
-// === MAPBOX CHAPTER CONFIGURATIONS ===
+
 const chapters = {
     'world-view': {
         center: [-55, -11.5],
@@ -234,7 +234,7 @@ function applyLegendDrivenLayers(chapter = null, overrideChannels = null) {
     }
 }
 
-// Wait for DOM to be ready
+
 function startVisualization() {
     Promise.all([
         d3.json("krishna_data/amazon_legal_boundary_simplified.geojson"),
@@ -259,29 +259,29 @@ function initialize([amazonBoundary, soyAmazonVsNon, soyMunicipal, fertilizerSer
     treemapCurrentYear = treemapYears[treemapYears.length - 1];
     initializeMap(amazonBoundary);
 
-    // Use enhanced interactive chart functions
+    
     drawAreaChartEnhanced(soyAmazonVsNon);
     drawFertilizerChartEnhanced(fertilizerSeries);
     initTreemapStory();
-    // setupScrollama is called AFTER map loads
+    
 }
 
 function initializeMap(boundaryGeo) {
     map = new mapboxgl.Map({
         container: 'map-container',
-        style: 'mapbox://styles/mapbox/navigation-night-v1', // Dark theme with colorful/neon accents
+        style: 'mapbox://styles/mapbox/navigation-night-v1', 
         center: chapters['world-view'].center,
         zoom: chapters['world-view'].zoom,
         pitch: chapters['world-view'].pitch,
         bearing: chapters['world-view'].bearing,
-        interactive: false, // Disable all user interaction
+        interactive: false, 
         attributionControl: false
     });
 
     map.on('load', () => {
-        // Override water color to dark blue
+        
         if (map.getLayer('water')) {
-            map.setPaintProperty('water', 'fill-color', '#001f3f'); // Deep dark blue
+            map.setPaintProperty('water', 'fill-color', '#001f3f'); 
         }
 
         map.addSource('amazon-boundary', { type: 'geojson', data: boundaryGeo });
@@ -313,7 +313,7 @@ function initializeMap(boundaryGeo) {
         setLayerPaint('amazon-boundary-line', 'line-color-transition', { duration: 400, delay: 0 });
 
         addStateChoropleth().then(() => {
-            addStateExtrusion(); // Add the 3D layer
+            addStateExtrusion(); 
             addSoyHotspotMarkers();
             updateLegend('world-view');
             updateMapLayers('world-view');
@@ -429,17 +429,17 @@ function addStateExtrusion() {
                 50, '#fc8d59',
                 500, '#990000'
             ],
-            'fill-extrusion-height': 0, // Start at 0 for animation
+            'fill-extrusion-height': 0, 
             'fill-extrusion-base': 0,
             'fill-extrusion-opacity': 0.65
         }
     });
 
-    // Set transition parameters
+    
     setLayerPaint('states-extrusion', 'fill-extrusion-opacity-transition', { duration: 450, delay: 0 });
-    setLayerPaint('states-extrusion', 'fill-extrusion-height-transition', { duration: 2000, delay: 500 }); // Slower growth
+    setLayerPaint('states-extrusion', 'fill-extrusion-height-transition', { duration: 2000, delay: 500 }); 
 
-    // Trigger animation to full height after mount
+    
     setTimeout(() => {
         if (!map || !map.getLayer('states-extrusion')) return;
         map.setPaintProperty('states-extrusion', 'fill-extrusion-height', [
@@ -951,9 +951,9 @@ function rgbToHex({ r, g, b }) {
         })
         .join('')}`;
 }
-// =========================================
-// ENHANCED INTERACTIVE CHART FUNCTIONS
-// =========================================
+
+
+
 
 function drawAreaChartEnhanced(rows) {
     const width = 640;
