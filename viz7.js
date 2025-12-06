@@ -6,17 +6,17 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia3Zpbm9kIiwiYSI6ImNtaHg3YXlqaDAweGMyanB4cTRoc
 
 
 let map;
-let metricsData;
-let treemapStateSeries;
-let treemapYears;
-let treemapCurrentYear;
-let treemapCurrentFocus = 'all';
-let treemapSelectedState = null;
+let stateMetrics;
+let stateSeries;
+let availableYears;
+let activeTreemapYear;
+let activeTreemapFocus = 'all';
+let pinnedTreemapState = null;
 
 let activeChapterId = null;
-let fertilizerFireHandle = null;
-let fertilizerFirePhase = 0;
-let fertilizerFireTargetOpacity = 0;
+let fertilizerPulseHandle = null;
+let fertilizerPulsePhase = 0;
+let fertilizerPulseTarget = 0;
 
 const FIRE_GRADIENT_STOPS = [1, 5, 10, 25, 50, 100, 200, 500];
 const FIRE_BASE_COLORS = ['#fef3d3', '#fed18c', '#fda762', '#f86f3c', '#d9442e', '#a92424', '#6b1015', '#37060d'];
@@ -86,15 +86,27 @@ const chapters = {
 
 const SOY_GROWTH_GRADIENT = 'linear-gradient(90deg, #fff7ec 0%, #fdd49e 45%, #d7301f 100%)';
 
-const soyHotspots = [
+const soyHotspotTowns = [
     { name: 'Sorriso, MT', description: 'World soy capital pushing deep into Amazonia', coordinates: [-55.721, -12.542] },
     { name: 'Campo Novo do Parecis, MT', description: 'Cerrado grains frontier turned export hub', coordinates: [-58.084, -13.677] },
     { name: 'Santarém, PA', description: 'BR-163 terminus and river export lifeline', coordinates: [-54.709, -2.438] }
 ];
 
-let soyMarkers = [];
-let stateFeatureIdBySigla = new Map();
-let highlightedStateIds = new Set();
+
+
+
+
+
+
+
+
+
+
+
+
+let soyMarkerNodes = [];
+let stateFeatureIds = new Map();
+let highlightedStateSet = new Set();
 
 const legendChannelTemplate = { boundary: false, gradient: false, soy: false, fertilizer: false };
 let previousLegendChannels = { ...legendChannelTemplate };
@@ -173,6 +185,19 @@ const chapterVisualPlan = {
     }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 const setLayerPaint = (layerId, property, value) => {
     if (map && map.getLayer(layerId)) {
         map.setPaintProperty(layerId, property, value);
@@ -235,6 +260,24 @@ function applyLegendDrivenLayers(chapter = null, overrideChannels = null) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function startVisualization() {
     Promise.all([
         d3.json("krishna_data/amazon_legal_boundary_simplified.geojson"),
@@ -253,10 +296,10 @@ if (document.readyState === 'loading') {
 }
 
 function initialize([amazonBoundary, soyAmazonVsNon, soyMunicipal, fertilizerSeries]) {
-    metricsData = computeStateMetrics(soyMunicipal);
-    treemapStateSeries = metricsData.stateSeries;
-    treemapYears = metricsData.years;
-    treemapCurrentYear = treemapYears[treemapYears.length - 1];
+    stateMetrics = computeStateMetrics(soyMunicipal);
+    stateSeries = stateMetrics.stateSeries;
+    availableYears = stateMetrics.years;
+    activeTreemapYear = availableYears[availableYears.length - 1];
     initializeMap(amazonBoundary);
 
     
@@ -332,11 +375,11 @@ async function addStateChoropleth() {
     statesGeo.features.forEach((feature, idx) => {
         feature.id = feature.id ?? idx;
         idRegistry.set(feature.properties.sigla, feature.id);
-        const metric = metricsData.metricsMap.get(feature.properties.sigla);
+        const metric = stateMetrics.metricsMap.get(feature.properties.sigla);
         feature.properties.growth_ratio = metric ? metric.ratio || 1 : 1;
         feature.properties.area_2024 = metric ? metric.areaLatest : 0;
     });
-    stateFeatureIdBySigla = idRegistry;
+    stateFeatureIds = idRegistry;
 
     map.addSource('brazil-states', { 'type': 'geojson', 'data': statesGeo });
 
@@ -416,6 +459,27 @@ async function addStateChoropleth() {
     return Promise.resolve();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function addStateExtrusion() {
     if (map.getLayer('states-extrusion')) return;
     map.addLayer({
@@ -458,8 +522,8 @@ function addStateExtrusion() {
 
 function addSoyHotspotMarkers() {
     if (!map) return;
-    soyMarkers.forEach(marker => marker.remove());
-    soyMarkers = soyHotspots.map((spot) => {
+    soyMarkerNodes.forEach(marker => marker.remove());
+    soyMarkerNodes = soyHotspotTowns.map((spot) => {
         const markerEl = document.createElement('button');
         markerEl.type = 'button';
         markerEl.className = 'soy-marker';
@@ -479,7 +543,7 @@ function addSoyHotspotMarkers() {
 }
 
 function toggleSoyMarkers(isVisible) {
-    soyMarkers.forEach(marker => {
+    soyMarkerNodes.forEach(marker => {
         const element = marker.getElement();
         if (!element) return;
         if (!element.style.transition) {
@@ -492,11 +556,25 @@ function toggleSoyMarkers(isVisible) {
 
 function clearStateHighlights() {
     if (!map || !map.isStyleLoaded()) return;
-    highlightedStateIds.forEach(id => {
+    highlightedStateSet.forEach(id => {
         map.setFeatureState({ source: 'brazil-states', id }, { highlight: false });
     });
-    highlightedStateIds = new Set();
+    highlightedStateSet = new Set();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function updateStateHighlights(chapter) {
     if (!map || !map.isStyleLoaded()) return;
@@ -513,7 +591,7 @@ function updateStateHighlights(chapter) {
     const lineColor = highlightConfig.lineColor || '#c87c00';
     const opacity = highlightConfig.opacity ?? 0.75;
     highlightConfig.states.forEach(sigla => {
-        const id = stateFeatureIdBySigla.get(sigla);
+        const id = stateFeatureIds.get(sigla);
         if (id === undefined) return;
         map.setFeatureState({ source: 'brazil-states', id }, {
             highlight: true,
@@ -524,13 +602,13 @@ function updateStateHighlights(chapter) {
         desired.add(id);
     });
 
-    highlightedStateIds.forEach(id => {
+    highlightedStateSet.forEach(id => {
         if (!desired.has(id)) {
             map.setFeatureState({ source: 'brazil-states', id }, { highlight: false });
         }
     });
 
-    highlightedStateIds = desired;
+    highlightedStateSet = desired;
 }
 
 function handleMapHover(e) {
@@ -548,6 +626,20 @@ function handleMapHover(e) {
             .style("top", `${e.originalEvent.pageY - 28}px`);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const sceneHooks = {
     'mato-grosso-boom': () => pulseAreaChart(),
@@ -621,6 +713,18 @@ function buildFlyOptions(chapterConfig) {
     return options;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 function runSceneHook(chapterID) {
     const hook = sceneHooks[chapterID];
     if (hook) {
@@ -639,7 +743,7 @@ function updateMapLayers(chapter, extrudeStateId = null) {
     }
 
     if (extrudeStateId) {
-        const targetId = stateFeatureIdBySigla.get(extrudeStateId);
+        const targetId = stateFeatureIds.get(extrudeStateId);
         if (targetId !== undefined) {
             map.setFeatureState({ source: 'brazil-states', id: targetId }, { extrude: true });
             currentlyExtruded = targetId;
@@ -740,6 +844,18 @@ function createSoyLegendRow(title = 'Soy frontier hubs', label = 'Key plantation
     section.appendChild(row);
     return section;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function showLegend() {
     const legendEl = document.getElementById('map-legend');
@@ -864,6 +980,18 @@ function parseSoyMunicipal(row) {
     };
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 function parseFertilizer(row) {
     return {
         year: +row.year,
@@ -877,35 +1005,35 @@ function parseBoolean(value) {
 }
 
 function startFertilizerFire(targetOpacity = 0.4) {
-    fertilizerFireTargetOpacity = targetOpacity;
+    fertilizerPulseTarget = targetOpacity;
     if (!map || !map.isStyleLoaded()) return;
     if (!map.getLayer('fertilizer-embers')) return;
-    if (fertilizerFireHandle) return;
+    if (fertilizerPulseHandle) return;
 
     const animate = () => {
         if (!map || !map.isStyleLoaded() || !map.getLayer('fertilizer-embers')) {
-            fertilizerFireHandle = null;
+            fertilizerPulseHandle = null;
             return;
         }
 
-        fertilizerFirePhase += 0.02;
-        const blend = (Math.sin(fertilizerFirePhase * 0.8) + 1) / 2;
+        fertilizerPulsePhase += 0.02;
+        const blend = (Math.sin(fertilizerPulsePhase * 0.8) + 1) / 2;
         map.setPaintProperty('fertilizer-embers', 'fill-color', buildFireExpression(blend));
 
-        const pulse = fertilizerFireTargetOpacity + 0.08 * Math.sin(fertilizerFirePhase * 1.6);
+        const pulse = fertilizerPulseTarget + 0.08 * Math.sin(fertilizerPulsePhase * 1.6);
         setLayerPaint('fertilizer-embers', 'fill-opacity', Math.max(0, pulse));
-        fertilizerFireHandle = requestAnimationFrame(animate);
+        fertilizerPulseHandle = requestAnimationFrame(animate);
     };
 
-    fertilizerFireHandle = requestAnimationFrame(animate);
+    fertilizerPulseHandle = requestAnimationFrame(animate);
 }
 
 function stopFertilizerFire() {
-    if (fertilizerFireHandle) {
-        cancelAnimationFrame(fertilizerFireHandle);
-        fertilizerFireHandle = null;
+    if (fertilizerPulseHandle) {
+        cancelAnimationFrame(fertilizerPulseHandle);
+        fertilizerPulseHandle = null;
     }
-    fertilizerFirePhase = 0;
+    fertilizerPulsePhase = 0;
     if (map && map.isStyleLoaded() && map.getLayer('fertilizer-embers')) {
         setLayerPaint('fertilizer-embers', 'fill-opacity', 0);
         map.setPaintProperty('fertilizer-embers', 'fill-color', buildFireExpression(0));
@@ -1671,7 +1799,7 @@ function pulseFertilizerLine() {
 }
 
 function initTreemapStory() {
-    if (!treemapStateSeries || !treemapYears) return;
+    if (!stateSeries || !availableYears) return;
     const container = document.getElementById('treemap-story-vis');
     if (!container) return;
 
@@ -1688,7 +1816,7 @@ function initTreemapStory() {
         .attr('class', 'tooltip treemap-story-tooltip')
         .style('opacity', 0);
 
-    const stateUniverse = Array.from(treemapStateSeries.keys());
+    const stateUniverse = Array.from(stateSeries.keys());
     const focusGroups = {
         all: { label: 'All Amazon', states: stateUniverse },
         arc: { label: 'Arc of Fire', states: ['MT', 'PA', 'RO', 'MA', 'TO'] },
@@ -1699,16 +1827,16 @@ function initTreemapStory() {
     const yearSlider = document.getElementById('treemap-year-slider');
     const yearLabel = document.getElementById('treemap-year-label');
     if (yearSlider && yearLabel) {
-        yearSlider.min = treemapYears[0];
-        yearSlider.max = treemapYears[treemapYears.length - 1];
-        yearSlider.value = treemapCurrentYear;
-        yearLabel.textContent = treemapCurrentYear;
+        yearSlider.min = availableYears[0];
+        yearSlider.max = availableYears[availableYears.length - 1];
+        yearSlider.value = activeTreemapYear;
+        yearLabel.textContent = activeTreemapYear;
         yearSlider.addEventListener('input', (event) => {
-            treemapCurrentYear = +event.target.value;
-            yearLabel.textContent = treemapCurrentYear;
+            activeTreemapYear = +event.target.value;
+            yearLabel.textContent = activeTreemapYear;
             renderTreemap();
-            if (treemapSelectedState) {
-                updateStateSpotlight(treemapSelectedState);
+            if (pinnedTreemapState) {
+                updateStateSpotlight(pinnedTreemapState);
             }
         });
     }
@@ -1717,7 +1845,7 @@ function initTreemapStory() {
     focusButtons.forEach(button => {
         button.addEventListener('click', () => {
             focusButtons.forEach(btn => btn.classList.toggle('active', btn === button));
-            treemapCurrentFocus = button.dataset.group || 'all';
+            activeTreemapFocus = button.dataset.group || 'all';
             renderTreemap();
         });
     });
@@ -1727,9 +1855,9 @@ function initTreemapStory() {
     renderTreemap();
 
     function renderTreemap() {
-        const activeKey = focusGroups[treemapCurrentFocus] ? treemapCurrentFocus : 'all';
+        const activeKey = focusGroups[activeTreemapFocus] ? activeTreemapFocus : 'all';
         const statePool = focusGroups[activeKey].states;
-        const nodes = buildTreemapNodes(statePool, treemapCurrentYear);
+        const nodes = buildTreemapNodes(statePool, activeTreemapYear);
 
         const width = container.clientWidth || 960;
         const height = 520;
@@ -1738,7 +1866,7 @@ function initTreemapStory() {
 
         if (!nodes.length) {
             chartGroup.selectAll('g.treemap-cell').remove();
-            treemapSelectedState = null;
+            pinnedTreemapState = null;
             updateStateSpotlight(null);
             return;
         }
@@ -1812,7 +1940,7 @@ function initTreemapStory() {
             .attr('y', 44)
             .style('opacity', d => hasRoom(d, 80, 50) ? 0.8 : 0);
 
-        merged.classed('is-selected', d => d.data.uf === treemapSelectedState);
+        merged.classed('is-selected', d => d.data.uf === pinnedTreemapState);
 
         merged.select('rect')
             .on('mousemove', (event, d) => {
@@ -1823,7 +1951,7 @@ function initTreemapStory() {
                     .style('opacity', 1)
                     .html(`
                         <strong>${d.data.uf}</strong><br>
-                        ${formatMillions(d.data.value)} Mha in ${treemapCurrentYear}<br>
+                        ${formatMillions(d.data.value)} Mha in ${activeTreemapYear}<br>
                         Δ since 2000: ${deltaPrefix}${deltaMagnitude} Mha<br>
                         Growth: ${d.data.ratio ? d.data.ratio.toFixed(1) + '×' : 'n/a'}
                     `)
@@ -1832,26 +1960,26 @@ function initTreemapStory() {
             })
             .on('mouseleave', () => tooltip.style('opacity', 0))
             .on('click', (event, d) => {
-                treemapSelectedState = d.data.uf;
-                updateStateSpotlight(treemapSelectedState);
+                pinnedTreemapState = d.data.uf;
+                updateStateSpotlight(pinnedTreemapState);
                 chartGroup.selectAll('g.treemap-cell')
-                    .classed('is-selected', node => node.data.uf === treemapSelectedState);
+                    .classed('is-selected', node => node.data.uf === pinnedTreemapState);
             });
 
-        if (!treemapSelectedState) {
-            treemapSelectedState = nodes[0].uf;
-            updateStateSpotlight(treemapSelectedState);
-            merged.classed('is-selected', d => d.data.uf === treemapSelectedState);
-        } else if (!nodes.some(n => n.uf === treemapSelectedState)) {
-            treemapSelectedState = nodes[0]?.uf || null;
-            updateStateSpotlight(treemapSelectedState);
-            merged.classed('is-selected', d => d.data.uf === treemapSelectedState);
+        if (!pinnedTreemapState) {
+            pinnedTreemapState = nodes[0].uf;
+            updateStateSpotlight(pinnedTreemapState);
+            merged.classed('is-selected', d => d.data.uf === pinnedTreemapState);
+        } else if (!nodes.some(n => n.uf === pinnedTreemapState)) {
+            pinnedTreemapState = nodes[0]?.uf || null;
+            updateStateSpotlight(pinnedTreemapState);
+            merged.classed('is-selected', d => d.data.uf === pinnedTreemapState);
         }
     }
 
     function buildTreemapNodes(statePool, year) {
         return statePool.map(uf => {
-            const series = treemapStateSeries.get(uf) || [];
+            const series = stateSeries.get(uf) || [];
             const latest = series.find(point => point.year === year) || series[series.length - 1];
             const baseline = series.find(point => point.year === 2000) || series[0];
             return {
@@ -1878,20 +2006,20 @@ function updateStateSpotlight(uf) {
     const sparkline = d3.select('#treemap-sparkline');
     sparkline.selectAll('*').remove();
 
-    if (!uf || !treemapStateSeries || !treemapStateSeries.has(uf)) {
+    if (!uf || !stateSeries || !stateSeries.has(uf)) {
         if (nameEl) nameEl.textContent = '—';
         if (valueEl) valueEl.textContent = 'Select a state';
         return;
     }
 
-    const series = treemapStateSeries.get(uf);
+    const series = stateSeries.get(uf);
     if (!series || !series.length) {
         if (nameEl) nameEl.textContent = uf;
         if (valueEl) valueEl.textContent = 'No data available';
         return;
     }
 
-    const latest = series.find(point => point.year === treemapCurrentYear) || series[series.length - 1];
+    const latest = series.find(point => point.year === activeTreemapYear) || series[series.length - 1];
     if (nameEl) nameEl.textContent = uf;
     if (valueEl) valueEl.textContent = `${(latest.area / 1_000_000).toFixed(1)} Mha in ${latest.year}`;
 
@@ -1940,7 +2068,7 @@ function drawStateSparkline(series) {
         .call(d3.axisLeft(y).ticks(3).tickFormat(d => `${(d / 1_000_000).toFixed(1)}M`))
         .call(g => g.selectAll('text').attr('font-size', '0.7rem'));
 
-    const focusPoint = series.find(d => d.year === treemapCurrentYear) || series[series.length - 1];
+    const focusPoint = series.find(d => d.year === activeTreemapYear) || series[series.length - 1];
     if (focusPoint) {
         sparkline.append('circle')
             .attr('cx', x(focusPoint.year))
